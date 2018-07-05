@@ -15,7 +15,7 @@
 
  ![image](https://github.com/foamliu/Scene-Classification/raw/master/images/dataset.png)
 
-你可以从中得到它 [Scene Classification Dataset](https://challenger.ai/datasets/scene):
+要下载点这里：图像中文描述 [数据集](https://challenger.ai/datasets/caption):
 
 
 ## ImageNet 预训练模型
