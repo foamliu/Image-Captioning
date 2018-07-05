@@ -15,17 +15,17 @@
 
  ![image](https://github.com/foamliu/Scene-Classification/raw/master/images/dataset.png)
 
-要下载点这里：图像中文描述 [数据集](https://challenger.ai/datasets/caption)，放在 data 目录下。
+下载点这里：[图像中文描述数据集](https://challenger.ai/datasets/caption)，放在 data 目录下。
 
 
 ## ImageNet 预训练模型
 
-下载 [ResNet-152](https://drive.google.com/file/d/0Byy2AcGyEVxfeXExMzNNOHpEODg/view?usp=sharing)， 放在 models 目录下。
+下载点这里： [ResNet-152](https://drive.google.com/file/d/0Byy2AcGyEVxfeXExMzNNOHpEODg/view?usp=sharing)， 放在 models 目录下。
 
 ## 用法
 
 ### 数据预处理
-提取60,999个训练图像，并将它们分开（53,879个用于训练，7,120个用于验证）：
+提取210,000 张训练图片和30,000 张验证图片：
 ```bash
 $ python pre-process.py
 ```
@@ -35,7 +35,7 @@ $ python pre-process.py
 $ python train.py
 ```
 
-如果想在培训期间进行可视化，请在终端中运行：
+可视化训练过程，执行：
 ```bash
 $ tensorboard --logdir path_to_current_dir/logs
 ```
@@ -54,15 +54,3 @@ $ python demo.py
 |![image](https://github.com/foamliu/Scene-Classification/raw/master/images/8_out.png)  | ![image](https://github.com/foamliu/Scene-Classification/raw/master/images/9_out.png) |![image](https://github.com/foamliu/Scene-Classification/raw/master/images/10_out.png) | ![image](https://github.com/foamliu/Scene-Classification/raw/master/images/11_out.png)|
 |![image](https://github.com/foamliu/Scene-Classification/raw/master/images/12_out.png)  | ![image](https://github.com/foamliu/Scene-Classification/raw/master/images/13_out.png) |![image](https://github.com/foamliu/Scene-Classification/raw/master/images/14_out.png)| ![image](https://github.com/foamliu/Scene-Classification/raw/master/images/15_out.png)|
 |![image](https://github.com/foamliu/Scene-Classification/raw/master/images/16_out.png) | ![image](https://github.com/foamliu/Scene-Classification/raw/master/images/17_out.png) | ![image](https://github.com/foamliu/Scene-Classification/raw/master/images/18_out.png) | ![image](https://github.com/foamliu/Scene-Classification/raw/master/images/19_out.png) |
-
-
-### 结果分析
-
-```bash
-$ python analyze.py
-```
-
-| |Test A|Test B|
-|---|---|---|
-|图片数|7040|7078|
-|Top3准确度|0.90511|0.86337|
