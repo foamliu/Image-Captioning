@@ -13,7 +13,7 @@
 使用 AI Challenger 2017 的图像中文描述数据集，包含30万张图片，150万句中文描述。训练集：210,000 张，验证集：30,000 张，测试集 A：30,000 张，测试集 B：30,000 张。
 
 
- ![image](https://github.com/foamliu/Scene-Classification/raw/master/images/dataset.png)
+ ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/dataset.png)
 
 下载点这里：[图像中文描述数据集](https://challenger.ai/datasets/caption)，放在 data 目录下。
 
