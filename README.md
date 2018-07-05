@@ -15,12 +15,12 @@
 
  ![image](https://github.com/foamliu/Scene-Classification/raw/master/images/dataset.png)
 
-要下载点这里：图像中文描述 [数据集](https://challenger.ai/datasets/caption):
+要下载点这里：图像中文描述 [数据集](https://challenger.ai/datasets/caption)，放在 data 目录下。
 
 
 ## ImageNet 预训练模型
 
-下载 [ResNet-152](https://drive.google.com/file/d/0Byy2AcGyEVxfeXExMzNNOHpEODg/view?usp=sharing) 放在 models 目录。
+下载 [ResNet-152](https://drive.google.com/file/d/0Byy2AcGyEVxfeXExMzNNOHpEODg/view?usp=sharing)， 放在 models 目录下。
 
 ## 用法
 
