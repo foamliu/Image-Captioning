@@ -1,5 +1,6 @@
 import os
 import zipfile
+from config import train_folder, valid_folder, test_a_folder, test_b_folder
 
 
 def ensure_folder(folder):
@@ -7,8 +8,8 @@ def ensure_folder(folder):
         os.makedirs(folder)
 
 
-def extract(package):
-    filename = 'data/{}.zip'.format(package)
+def extract(folder):
+    filename = '{}.zip'.format(folder)
     print('Extracting {}...'.format(filename))
     with zipfile.ZipFile(filename, 'r') as zip_ref:
         zip_ref.extractall('data')
@@ -18,9 +19,9 @@ if __name__ == '__main__':
     # parameters
     ensure_folder('data')
 
-    extract('ai_challenger_caption_train_20170902')
-    extract('ai_challenger_caption_validation_20170910')
-    extract('ai_challenger_caption_test_a_20180103')
-    extract('ai_challenger_caption_test_b_20180103')
+    extract(train_folder)
+    extract(valid_folder)
+    extract(test_a_folder)
+    extract(test_b_folder)
 
     extract('wiki.zh')

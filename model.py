@@ -7,7 +7,7 @@ from keras.models import Model
 from keras.utils import plot_model
 from tqdm import tqdm
 
-from config import rnn_type, bidirectional_rnn, rnn_layers, rnn_output_size, rnn_dropout_rate
+from config import rnn_type, bidirectional_rnn, rnn_layers, hidden_size, rnn_dropout_rate
 from config import vocab_size, embedding_size, zh_model
 
 
@@ -36,7 +36,7 @@ def build_sequence_model(sequence_input):
     RNN = GRU if rnn_type == 'gru' else LSTM
 
     def rnn():
-        rnn = RNN(units=rnn_output_size,
+        rnn = RNN(units=hidden_size,
                   return_sequences=True,
                   dropout=rnn_dropout_rate,
                   recurrent_dropout=rnn_dropout_rate,
