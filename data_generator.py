@@ -55,7 +55,7 @@ class DataGenSequence(Sequence):
             img_array = img_to_array(img)
             img_array = self.data_generator.random_transform(img_array)
             img_array = keras.applications.resnet50.preprocess_input(img_array)
-            image_input = img_array[0]
+            image_input = np.array(img_array[0])
 
             caption = sample['caption']
             c = caption[0]
