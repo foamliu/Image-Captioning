@@ -13,7 +13,7 @@ from config import vocab_size, embedding_size, max_token_length, regularizer, em
 
 def build_model():
     # word embedding
-    text_input = Input(shape=(max_token_length, vocab_size), name='text')
+    text_input = Input(shape=[None])
     text_embedding = Embedding(input_dim=vocab_size, output_dim=embedding_size, weights=[embedding_matrix],
                                trainable=False)(text_input)
 
