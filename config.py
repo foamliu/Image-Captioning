@@ -7,7 +7,7 @@ num_train_samples = 210000
 num_valid_samples = 30000
 embedding_size = 300
 vocab_size = 332647
-max_cap_len = 40
+max_cap_len = 50
 
 rnn_type = 'gru'
 bidirectional_rnn = False
