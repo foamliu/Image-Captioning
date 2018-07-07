@@ -51,7 +51,7 @@ def build_model():
 
     output = TimeDistributed(Dense(units=vocab_size,
                                    kernel_regularizer=l2(regularizer),
-                                   activation='softmax'),
+                                   activation='linear'),
                              name='output')(recurrent_network)
 
     inputs = [text_input, image_input]
