@@ -44,7 +44,7 @@ class DataGenSequence(Sequence):
         i = idx * batch_size
 
         length = min(batch_size, (len(self.samples) - i))
-        batch_x = np.empty((length, 2), dtype=np.object)
+        batch_x = []
         batch_y = np.empty((length, max_token_length, 1), dtype=np.int32)
 
         for i_batch in range(length):
@@ -73,7 +73,7 @@ class DataGenSequence(Sequence):
                 target[index] = position
                 text_input[index + 1] = position
 
-            batch_x[i_batch] = [text_input, image_input]
+            batch_x.append([text_input, image_input])
             batch_y[i_batch, :, :] = target
 
             i += 1
