@@ -19,6 +19,7 @@ if __name__ == '__main__':
         caption = sample['caption']
         for c in caption:
             seg_list = jieba.cut(c, cut_all=True)
-            if len(seg_list) > max_len:
-                max_len = len(seg_list)
+            length = sum(1 for item in seg_list)
+            if length > max_len:
+                max_len = length
     print('max_len: ' + str(max_len))

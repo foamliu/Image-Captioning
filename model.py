@@ -2,13 +2,15 @@ import keras.backend as K
 import numpy as np
 import tensorflow as tf
 from keras.applications.resnet50 import ResNet50
-from keras.layers import Input, Dense, RepeatVector, Embedding, Concatenate, LSTM, GRU, Bidirectional
+from keras.layers import Input, Dense, RepeatVector, Embedding, Concatenate, LSTM, GRU, Bidirectional, TimeDistributed, \
+    Dropout, Masking, Add
 from keras.models import Model
+from keras.regularizers import l2
 from keras.utils import plot_model
 from tqdm import tqdm
 
-from config import rnn_type, bidirectional_rnn, rnn_layers, hidden_size, rnn_dropout_rate
-from config import vocab_size, embedding_size, zh_model
+from config import rnn_type, hidden_size
+from config import vocab_size, embedding_size, max_token_length, zh_model, regularizer, num_image_features
 
 
 def build_image_embedding():
@@ -32,33 +34,52 @@ def build_word_embedding():
     return input, x
 
 
-def build_sequence_model(sequence_input):
-    RNN = GRU if rnn_type == 'gru' else LSTM
-
-    def rnn():
-        rnn = RNN(units=hidden_size,
-                  return_sequences=True,
-                  dropout=rnn_dropout_rate,
-                  recurrent_dropout=rnn_dropout_rate,
-                  implementation=2)
-        rnn = Bidirectional(rnn) if bidirectional_rnn else rnn
-        return rnn
-
-    x = sequence_input
-    for _ in range(rnn_layers):
-        rnn_out = rnn()(x)
-        x = rnn_out
-    x = Dense(vocab_size, activation='softmax')(x)
-    return x
-
-
 def build_model():
-    image_input, image_embedding = build_image_embedding()
-    sentence_input, word_embedding = build_word_embedding()
-    sequence_input = Concatenate(axis=1)([image_embedding, word_embedding])
-    sequence_output = build_sequence_model(sequence_input)
+    # word embedding
+    text_input = Input(shape=(max_token_length, vocab_size), name='text')
+    text_mask = Masking(mask_value=0.0, name='text_mask')(text_input)
+    text_to_embedding = TimeDistributed(Dense(units=embedding_size,
+                                              kernel_regularizer=l2(regularizer),
+                                              name='text_embedding'))(text_mask)
 
-    model = Model(inputs=[image_input, sentence_input], outputs=sequence_output)
+    text_dropout = Dropout(.5, name='text_dropout')(text_to_embedding)
+
+    # image embedding
+    image_input = Input(shape=(max_token_length, num_image_features),
+                        name='image')
+    image_embedding = TimeDistributed(Dense(units=embedding_size,
+                                            kernel_regularizer=l2(regularizer),
+                                            name='image_embedding'))(image_input)
+    image_dropout = Dropout(.5, name='image_dropout')(image_embedding)
+
+    # language model
+    recurrent_inputs = [text_dropout, image_dropout]
+    merged_input = Add()(recurrent_inputs)
+    if rnn_type == 'lstm':
+        recurrent_network = LSTM(units=hidden_size,
+                                 recurrent_regularizer=l2(regularizer),
+                                 kernel_regularizer=l2(regularizer),
+                                 bias_regularizer=l2(regularizer),
+                                 return_sequences=True,
+                                 name='recurrent_network')(merged_input)
+
+    elif rnn_type == 'gru':
+        recurrent_network = GRU(units=hidden_size,
+                                recurrent_regularizer=l2(regularizer),
+                                kernel_regularizer=l2(regularizer),
+                                bias_regularizer=l2(regularizer),
+                                return_sequences=True,
+                                name='recurrent_network')(merged_input)
+    else:
+        raise Exception('Invalid rnn type')
+
+    output = TimeDistributed(Dense(units=vocab_size,
+                                   kernel_regularizer=l2(regularizer),
+                                   activation='softmax'),
+                             name='output')(recurrent_network)
+
+    inputs = [text_input, image_input]
+    model = Model(inputs=inputs, outputs=output)
     return model
 
 

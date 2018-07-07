@@ -7,13 +7,15 @@ num_train_samples = 210000
 num_valid_samples = 30000
 embedding_size = 300
 vocab_size = 332647
-max_cap_len = 50
+max_token_length = 50
+num_image_features = 2048
 
 rnn_type = 'gru'
 bidirectional_rnn = False
 hidden_size = 512
 rnn_dropout_rate = 0.5
 rnn_layers = 2
+regularizer=1e-8
 
 train_folder = 'data/ai_challenger_caption_train_20170902'
 valid_folder = 'data/ai_challenger_caption_validation_20170910'
