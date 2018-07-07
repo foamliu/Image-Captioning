@@ -1,3 +1,4 @@
+import numpy as np
 import keras.backend as K
 import tensorflow as tf
 from keras.applications.resnet50 import ResNet50
@@ -5,7 +6,7 @@ from keras.layers import Input, Dense, RepeatVector, Embedding, Concatenate, LST
 from keras.models import Model
 from keras.utils import plot_model
 
-from config import embedding_size, vocab_size
+from config import vocab_size, embedding_size
 from config import rnn_type, bidirectional_rnn, rnn_layers, rnn_output_size, rnn_dropout_rate
 
 
@@ -16,14 +17,15 @@ def build_image_embedding():
         layer.trainable = False
     x = image_model.output
     x = Dense(embedding_size, activation='relu')(x)
-    output = RepeatVector(1)(x)
-    return input, output
+    x = RepeatVector(1)(x)
+    return input, x
 
 
 def build_word_embedding():
+    embedding_weights = np.zeros((vocab_size, embedding_size))
     input = Input(shape=[None])
-    output = Embedding(input_dim=vocab_size, output_dim=embedding_size)(input)
-    return input, output
+    x = Embedding(input_dim=vocab_size, output_dim=embedding_size, embedding_weights=[embedding_weights], trainable=False)(input)
+    return input, x
 
 
 def build_sequence_model(sequence_input):
@@ -42,8 +44,7 @@ def build_sequence_model(sequence_input):
     for _ in range(rnn_layers):
         rnn_out = rnn()(x)
         x = rnn_out
-    x = TimeDistributed(Dense(vocab_size))(x)
-
+    x = Dense(vocab_size, activation='softmax')(x)
     return x
 
 

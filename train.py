@@ -8,7 +8,7 @@ from keras.utils import multi_gpu_model
 from config import patience, epochs, num_train_samples, num_valid_samples, batch_size
 from data_generator import train_gen, valid_gen
 from model import build_model
-from utils import get_available_gpus, categorical_crossentropy_color
+from utils import get_available_gpus
 
 if __name__ == '__main__':
     # Parse arguments
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     sgd = keras.optimizers.SGD(lr=3e-6, decay=1e-6, momentum=0.9, nesterov=True)
     # new_model.compile(optimizer='nadam', loss='categorical_crossentropy')
-    new_model.compile(optimizer=sgd, loss=categorical_crossentropy_color)
+    new_model.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['accuracy'])
 
     print(new_model.summary())
 

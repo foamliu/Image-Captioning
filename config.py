@@ -6,7 +6,7 @@ patience = 50
 num_train_samples = 210000
 num_valid_samples = 30000
 embedding_size = 300
-vocab_size = 0
+vocab_size = 332647
 max_cap_len = 5
 
 rnn_type = 'gru'
@@ -15,3 +15,5 @@ rnn_output_size = 256
 rnn_dropout_rate = 0.5
 rnn_layers = 2
 
+from gensim.models import KeyedVectors
+zh_model = KeyedVectors.load_word2vec_format('wiki.zh.vec')
