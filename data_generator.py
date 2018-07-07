@@ -35,6 +35,7 @@ class DataGenSequence(Sequence):
                                                  zoom_range=0.2,
                                                  horizontal_flip=True,
                                                  fill_mode='nearest')
+        self.words = list(vocab.keys())
 
     def __len__(self):
         return int(np.ceil(len(self.samples) / float(batch_size)))
@@ -61,10 +62,16 @@ class DataGenSequence(Sequence):
             seg_list = jieba.cut(c)
             text_input = np.zeros((max_token_length, 1), dtype=np.int32)
             target = np.zeros((max_token_length, 1), dtype=np.int32)
-            for index, word in enumerate(seg_list):
-                position = vocab.index(word)
+            # Ignore the UNK word
+            token_list = []
+            for word in enumerate(seg_list):
+                if word in self.words:
+                    token_list.append(word)
+
+            for index, word in enumerate(token_list):
+                position = self.words.index(word)
                 target[index] = position
-                text_input[index+1] = position
+                text_input[index + 1] = position
 
             batch_x[i_batch, :, :, :] = [text_input, image_input]
             batch_y[i_batch, :, :] = target
