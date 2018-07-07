@@ -44,7 +44,8 @@ class DataGenSequence(Sequence):
         i = idx * batch_size
 
         length = min(batch_size, (len(self.samples) - i))
-        batch_x = []
+        batch_text_input = np.empty((length,))
+        batch_image_input = np.empty((length,))
         batch_y = np.empty((length, max_token_length, 1), dtype=np.int32)
 
         for i_batch in range(length):
@@ -73,12 +74,13 @@ class DataGenSequence(Sequence):
                 target[index] = position
                 text_input[index + 1] = position
 
-            batch_x.append([text_input, image_input])
+            batch_text_input[i_batch] = text_input
+            batch_image_input[i_batch] = image_input
             batch_y[i_batch, :, :] = target
 
             i += 1
 
-        return batch_x, batch_y
+        return [batch_text_input, batch_image_input], batch_y
 
     def on_epoch_end(self):
         np.random.shuffle(self.samples)
