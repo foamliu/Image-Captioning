@@ -5,8 +5,7 @@ epochs = 10000
 patience = 50
 num_train_samples = 210000
 num_valid_samples = 30000
-image_embedding_size = 4096
-word_embedding_size = 300
+embedding_size = 300
 vocab_size = 0
 max_cap_len = 5
 

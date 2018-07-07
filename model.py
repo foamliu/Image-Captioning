@@ -5,7 +5,7 @@ from keras.layers import Input, Dense, RepeatVector, Embedding, Concatenate, LST
 from keras.models import Model
 from keras.utils import plot_model
 
-from config import image_embedding_size, word_embedding_size, vocab_size
+from config import embedding_size, vocab_size
 from config import rnn_type, bidirectional_rnn, rnn_layers, rnn_output_size, rnn_dropout_rate
 
 
@@ -15,14 +15,14 @@ def build_image_embedding():
     for layer in image_model.layers:
         layer.trainable = False
     x = image_model.output
-    x = Dense(image_embedding_size, activation='relu')(x)
+    x = Dense(embedding_size, activation='relu')(x)
     output = RepeatVector(1)(x)
     return input, output
 
 
 def build_word_embedding():
     input = Input(shape=[None])
-    output = Embedding(input_dim=vocab_size, output_dim=word_embedding_size)(input)
+    output = Embedding(input_dim=vocab_size, output_dim=embedding_size)(input)
     return input, output
 
 
