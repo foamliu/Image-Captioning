@@ -5,6 +5,7 @@ from tqdm import tqdm
 from config import train_folder, train_annotations_filename
 
 if __name__ == '__main__':
+    print('Calculating the maximum length among all the captions')
     annotations_path = os.path.join(train_folder, train_annotations_filename)
 
     with open(annotations_path, 'r') as f:
@@ -16,5 +17,4 @@ if __name__ == '__main__':
         for c in caption:
             if len(c) > max_len:
                 max_len = len(c)
-
     print('max_len: ' + str(max_len))
