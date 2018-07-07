@@ -54,17 +54,20 @@ class DataGenSequence(Sequence):
             img_array = img_to_array(img)
             img_array = self.data_generator.random_transform(img_array)
             img_array = keras.applications.resnet50.preprocess_input(img_array)
+            image_input = img_array[0]
 
             caption = sample['caption']
             c = caption[0]
             seg_list = jieba.cut(c)
-            y = np.zeros((max_token_length, 1), dtype=np.int32)
+            text_input = np.zeros((max_token_length, 1), dtype=np.int32)
+            target = np.zeros((max_token_length, 1), dtype=np.int32)
             for index, word in enumerate(seg_list):
                 position = vocab.index(word)
-                y[index] = position
+                target[index] = position
+                text_input[index+1] = position
 
-            batch_x[i_batch, :, :, :] = img_array[0]
-            batch_y[i_batch, :, :] = y
+            batch_x[i_batch, :, :, :] = [text_input, image_input]
+            batch_y[i_batch, :, :] = target
 
             i += 1
 
