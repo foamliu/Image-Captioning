@@ -1,10 +1,15 @@
+# encoding=utf-8
 import json
 import os
+import jieba
 import numpy as np
+import keras
+from keras.preprocessing.image import (ImageDataGenerator, load_img, img_to_array)
 from keras.utils import Sequence
 
-from config import batch_size, img_rows, img_cols
-from config import train_folder, train_annotations_filename, valid_folder, valid_annotations_filename
+from config import batch_size, img_rows, img_cols, max_token_length, vocab
+from config import train_folder, train_annotations_filename, train_image_folder
+from config import valid_folder, valid_annotations_filename, valid_image_folder
 
 
 class DataGenSequence(Sequence):
@@ -13,13 +18,23 @@ class DataGenSequence(Sequence):
 
         if usage == 'train':
             annotations_path = os.path.join(train_folder, train_annotations_filename)
+            self.image_folder = train_image_folder
         else:
             annotations_path = os.path.join(valid_folder, valid_annotations_filename)
+            self.image_folder = valid_image_folder
 
         with open(annotations_path, 'r') as f:
             self.samples = json.load(f)
 
         np.random.shuffle(self.samples)
+
+        self.data_generator = ImageDataGenerator(rotation_range=40,
+                                                 width_shift_range=0.2,
+                                                 height_shift_range=0.2,
+                                                 shear_range=0.2,
+                                                 zoom_range=0.2,
+                                                 horizontal_flip=True,
+                                                 fill_mode='nearest')
 
     def __len__(self):
         return int(np.ceil(len(self.samples) / float(batch_size)))
@@ -29,14 +44,27 @@ class DataGenSequence(Sequence):
 
         length = min(batch_size, (len(self.samples) - i))
         batch_x = np.empty((length, img_rows, img_cols, 3), dtype=np.float32)
-        batch_y = np.empty((length, 1), dtype=np.int32)
+        batch_y = np.empty((length, max_token_length, 1), dtype=np.int32)
 
         for i_batch in range(length):
             sample = self.samples[i]
             image_id = sample['image_id']
+            img_path = os.path.join(self.image_folder, image_id)
+            img = load_img(img_path, target_size=(img_rows, img_cols))
+            img_array = img_to_array(img)
+            img_array = self.data_generator.random_transform(img_array)
+            img_array = keras.applications.resnet50.preprocess_input(img_array)
 
-            batch_x[i_batch, :, :, 0] = x
-            batch_y[i_batch] = y
+            caption = sample['caption']
+            c = caption[0]
+            seg_list = jieba.cut(c)
+            y = np.zeros((max_token_length, 1), dtype=np.int32)
+            for index, word in enumerate(seg_list):
+                position = vocab.index(word)
+                y[index] = position
+
+            batch_x[i_batch, :, :, :] = img_array[0]
+            batch_y[i_batch, :, :] = y
 
             i += 1
 
