@@ -16,4 +16,4 @@ rnn_dropout_rate = 0.5
 rnn_layers = 2
 
 from gensim.models import KeyedVectors
-zh_model = KeyedVectors.load_word2vec_format('wiki.zh.vec')
+zh_model = KeyedVectors.load_word2vec_format('data/wiki.zh.vec')
