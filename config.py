@@ -1,3 +1,6 @@
+import numpy as np
+from tqdm import tqdm
+
 img_rows, img_cols = 224, 224
 channel = 3
 batch_size = 128
@@ -15,7 +18,7 @@ bidirectional_rnn = False
 hidden_size = 512
 rnn_dropout_rate = 0.5
 rnn_layers = 2
-regularizer=1e-8
+regularizer = 1e-8
 
 train_folder = 'data/ai_challenger_caption_train_20170902'
 valid_folder = 'data/ai_challenger_caption_validation_20170910'
@@ -25,5 +28,9 @@ train_annotations_filename = 'caption_train_annotations_20170902.json'
 valid_annotations_filename = 'caption_validation_annotations_20170910.json'
 
 print('loading word embedding...')
-# from gensim.models import KeyedVectors
-# zh_model = KeyedVectors.load_word2vec_format('data/wiki.zh.vec')
+from gensim.models import KeyedVectors
+
+zh_model = KeyedVectors.load_word2vec_format('data/wiki.zh.vec')
+embedding_matrix = np.zeros((vocab_size, embedding_size))
+for index, word in tqdm(enumerate(zh_model.vocab)):
+    embedding_matrix[index, :] = zh_model[word]

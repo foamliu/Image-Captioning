@@ -2,39 +2,20 @@ import keras.backend as K
 import tensorflow as tf
 from keras.applications.resnet50 import ResNet50
 from keras.layers import Input, Dense, RepeatVector, LSTM, GRU, TimeDistributed, \
-    Dropout, Masking, Add
+    Add, Embedding
 from keras.models import Model
 from keras.regularizers import l2
 from keras.utils import plot_model
 
 from config import rnn_type, hidden_size
-from config import vocab_size, embedding_size, max_token_length, regularizer  # ,zh_model
+from config import vocab_size, embedding_size, max_token_length, regularizer, embedding_matrix
 
-
-def build_image_embedding():
-    return input, x
-
-
-#
-# def build_word_embedding():
-#     embedding_matrix = np.zeros((vocab_size, embedding_size))
-#     for index, word in tqdm(enumerate(zh_model.vocab)):
-#         embedding_matrix[index, :] = zh_model[word]
-#
-#     input = Input(shape=[None])
-#     x = Embedding(input_dim=vocab_size, output_dim=embedding_size, weights=[embedding_matrix], trainable=False)(input)
-#     return input, x
-#
 
 def build_model():
     # word embedding
     text_input = Input(shape=(max_token_length, vocab_size), name='text')
-    x = Masking(mask_value=0.0, name='text_mask')(text_input)
-    x = TimeDistributed(Dense(units=embedding_size,
-                              kernel_regularizer=l2(regularizer),
-                              name='text_embedding'))(x)
-
-    text_dropout = Dropout(.5, name='text_dropout')(x)
+    text_embedding = Embedding(input_dim=vocab_size, output_dim=embedding_size, weights=[embedding_matrix],
+                               trainable=False)(text_input)
 
     # image embedding
     image_model = ResNet50(include_top=False, weights='imagenet', pooling='avg')
@@ -44,13 +25,12 @@ def build_model():
     x = image_model.output
     x = Dense(embedding_size, activation='relu')(x)
     x = RepeatVector(max_token_length)(x)
-    x = TimeDistributed(Dense(units=embedding_size,
-                              kernel_regularizer=l2(regularizer),
-                              name='image_embedding'))(x)
-    image_dropout = Dropout(.5, name='image_dropout')(x)
+    image_embedding = TimeDistributed(Dense(units=embedding_size,
+                                            kernel_regularizer=l2(regularizer),
+                                            name='image_embedding'))(x)
 
     # language model
-    recurrent_inputs = [text_dropout, image_dropout]
+    recurrent_inputs = [text_embedding, image_embedding]
     merged_input = Add()(recurrent_inputs)
     if rnn_type == 'lstm':
         recurrent_network = LSTM(units=hidden_size,
