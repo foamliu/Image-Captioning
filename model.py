@@ -10,7 +10,7 @@ from keras.utils import plot_model
 from tqdm import tqdm
 
 from config import rnn_type, hidden_size
-from config import vocab_size, embedding_size, max_token_length, zh_model, regularizer, num_image_features
+from config import vocab_size, embedding_size, max_token_length, regularizer, num_image_features #,zh_model
 
 #
 # def build_image_embedding():
