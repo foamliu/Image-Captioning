@@ -23,13 +23,12 @@ def build_image_embedding():
 
 
 def build_word_embedding():
-    embedding_weights = np.zeros((vocab_size, embedding_size))
+    embedding_matrix = np.zeros((vocab_size, embedding_size))
     for index, word in tqdm(enumerate(zh_model.vocab)):
-        embedding_weights[index, :] = zh_model[word]
+        embedding_matrix[index, :] = zh_model[word]
 
     input = Input(shape=[None])
-    x = Embedding(input_dim=vocab_size, output_dim=embedding_size, embedding_weights=[embedding_weights],
-                  trainable=False)(input)
+    x = Embedding(input_dim=vocab_size, output_dim=embedding_size, weights=[embedding_matrix], trainable=False)(input)
     return input, x
 
 
