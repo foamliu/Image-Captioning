@@ -44,9 +44,9 @@ class DataGenSequence(Sequence):
         i = idx * batch_size
 
         length = min(batch_size, (len(self.samples) - i))
-        batch_text_input = np.empty((length, max_token_length, 1), dtype=np.int32)
+        batch_text_input = np.empty((length, max_token_length), dtype=np.int32)
         batch_image_input = np.empty((length, img_rows, img_cols, 3), dtype=np.float32)
-        batch_y = np.empty((length, max_token_length, 1), dtype=np.int32)
+        batch_y = np.empty((length, max_token_length), dtype=np.int32)
 
         for i_batch in range(length):
             sample = self.samples[i]
@@ -61,8 +61,8 @@ class DataGenSequence(Sequence):
             caption = sample['caption']
             c = caption[0]
             seg_list = jieba.cut(c)
-            text_input = np.zeros((max_token_length, 1), dtype=np.int32)
-            target = np.zeros((max_token_length, 1), dtype=np.int32)
+            text_input = np.zeros((max_token_length,), dtype=np.int32)
+            target = np.zeros((max_token_length,), dtype=np.int32)
             # Ignore the UNK word
             token_list = []
             for word in enumerate(seg_list):
@@ -76,7 +76,7 @@ class DataGenSequence(Sequence):
 
             batch_text_input[i_batch] = text_input
             batch_image_input[i_batch] = image_input
-            batch_y[i_batch, :, :] = target
+            batch_y[i_batch] = target
 
             i += 1
 
