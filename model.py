@@ -24,7 +24,7 @@ def build_image_embedding():
 
 def build_word_embedding():
     embedding_weights = np.zeros((vocab_size, embedding_size))
-    for index, word in tqdm(zh_model.vocab):
+    for index, word in tqdm(enumerate(zh_model.vocab)):
         embedding_weights[index, :] = zh_model[word]
 
     input = Input(shape=[None])
