@@ -1,13 +1,13 @@
-import numpy as np
 import keras.backend as K
+import numpy as np
 import tensorflow as tf
 from keras.applications.resnet50 import ResNet50
-from keras.layers import Input, Dense, RepeatVector, Embedding, Concatenate, LSTM, GRU, Bidirectional, TimeDistributed
+from keras.layers import Input, Dense, RepeatVector, Embedding, Concatenate, LSTM, GRU, Bidirectional
 from keras.models import Model
 from keras.utils import plot_model
 
-from config import vocab_size, embedding_size
 from config import rnn_type, bidirectional_rnn, rnn_layers, rnn_output_size, rnn_dropout_rate
+from config import vocab_size, embedding_size
 
 
 def build_image_embedding():
@@ -24,7 +24,8 @@ def build_image_embedding():
 def build_word_embedding():
     embedding_weights = np.zeros((vocab_size, embedding_size))
     input = Input(shape=[None])
-    x = Embedding(input_dim=vocab_size, output_dim=embedding_size, embedding_weights=[embedding_weights], trainable=False)(input)
+    x = Embedding(input_dim=vocab_size, output_dim=embedding_size, embedding_weights=[embedding_weights],
+                  trainable=False)(input)
     return input, x
 
 
