@@ -12,27 +12,27 @@ from tqdm import tqdm
 from config import rnn_type, hidden_size
 from config import vocab_size, embedding_size, max_token_length, zh_model, regularizer, num_image_features
 
-
-def build_image_embedding():
-    image_model = ResNet50(include_top=False, weights='imagenet', pooling='avg')
-    input = image_model.input
-    for layer in image_model.layers:
-        layer.trainable = False
-    x = image_model.output
-    x = Dense(embedding_size, activation='relu')(x)
-    x = RepeatVector(1)(x)
-    return input, x
-
-
-def build_word_embedding():
-    embedding_matrix = np.zeros((vocab_size, embedding_size))
-    for index, word in tqdm(enumerate(zh_model.vocab)):
-        embedding_matrix[index, :] = zh_model[word]
-
-    input = Input(shape=[None])
-    x = Embedding(input_dim=vocab_size, output_dim=embedding_size, weights=[embedding_matrix], trainable=False)(input)
-    return input, x
-
+#
+# def build_image_embedding():
+#     image_model = ResNet50(include_top=False, weights='imagenet', pooling='avg')
+#     input = image_model.input
+#     for layer in image_model.layers:
+#         layer.trainable = False
+#     x = image_model.output
+#     x = Dense(embedding_size, activation='relu')(x)
+#     x = RepeatVector(1)(x)
+#     return input, x
+#
+#
+# def build_word_embedding():
+#     embedding_matrix = np.zeros((vocab_size, embedding_size))
+#     for index, word in tqdm(enumerate(zh_model.vocab)):
+#         embedding_matrix[index, :] = zh_model[word]
+#
+#     input = Input(shape=[None])
+#     x = Embedding(input_dim=vocab_size, output_dim=embedding_size, weights=[embedding_matrix], trainable=False)(input)
+#     return input, x
+#
 
 def build_model():
     # word embedding

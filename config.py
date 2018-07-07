@@ -7,7 +7,7 @@ num_train_samples = 210000
 num_valid_samples = 30000
 embedding_size = 300
 vocab_size = 332647
-max_token_length = 40 
+max_token_length = 40
 num_image_features = 2048
 
 rnn_type = 'gru'
@@ -25,5 +25,5 @@ train_annotations_filename = 'caption_train_annotations_20170902.json'
 valid_annotations_filename = 'caption_validation_annotations_20170910.json'
 
 print('loading word embedding...')
-from gensim.models import KeyedVectors
-zh_model = KeyedVectors.load_word2vec_format('data/wiki.zh.vec')
+# from gensim.models import KeyedVectors
+# zh_model = KeyedVectors.load_word2vec_format('data/wiki.zh.vec')
