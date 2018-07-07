@@ -7,7 +7,7 @@ num_train_samples = 210000
 num_valid_samples = 30000
 embedding_size = 300
 vocab_size = 332647
-max_token_length = 50
+max_token_length = 40 
 num_image_features = 2048
 
 rnn_type = 'gru'
