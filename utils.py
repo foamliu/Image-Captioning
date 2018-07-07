@@ -1,7 +1,7 @@
 import multiprocessing
 
 import cv2 as cv
-from tensorflow.nn import sparse_softmax_cross_entropy_with_logits
+import tensorflow as tf
 from tensorflow.python.client import device_lib
 
 
@@ -23,5 +23,5 @@ def draw_str(dst, target, s):
 
 
 def sparse_loss(y_true, y_pred):
-    return sparse_softmax_cross_entropy_with_logits(labels=y_true,
-                                                    logits=y_pred)
+    return tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y_true,
+                                                          logits=y_pred)
