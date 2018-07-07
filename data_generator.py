@@ -7,7 +7,7 @@ import keras
 from keras.preprocessing.image import (ImageDataGenerator, load_img, img_to_array)
 from keras.utils import Sequence
 
-from config import batch_size, img_rows, img_cols, max_token_length, vocab
+from config import batch_size, img_rows, img_cols, max_token_length, vocab, vocab_size
 from config import train_folder, train_annotations_filename, train_image_folder
 from config import valid_folder, valid_annotations_filename, valid_image_folder
 
@@ -46,7 +46,7 @@ class DataGenSequence(Sequence):
         length = min(batch_size, (len(self.samples) - i))
         batch_text_input = np.empty((length, max_token_length), dtype=np.int32)
         batch_image_input = np.empty((length, img_rows, img_cols, 3), dtype=np.float32)
-        batch_y = np.empty((length, max_token_length), dtype=np.int32)
+        batch_y = np.empty((length, max_token_length, vocab_size), dtype=np.int32)
 
         for i_batch in range(length):
             sample = self.samples[i]
@@ -76,7 +76,7 @@ class DataGenSequence(Sequence):
 
             batch_text_input[i_batch] = text_input
             batch_image_input[i_batch] = image_input
-            batch_y[i_batch] = target
+            batch_y[i_batch] = keras.utils.to_categorical(target, vocab_size)
 
             i += 1
 
