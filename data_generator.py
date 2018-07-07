@@ -44,7 +44,7 @@ class DataGenSequence(Sequence):
         i = idx * batch_size
 
         length = min(batch_size, (len(self.samples) - i))
-        batch_x = np.empty((length, 1), dtype=np.object)
+        batch_x = np.empty((length, 2), dtype=np.object)
         batch_y = np.empty((length, max_token_length, 1), dtype=np.int32)
 
         for i_batch in range(length):
