@@ -36,8 +36,8 @@ if __name__ == '__main__':
         image_input = np.zeros((1, 224, 224, 3))
         image_input[0] = img_array
 
-        text_input = np.zeros((max_token_length,), dtype=np.int32)
-        text_input[0] = word2index[start_word]
+        text_input = np.zeros((1, max_token_length), dtype=np.int32)
+        text_input[0, 0] = word2index[start_word]
 
         sentence = []
         for i in range(max_token_length - 2):
@@ -49,7 +49,7 @@ if __name__ == '__main__':
             if words[next_index] == stop_word:
                 break
             print(words[next_index])
-            text_input[i + 1] = next_index
+            text_input[0, i + 1] = next_index
             sentence.append(words[next_index])
 
         print(sentence)
