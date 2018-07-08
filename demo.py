@@ -9,7 +9,8 @@ import numpy as np
 from keras.preprocessing.image import (load_img, img_to_array)
 
 import utils
-from config import img_rows, img_cols, max_token_length, word2index, start_word, stop_word, vocab_size, words, test_a_image_folder
+from config import img_rows, img_cols, max_token_length, word2index, start_word, stop_word, vocab_size, words, \
+    test_a_image_folder
 from model import build_model
 
 if __name__ == '__main__':
@@ -39,7 +40,7 @@ if __name__ == '__main__':
         text_input[0] = word2index[start_word]
 
         sentence = []
-        for i in range(max_token_length):
+        for i in range(max_token_length - 2):
             output = model.predict([image_input, text_input])
             print('output.shape: ' + str(output.shape))
             p = utils.softmax(output[0, 0, :])
