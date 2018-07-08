@@ -32,7 +32,9 @@ if __name__ == '__main__':
         img = load_img(filename, target_size=(img_rows, img_cols))
         img_array = img_to_array(img)
         img_array = keras.applications.resnet50.preprocess_input(img_array)
+        print('img_array.shape' + str(img_array.shape))
         image_input = np.array(img_array[0])
+        print('image_input.shape' + str(image_input.shape))
 
         text_input = np.zeros((max_token_length,), dtype=np.int32)
         text_input[0] = word2index[start_word]
@@ -40,6 +42,7 @@ if __name__ == '__main__':
         sentence = []
         for i in range(max_token_length):
             output = model.predict([image_input, text_input])
+            print('output.shape' + str(output.shape))
             next_index = random.choice(range(vocab_size), p=utils.softmax(output))
             if words[next_index] == stop_word:
                 break
