@@ -1,13 +1,13 @@
 import keras.backend as K
 import tensorflow as tf
 from keras.applications.resnet50 import ResNet50
-from keras.layers import Input, Dense, RepeatVector, LSTM, GRU, TimeDistributed, Concatenate, Embedding, Add
+from keras.layers import Input, Dense, LSTM, GRU, TimeDistributed, Concatenate, Embedding
 from keras.models import Model
 from keras.regularizers import l2
 from keras.utils import plot_model
 
 from config import rnn_type, hidden_size
-from config import vocab_size, embedding_size, max_token_length, regularizer, embedding_matrix
+from config import vocab_size, embedding_size, regularizer, embedding_matrix
 
 
 def build_model():
@@ -24,9 +24,9 @@ def build_model():
     x = image_model.output
     x = Dense(embedding_size, activation='relu')(x)
     # x = RepeatVector(1)(x)  # the image I is only input once
-    image_embedding = TimeDistributed(Dense(units=embedding_size,
-                                            kernel_regularizer=l2(regularizer),
-                                            name='image_embedding'))(x)
+    image_embedding = Dense(units=embedding_size,
+                            kernel_regularizer=l2(regularizer),
+                            name='image_embedding')(x)
 
     # language model
     recurrent_inputs = [image_embedding, text_embedding]
