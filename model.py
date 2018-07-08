@@ -1,7 +1,7 @@
 import keras.backend as K
 import tensorflow as tf
 from keras.applications.resnet50 import ResNet50
-from keras.layers import Input, Dense, LSTM, GRU, TimeDistributed, Concatenate, Embedding
+from keras.layers import Input, Dense, LSTM, GRU, TimeDistributed, Concatenate, Embedding, RepeatVector
 from keras.models import Model
 from keras.regularizers import l2
 from keras.utils import plot_model
@@ -23,7 +23,8 @@ def build_model():
         layer.trainable = False
     x = image_model.output
     x = Dense(embedding_size, activation='relu')(x)
-    # x = RepeatVector(1)(x)  # the image I is only input once
+    # the image I is only input once
+    x = RepeatVector(1)(x)
     image_embedding = Dense(units=embedding_size,
                             kernel_regularizer=l2(regularizer),
                             name='image_embedding')(x)

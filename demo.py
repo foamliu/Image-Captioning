@@ -8,7 +8,7 @@ import keras.backend as K
 import numpy as np
 from keras.preprocessing.image import (load_img, img_to_array)
 
-from config import img_rows, img_cols
+from config import img_rows, img_cols, max_token_length, word2index, start_word
 from model import build_model
 
 if __name__ == '__main__':
@@ -33,6 +33,12 @@ if __name__ == '__main__':
         img_array = img_to_array(img)
         img_array = keras.applications.resnet50.preprocess_input(img_array)
         image_input = np.array(img_array[0])
+
+        text_input = np.zeros((max_token_length,), dtype=np.int32)
+        text_input[0] = word2index[start_word]
+
+        for i in range(max_token_length):
+            None
 
         if not os.path.exists('images'):
             os.makedirs('images')
