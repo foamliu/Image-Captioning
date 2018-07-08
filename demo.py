@@ -43,11 +43,14 @@ if __name__ == '__main__':
             output = model.predict([image_input, text_input])
             print('output.shape: ' + str(output.shape))
             softmax = utils.softmax(output[0:-2])
+            print('softmax.shape: ' + str(softmax.shape))
             next_index = np.random.choice(range(vocab_size), p=softmax)
             if words[next_index] == stop_word:
                 break
+            print(words[next_index])
             text_input[i + 1] = next_index
             sentence.append(words[next_index])
+            
         print(sentence)
 
         if not os.path.exists('images'):
