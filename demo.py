@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
     print(model.summary())
 
-    image_folder = '/data/ai_challenger_caption_test_a_20180103'
+    image_folder = 'data/ai_challenger_caption_test_a_20180103'
     names = [f for f in os.listdir(image_folder) if f.endswith('.jpg')]
 
     samples = random.sample(names, 10)
