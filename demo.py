@@ -32,9 +32,8 @@ if __name__ == '__main__':
         img = load_img(filename, target_size=(img_rows, img_cols))
         img_array = img_to_array(img)
         img_array = keras.applications.resnet50.preprocess_input(img_array)
-        print('img_array.shape' + str(img_array.shape))
-        image_input = np.array(img_array[0])
-        print('image_input.shape' + str(image_input.shape))
+        image_input = np.zeros((1, 224, 224, 3))
+        image_input[0] = img_array
 
         text_input = np.zeros((max_token_length,), dtype=np.int32)
         text_input[0] = word2index[start_word]
