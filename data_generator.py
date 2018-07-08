@@ -26,8 +26,16 @@ class DataGenSequence(Sequence):
             self.image_folder = valid_image_folder
 
         with open(annotations_path, 'r') as f:
-            self.samples = json.load(f)
+            annotations = json.load(f)
 
+        samples = []
+        for a in annotations:
+            image_id = a['image_id']
+            caption = a['caption']
+            for c in caption:
+                samples.append({'image_id': image_id, 'caption': c})
+
+        self.samples = samples
         np.random.shuffle(self.samples)
 
         self.data_generator = ImageDataGenerator(rotation_range=40,

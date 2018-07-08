@@ -4,11 +4,11 @@ from tqdm import tqdm
 
 img_rows, img_cols = 224, 224
 channel = 3
-batch_size = 32
+batch_size = 64
 epochs = 10000
 patience = 50
-num_train_samples = 210000 / 10
-num_valid_samples = 30000 / 10
+num_train_samples = 210000 * 5
+num_valid_samples = 30000 * 5
 embedding_size = 300
 vocab_size = 332647 + 3
 max_token_length = 40
