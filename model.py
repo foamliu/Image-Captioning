@@ -1,7 +1,7 @@
 import keras.backend as K
 import tensorflow as tf
 from keras.applications.resnet50 import ResNet50
-from keras.layers import Input, Dense, RepeatVector, LSTM, GRU, TimeDistributed, Concatenate, Embedding
+from keras.layers import Input, Dense, RepeatVector, LSTM, GRU, TimeDistributed, Concatenate, Embedding, Add
 from keras.models import Model
 from keras.regularizers import l2
 from keras.utils import plot_model
@@ -30,7 +30,7 @@ def build_model():
 
     # language model
     recurrent_inputs = [text_embedding, image_embedding]
-    merged_input = Concatenate(axis=1)(recurrent_inputs)
+    merged_input = Add()(recurrent_inputs)
     if rnn_type == 'lstm':
         recurrent_network = LSTM(units=hidden_size,
                                  recurrent_regularizer=l2(regularizer),
