@@ -9,7 +9,7 @@ import numpy as np
 from keras.preprocessing.image import (load_img, img_to_array)
 
 import utils
-from config import img_rows, img_cols, max_token_length, word2index, start_word, stop_word, vocab_size, words
+from config import img_rows, img_cols, max_token_length, word2index, start_word, stop_word, vocab_size, words, test_a_image_folder
 from model import build_model
 
 if __name__ == '__main__':
@@ -21,14 +21,13 @@ if __name__ == '__main__':
 
     print(model.summary())
 
-    image_folder = 'data/ai_challenger_caption_test_a_20180103'
-    names = [f for f in os.listdir(image_folder) if f.endswith('.jpg')]
+    names = [f for f in os.listdir(test_a_image_folder) if f.endswith('.jpg')]
 
     samples = random.sample(names, 10)
 
     for i in range(len(samples)):
         image_name = samples[i]
-        filename = os.path.join(image_folder, image_name)
+        filename = os.path.join(test_a_image_folder, image_name)
         print('Start processing image: {}'.format(filename))
         img = load_img(filename, target_size=(img_rows, img_cols))
         img_array = img_to_array(img)
