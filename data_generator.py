@@ -47,7 +47,7 @@ class DataGenSequence(Sequence):
         length = min(batch_size, (len(self.samples) - i))
         batch_text_input = np.empty((length, max_token_length), dtype=np.int32)
         batch_image_input = np.empty((length, img_rows, img_cols, 3), dtype=np.float32)
-        batch_y = np.empty((length, max_token_length), dtype=np.int32)
+        batch_y = np.empty((length, max_token_length + 1), dtype=np.int32)
 
         for i_batch in range(length):
             sample = self.samples[i]
