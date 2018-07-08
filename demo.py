@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     names = [f for f in os.listdir(test_a_image_folder) if f.endswith('.jpg')]
 
-    samples = random.sample(names, 10)
+    samples = random.sample(names, 1)
 
     for i in range(len(samples)):
         image_name = samples[i]
@@ -32,6 +32,7 @@ if __name__ == '__main__':
         print('Start processing image: {}'.format(filename))
         img = load_img(filename, target_size=(img_rows, img_cols))
         img_array = img_to_array(img)
+        print('img_array.shape: ' + str(img_array.shape))
         img_array = keras.applications.resnet50.preprocess_input(img_array)
         image_input = np.zeros((1, 224, 224, 3))
         image_input[0] = img_array
@@ -56,7 +57,7 @@ if __name__ == '__main__':
 
         if not os.path.exists('images'):
             os.makedirs('images')
-        bgr = cv.cvtColor(img, cv.COLOR_RGB2BGR)
+        bgr = cv.cvtColor(img_array, cv.COLOR_RGB2BGR)
         cv.imwrite('images/{}_image.png'.format(i), bgr)
 
     K.clear_session()
