@@ -8,7 +8,8 @@ import keras.backend as K
 import numpy as np
 from keras.preprocessing.image import (load_img, img_to_array)
 
-from config import img_rows, img_cols, max_token_length, word2index, start_word
+import utils
+from config import img_rows, img_cols, max_token_length, word2index, start_word, stop_word, vocab_size, words
 from model import build_model
 
 if __name__ == '__main__':
@@ -37,8 +38,15 @@ if __name__ == '__main__':
         text_input = np.zeros((max_token_length,), dtype=np.int32)
         text_input[0] = word2index[start_word]
 
+        sentence = []
         for i in range(max_token_length):
-            None
+            output = model.predict([image_input, text_input])
+            next_index = random.choice(range(vocab_size), p=utils.softmax(output))
+            if words[next_index] == stop_word:
+                break
+            text_input[i + 1] = next_index
+            sentence.append(words[next_index])
+        print(sentence)
 
         if not os.path.exists('images'):
             os.makedirs('images')

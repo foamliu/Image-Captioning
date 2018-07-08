@@ -63,7 +63,7 @@ class DataGenSequence(Sequence):
             c = caption[0]
             seg_list = jieba.cut(c)
             text_input = np.zeros((max_token_length,), dtype=np.int32)
-            text_input[0] = word2index(start_word)
+            text_input[0] = word2index[start_word]
             target = np.zeros((max_token_length + 1,), dtype=np.int32)
 
             for j, word in enumerate(seg_list):
