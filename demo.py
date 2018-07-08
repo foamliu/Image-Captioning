@@ -42,7 +42,7 @@ if __name__ == '__main__':
         for i in range(max_token_length):
             output = model.predict([image_input, text_input])
             print('output.shape: ' + str(output.shape))
-            p = utils.softmax(output[0, -2, :])
+            p = utils.softmax(output[0, 0, :])
             print('p.shape: ' + str(p.shape))
             next_index = np.random.choice(range(vocab_size), p=p)
             if words[next_index] == stop_word:
