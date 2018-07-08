@@ -23,14 +23,14 @@ def build_model():
         layer.trainable = False
     x = image_model.output
     x = Dense(embedding_size, activation='relu')(x)
-    x = RepeatVector(max_token_length)(x)
+    # x = RepeatVector(1)(x)  # the image I is only input once
     image_embedding = TimeDistributed(Dense(units=embedding_size,
                                             kernel_regularizer=l2(regularizer),
                                             name='image_embedding'))(x)
 
     # language model
-    recurrent_inputs = [text_embedding, image_embedding]
-    merged_input = Add()(recurrent_inputs)
+    recurrent_inputs = [image_embedding, text_embedding]
+    merged_input = Concatenate(axis=1)(recurrent_inputs)
     if rnn_type == 'lstm':
         recurrent_network = LSTM(units=hidden_size,
                                  recurrent_regularizer=l2(regularizer),
@@ -54,7 +54,7 @@ def build_model():
                                    activation='linear'),
                              name='output')(recurrent_network)
 
-    inputs = [text_input, image_input]
+    inputs = [image_input, text_input]
     model = Model(inputs=inputs, outputs=output)
     return model
 

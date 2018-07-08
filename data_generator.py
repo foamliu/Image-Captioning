@@ -1,13 +1,15 @@
 # encoding=utf-8
 import json
 import os
+
 import jieba
-import numpy as np
 import keras
+import numpy as np
 from keras.preprocessing.image import (ImageDataGenerator, load_img, img_to_array)
 from keras.utils import Sequence
 
-from config import batch_size, img_rows, img_cols, max_token_length, vocab, vocab_size
+from config import batch_size, img_rows, img_cols, max_token_length, words, word2index, start_word, stop_word, \
+    unknown_word
 from config import train_folder, train_annotations_filename, train_image_folder
 from config import valid_folder, valid_annotations_filename, valid_image_folder
 
@@ -35,7 +37,6 @@ class DataGenSequence(Sequence):
                                                  zoom_range=0.2,
                                                  horizontal_flip=True,
                                                  fill_mode='nearest')
-        self.words = list(vocab.keys())
 
     def __len__(self):
         return int(np.ceil(len(self.samples) / float(batch_size)))
@@ -62,17 +63,19 @@ class DataGenSequence(Sequence):
             c = caption[0]
             seg_list = jieba.cut(c)
             text_input = np.zeros((max_token_length,), dtype=np.int32)
-            target = np.zeros((max_token_length,), dtype=np.int32)
-            # Ignore the UNK word
-            token_list = []
-            for word in enumerate(seg_list):
-                if word in self.words:
-                    token_list.append(word)
+            text_input[0] = word2index(start_word)
+            target = np.zeros((max_token_length + 1,), dtype=np.int32)
 
-            for index, word in enumerate(token_list):
-                position = self.words.index(word)
-                target[index] = position
-                text_input[index + 1] = position
+            for j, word in enumerate(seg_list):
+                if word not in words:
+                    word = unknown_word
+                index = word2index[word]
+                target[j] = index
+                text_input[j + 1] = index
+            eos_index = j + 1
+            index = word2index[stop_word]
+            target[eos_index] = index
+            text_input[eos_index + 1] = index
 
             batch_text_input[i_batch] = text_input
             batch_image_input[i_batch] = image_input
@@ -80,7 +83,7 @@ class DataGenSequence(Sequence):
 
             i += 1
 
-        return [batch_text_input, batch_image_input], batch_y
+        return [batch_image_input, batch_text_input], batch_y
 
     def on_epoch_end(self):
         np.random.shuffle(self.samples)

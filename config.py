@@ -7,10 +7,10 @@ channel = 3
 batch_size = 32
 epochs = 10000
 patience = 50
-num_train_samples = 210000
-num_valid_samples = 30000
+num_train_samples = 210000 / 10
+num_valid_samples = 30000 / 10
 embedding_size = 300
-vocab_size = 332647
+vocab_size = 332647 + 3
 max_token_length = 40
 num_image_features = 2048
 
@@ -38,4 +38,16 @@ embedding_matrix = np.zeros((vocab_size, embedding_size))
 for index, word in tqdm(enumerate(zh_model.vocab)):
     embedding_matrix[index, :] = zh_model[word]
 vocab = zh_model.vocab
+words = list(vocab.keys())
+start_word = '<START>'
+stop_word = '<EOS>'
+unknown_word = '<UNK>'
+words.append(start_word)
+words.append(stop_word)
+words.append(unknown_word)
+word2index = dict(zip(words, range(vocab_size)))
+
+embedding_matrix[vocab_size-3] = np.random.rand(embedding_size,)
+embedding_matrix[vocab_size-2] = np.random.rand(embedding_size,)
+embedding_matrix[vocab_size-1] = np.random.rand(embedding_size,)
 
