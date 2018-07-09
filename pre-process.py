@@ -41,7 +41,7 @@ def encode_images(usage):
         image_folder = test_b_image_folder
 
     names = [f for f in os.listdir(image_folder) if f.endswith('.jpg')]
-    print('starting encoding {} images'.format(usage))
+    print('encoding {} images'.format(usage))
     for i in tqdm(range(len(names))):
         image_name = names[i]
         filename = os.path.join(image_folder, image_name)
