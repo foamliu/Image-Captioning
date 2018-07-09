@@ -1,10 +1,9 @@
 import multiprocessing
+import pickle
 
 import cv2 as cv
-import numpy as np
 import tensorflow as tf
 from tensorflow.python.client import device_lib
-from config import vocab_size, embedding_size, start_word, stop_word, unknown_word
 
 
 # getting the number of GPUs
@@ -29,29 +28,7 @@ def sparse_loss(y_true, y_pred):
 
 
 def load_word_index_converts():
-    from gensim.models import KeyedVectors
-    zh_model = KeyedVectors.load_word2vec_format('data/wiki.zh.vec')
-    vocab = zh_model.vocab
-    idx2word = list(vocab.keys())
-    idx2word.append(start_word)
-    idx2word.append(stop_word)
-    idx2word.append(unknown_word)
-    word2idx = dict(zip(idx2word, range(vocab_size)))
+    vocab = pickle.load(open('vocab_train.p', 'rb'))
+    idx2word = list(vocab)
+    word2idx = dict(zip(idx2word, range(len(vocab))))
     return idx2word, word2idx
-
-
-def load_word_embedding():
-    from gensim.models import KeyedVectors
-    from tqdm import tqdm
-    print('loading word embedding...')
-    zh_model = KeyedVectors.load_word2vec_format('data/wiki.zh.vec')
-    embedding_matrix = np.zeros((vocab_size, embedding_size))
-    for index, word in tqdm(enumerate(zh_model.vocab)):
-        embedding_matrix[index, :] = zh_model[word]
-
-    np.random.seed(1)
-    embedding_matrix[vocab_size - 3] = np.random.rand(embedding_size, )
-    embedding_matrix[vocab_size - 2] = np.random.rand(embedding_size, )
-    embedding_matrix[vocab_size - 1] = np.random.rand(embedding_size, )
-
-    return

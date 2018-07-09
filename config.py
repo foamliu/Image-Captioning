@@ -8,7 +8,7 @@ patience = 50
 num_train_samples = 210000 * 5 / 10
 num_valid_samples = 30000 * 5 / 10
 embedding_size = 300
-vocab_size = 332647 + 3
+vocab_size = 17625
 max_token_length = 40
 num_image_features = 2048
 
@@ -27,6 +27,5 @@ test_b_image_folder = os.path.join(test_b_folder, 'caption_test_b_images_2018010
 train_annotations_filename = 'caption_train_annotations_20170902.json'
 valid_annotations_filename = 'caption_validation_annotations_20170910.json'
 
-start_word = '<START>'
-stop_word = '<EOS>'
-unknown_word = '<UNK>'
+start_word = '<start>'
+stop_word = '<end>'
