@@ -58,6 +58,8 @@ def build_samples(usage):
                 input.append(word2idx[last_word])
                 samples.append({'image_id': image_id, 'input': input, 'output': word2idx[word]})
                 last_word = word
+            input.append(word2idx[last_word])
+            samples.append({'image_id': image_id, 'input': input, 'output': word2idx[stop_word]})
 
     filename = 'data/samples_{}.p'.format(usage)
     with open(filename, 'wb') as f:
@@ -69,7 +71,7 @@ if __name__ == '__main__':
         build_train_vocab('train')
 
     if not os.path.isfile('data/samples_train.p'):
-        build_train_vocab('train')
+        build_samples('train')
 
     if not os.path.isfile('data/samples_valid.p'):
-        build_train_vocab('valid')
+        build_samples('valid')
