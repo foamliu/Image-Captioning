@@ -29,3 +29,4 @@ valid_annotations_filename = 'caption_validation_annotations_20170910.json'
 
 start_word = '<start>'
 stop_word = '<end>'
+unknown_word = '<UNK>'

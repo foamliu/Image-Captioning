@@ -5,12 +5,12 @@ import pickle
 import jieba
 from tqdm import tqdm
 
-from config import start_word, stop_word
+from config import start_word, stop_word, unknown_word
 from config import train_folder, train_annotations_filename
 from config import valid_folder, valid_annotations_filename
 
 
-def build_train_vocab(usage):
+def build_train_vocab():
     annotations_path = os.path.join(train_folder, train_annotations_filename)
 
     with open(annotations_path, 'r') as f:
@@ -27,8 +27,9 @@ def build_train_vocab(usage):
 
     vocab.add(start_word)
     vocab.add(stop_word)
+    vocab.add(unknown_word)
 
-    filename = 'data/vocab_{}.p'.format(usage)
+    filename = 'data/vocab_train.p'
     with open(filename, 'wb') as encoded_pickle:
         pickle.dump(vocab, encoded_pickle)
 
@@ -55,6 +56,8 @@ def build_samples(usage):
             input = []
             last_word = start_word
             for j, word in enumerate(seg_list):
+                if word not in vocab:
+                    word = unknown_word
                 input.append(word2idx[last_word])
                 samples.append({'image_id': image_id, 'input': input, 'output': word2idx[word]})
                 last_word = word
@@ -68,7 +71,7 @@ def build_samples(usage):
 
 if __name__ == '__main__':
     if not os.path.isfile('data/vocab_train.p'):
-        build_train_vocab('train')
+        build_train_vocab()
 
     if not os.path.isfile('data/samples_train.p'):
         build_samples('train')
