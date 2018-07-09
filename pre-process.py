@@ -44,19 +44,28 @@ def encode_images(usage):
     else:  # usage == 'test_b':
         image_folder = test_b_image_folder
 
+    batch_size = 256
     names = [f for f in os.listdir(image_folder) if f.endswith('.jpg')]
+    num_batches = int(np.ceil(len(names) / float(batch_size)))
+
     print('encoding {} images'.format(usage))
-    for i in tqdm(range(len(names))):
-        image_name = names[i]
-        filename = os.path.join(image_folder, image_name)
-        img = load_img(filename, target_size=(img_rows, img_cols))
-        img_array = img_to_array(img)
-        img_array = keras.applications.resnet50.preprocess_input(img_array)
-        image_input = np.zeros((1, img_rows, img_cols, 3))
-        image_input[0] = img_array
-        enc = image_model.predict(image_input)
-        enc = np.reshape(enc, (2048,))
-        encoding[image_name] = enc
+    for idx in tqdm(range(num_batches)):
+        i = idx * batch_size
+        length = min(batch_size, (len(names) - i))
+        image_input = np.empty((length, img_rows, img_cols, 3))
+        for i_batch in range(length):
+            image_name = names[i + i_batch]
+            filename = os.path.join(image_folder, image_name)
+            img = load_img(filename, target_size=(img_rows, img_cols))
+            img_array = img_to_array(img)
+            img_array = keras.applications.resnet50.preprocess_input(img_array)
+            image_input[i_batch] = img_array
+
+        preds = image_model.predict(image_input)
+
+        for i_batch in range(length):
+            image_name = names[i + i_batch]
+            encoding[image_name] = preds[i_batch]
 
     filename = 'data/encoded_{}_images.p'.format(usage)
     with open(filename, 'wb') as encoded_pickle:
@@ -126,29 +135,29 @@ if __name__ == '__main__':
     # parameters
     ensure_folder('data')
 
-    if not os.path.isdir(train_image_folder):
-        extract(train_folder)
+    # if not os.path.isdir(train_image_folder):
+    extract(train_folder)
 
-    if not os.path.isdir(valid_image_folder):
-        extract(valid_folder)
+    # if not os.path.isdir(valid_image_folder):
+    extract(valid_folder)
 
-    if not os.path.isdir(test_a_image_folder):
-        extract(test_a_folder)
+    # if not os.path.isdir(test_a_image_folder):
+    extract(test_a_folder)
 
-    if not os.path.isdir(test_b_image_folder):
-        extract(test_b_folder)
+    # if not os.path.isdir(test_b_image_folder):
+    extract(test_b_folder)
 
-    # if not os.path.isfile('data/encoded_train_images.p'):
-    #     encode_images('train')
+    if not os.path.isfile('data/encoded_train_images.p'):
+        encode_images('train')
 
     if not os.path.isfile('data/encoded_valid_images.p'):
         encode_images('valid')
 
-    # if not os.path.isfile('data/encoded_test_a_images.p'):
-    #     encode_images('test_a')
-    #
-    # if not os.path.isfile('data/encoded_test_b_images.p'):
-    #     encode_images('test_b')
+    if not os.path.isfile('data/encoded_test_a_images.p'):
+        encode_images('test_a')
+
+    if not os.path.isfile('data/encoded_test_b_images.p'):
+        encode_images('test_b')
 
     if not os.path.isfile('data/vocab_train.p'):
         build_train_vocab()

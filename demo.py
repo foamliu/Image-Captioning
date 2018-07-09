@@ -1,16 +1,16 @@
 # import the necessary packages
 import os
+import pickle
 import random
 
 import cv2 as cv
 import keras
 import keras.backend as K
 import numpy as np
-from keras.preprocessing.image import (load_img, img_to_array)
 from keras.preprocessing import sequence
-import utils
-from config import img_rows, img_cols, max_token_length, word2idx, start_word, stop_word, vocab_size, idx2word, \
-    test_a_image_folder
+from keras.preprocessing.image import (load_img, img_to_array)
+
+from config import img_rows, img_cols, max_token_length, start_word, stop_word, test_a_image_folder
 from model import build_model
 
 if __name__ == '__main__':
@@ -19,6 +19,10 @@ if __name__ == '__main__':
     model_weights_path = 'models/model.00-0.0885.hdf5'
     model = build_model()
     model.load_weights(model_weights_path)
+
+    vocab = pickle.load(open('data/vocab_train.p', 'rb'))
+    idx2word = sorted(vocab)
+    word2idx = dict(zip(idx2word, range(len(vocab))))
 
     print(model.summary())
 
