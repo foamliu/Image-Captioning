@@ -8,7 +8,7 @@ patience = 50
 num_train_samples = 210000 * 5 / 10
 num_valid_samples = 30000 * 5 / 10
 embedding_size = 300
-vocab_size = 17625
+vocab_size = 17627
 max_token_length = 40
 num_image_features = 2048
 

@@ -16,6 +16,7 @@ def build_train_vocab(usage):
     with open(annotations_path, 'r') as f:
         annotations = json.load(f)
 
+    print('building {} train vocab')
     vocab = set()
     for a in tqdm(annotations):
         caption = a['caption']
