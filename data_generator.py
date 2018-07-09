@@ -5,9 +5,9 @@ import os
 import jieba
 import keras
 import numpy as np
-from keras.preprocessing.image import (ImageDataGenerator, load_img, img_to_array)
+from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import Sequence
-
+import pickle
 from config import batch_size, img_rows, img_cols, max_token_length, start_word, stop_word, unknown_word
 from config import train_folder, train_annotations_filename, train_image_folder
 from config import valid_folder, valid_annotations_filename, valid_image_folder
@@ -27,6 +27,9 @@ class DataGenSequence(Sequence):
                                                  fill_mode='nearest')
 
         self.idx2word, self.word2idx = load_word_index_converts()
+
+        filename = 'encoded_{}_images.p'.format(usage)
+        self.image_encoding = pickle.load(open(filename, 'rb'))
 
         if usage == 'train':
             annotations_path = os.path.join(train_folder, train_annotations_filename)
@@ -56,18 +59,13 @@ class DataGenSequence(Sequence):
 
         length = min(batch_size, (len(self.samples) - i))
         batch_text_input = np.empty((length, max_token_length), dtype=np.int32)
-        batch_image_input = np.empty((length, img_rows, img_cols, 3), dtype=np.float32)
-        batch_y = np.empty((length, max_token_length + 1), dtype=np.int32)
+        batch_image_input = np.empty((length, 2048), dtype=np.float32)
+        batch_y = np.empty((length, 1), dtype=np.int32)
 
         for i_batch in range(length):
             sample = self.samples[i]
             image_id = sample['image_id']
-            img_path = os.path.join(self.image_folder, image_id)
-            img = load_img(img_path, target_size=(img_rows, img_cols))
-            img_array = img_to_array(img)
-            img_array = self.data_generator.random_transform(img_array)
-            img_array = keras.applications.resnet50.preprocess_input(img_array)
-            image_input = np.array(img_array[0])
+            image_input = np.array(self.image_encoding[image_id])
 
             caption = sample['caption']
             seg_list = jieba.cut(caption)

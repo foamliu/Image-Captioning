@@ -77,7 +77,14 @@ if __name__ == '__main__':
     if not os.path.isdir(test_b_image_folder):
         extract(test_b_folder)
 
-    encode_images('train')
-    encode_images('valid')
-    encode_images('test_a')
-    encode_images('test_b')
+    if not os.path.isfile('encoded_train_images.p'):
+        encode_images('train')
+
+    if not os.path.isfile('encoded_valid_images.p'):
+        encode_images('valid')
+
+    if not os.path.isfile('encoded_test_a_images.p'):
+        encode_images('test_a')
+
+    if not os.path.isfile('encoded_test_b_images.p'):
+        encode_images('test_b')

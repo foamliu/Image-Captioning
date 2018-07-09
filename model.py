@@ -1,21 +1,19 @@
 import keras.backend as K
 import tensorflow as tf
-from keras.layers import Input, Dense, LSTM, GRU, Concatenate, Embedding, RepeatVector
+from keras.layers import Input, Dense, LSTM, GRU, Concatenate, Embedding, RepeatVector, Bidirectional, TimeDistributed
 from keras.models import Model
-from keras.regularizers import l2
 from keras.utils import plot_model
 
 from config import rnn_type, hidden_size
-from config import vocab_size, embedding_size, regularizer
-from utils import load_word_embedding
+from config import vocab_size, embedding_size
 
 
 def build_model():
-    embedding_matrix = load_word_embedding()
     # word embedding
     text_input = Input(shape=[None])
-    text_embedding = Embedding(input_dim=vocab_size, output_dim=embedding_size, weights=[embedding_matrix],
-                               trainable=False)(text_input)
+    x = Embedding(input_dim=vocab_size, output_dim=embedding_size)(text_input)
+    x = LSTM(256, return_sequences=True)(x)
+    text_embedding = TimeDistributed(Dense(300))(x)
 
     # image embedding
     image_input = Input(shape=(2048,))
@@ -24,17 +22,17 @@ def build_model():
     image_embedding = RepeatVector(1)(x)
 
     # language model
-    recurrent_inputs = [image_embedding, text_embedding]
-    merged_input = Concatenate(axis=1)(recurrent_inputs)
+    x = [image_embedding, text_embedding]
+    x = Concatenate(axis=1)(x)
     if rnn_type == 'lstm':
-        recurrent_network = LSTM(hidden_size, return_sequences=False, name='recurrent_network')(merged_input)
+        x = Bidirectional(LSTM(hidden_size, return_sequences=False, name='recurrent_network'))(x)
 
     elif rnn_type == 'gru':
-        recurrent_network = GRU(hidden_size, return_sequences=False, name='recurrent_network')(merged_input)
+        x = Bidirectional(GRU(hidden_size, return_sequences=False, name='recurrent_network'))(x)
     else:
         raise Exception('Invalid rnn type')
 
-    output = Dense(vocab_size, activation='linear', name='output')(recurrent_network)
+    output = Dense(vocab_size, activation='linear', name='output')(x)
 
     inputs = [image_input, text_input]
     model = Model(inputs=inputs, outputs=output)
