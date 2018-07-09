@@ -43,7 +43,7 @@ def build_samples(usage):
         annotations = json.load(f)
 
     vocab = pickle.load(open('data/vocab_train.p', 'rb'))
-    idx2word = list(vocab)
+    idx2word = sorted(vocab)
     word2idx = dict(zip(idx2word, range(len(vocab))))
 
     print('building {} samples'.format(usage))

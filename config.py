@@ -2,7 +2,7 @@ import os
 
 img_rows, img_cols = 224, 224
 channel = 3
-batch_size = 64
+batch_size = 256
 epochs = 10000
 patience = 50
 num_train_samples = 210000 * 5 / 10
