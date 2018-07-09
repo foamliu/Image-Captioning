@@ -1,14 +1,13 @@
 # encoding=utf-8
 import json
 import os
+import pickle
 
 import jieba
-import keras
 import numpy as np
-from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import Sequence
-import pickle
-from config import batch_size, img_rows, img_cols, max_token_length, start_word, stop_word, unknown_word
+
+from config import batch_size, max_token_length, start_word, stop_word, unknown_word
 from config import train_folder, train_annotations_filename, train_image_folder
 from config import valid_folder, valid_annotations_filename, valid_image_folder
 from utils import load_word_index_converts
@@ -17,14 +16,6 @@ from utils import load_word_index_converts
 class DataGenSequence(Sequence):
     def __init__(self, usage):
         self.usage = usage
-
-        self.data_generator = ImageDataGenerator(rotation_range=40,
-                                                 width_shift_range=0.2,
-                                                 height_shift_range=0.2,
-                                                 shear_range=0.2,
-                                                 zoom_range=0.2,
-                                                 horizontal_flip=True,
-                                                 fill_mode='nearest')
 
         self.idx2word, self.word2idx = load_word_index_converts()
 
