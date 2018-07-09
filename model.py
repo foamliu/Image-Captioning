@@ -4,13 +4,13 @@ from keras.layers import Input, Dense, LSTM, Concatenate, Embedding, RepeatVecto
 from keras.models import Model
 from keras.utils import plot_model
 
-from config import hidden_size
+from config import hidden_size, max_token_length
 from config import vocab_size, embedding_size
 
 
 def build_model():
     # word embedding
-    text_input = Input(shape=[None])
+    text_input = Input(shape=(max_token_length,), dtype='int32')
     x = Embedding(input_dim=vocab_size, output_dim=embedding_size)(text_input)
     x = LSTM(256, return_sequences=True)(x)
     text_embedding = TimeDistributed(Dense(300))(x)
