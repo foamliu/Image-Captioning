@@ -59,10 +59,10 @@ def build_samples(usage):
                 if word not in vocab:
                     word = unknown_word
                 input.append(word2idx[last_word])
-                samples.append({'image_id': image_id, 'input': input, 'output': word2idx[word]})
+                samples.append({'image_id': image_id, 'input': list(input), 'output': word2idx[word]})
                 last_word = word
             input.append(word2idx[last_word])
-            samples.append({'image_id': image_id, 'input': input, 'output': word2idx[stop_word]})
+            samples.append({'image_id': image_id, 'input': list(input), 'output': word2idx[stop_word]})
 
     filename = 'data/samples_{}.p'.format(usage)
     with open(filename, 'wb') as f:
