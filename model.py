@@ -1,6 +1,5 @@
 import keras.backend as K
 import tensorflow as tf
-from keras.applications.resnet50 import ResNet50
 from keras.layers import Input, Dense, LSTM, GRU, Concatenate, Embedding, RepeatVector
 from keras.models import Model
 from keras.regularizers import l2
@@ -19,42 +18,23 @@ def build_model():
                                trainable=False)(text_input)
 
     # image embedding
-    image_model = ResNet50(include_top=False, weights='imagenet', pooling='avg')
-    image_input = image_model.input
-    for layer in image_model.layers:
-        layer.trainable = False
-    x = image_model.output
-    x = Dense(embedding_size, activation='relu')(x)
+    image_input = Input(shape=(2048,))
+    x = Dense(embedding_size, activation='relu', name='image_embedding')(image_input)
     # the image I is only input once
-    x = RepeatVector(1)(x)
-    image_embedding = Dense(units=embedding_size,
-                            kernel_regularizer=l2(regularizer),
-                            name='image_embedding')(x)
+    image_embedding = RepeatVector(1)(x)
 
     # language model
     recurrent_inputs = [image_embedding, text_embedding]
     merged_input = Concatenate(axis=1)(recurrent_inputs)
     if rnn_type == 'lstm':
-        recurrent_network = LSTM(units=hidden_size,
-                                 recurrent_regularizer=l2(regularizer),
-                                 kernel_regularizer=l2(regularizer),
-                                 bias_regularizer=l2(regularizer),
-                                 return_sequences=False,
-                                 name='recurrent_network')(merged_input)
+        recurrent_network = LSTM(hidden_size, return_sequences=False, name='recurrent_network')(merged_input)
 
     elif rnn_type == 'gru':
-        recurrent_network = GRU(units=hidden_size,
-                                recurrent_regularizer=l2(regularizer),
-                                kernel_regularizer=l2(regularizer),
-                                bias_regularizer=l2(regularizer),
-                                return_sequences=False,
-                                name='recurrent_network')(merged_input)
+        recurrent_network = GRU(hidden_size, return_sequences=False, name='recurrent_network')(merged_input)
     else:
         raise Exception('Invalid rnn type')
 
-    output = Dense(units=vocab_size,
-                   kernel_regularizer=l2(regularizer),
-                   activation='linear', name='output')(recurrent_network)
+    output = Dense(vocab_size, activation='linear', name='output')(recurrent_network)
 
     inputs = [image_input, text_input]
     model = Model(inputs=inputs, outputs=output)

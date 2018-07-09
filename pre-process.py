@@ -50,7 +50,7 @@ def encode_images(usage):
         img_array = keras.applications.resnet50.preprocess_input(img_array)
         image_input = np.zeros((1, img_rows, img_cols, 3))
         image_input[0] = img_array
-        enc = image_model(image_input)
+        enc = image_model.predict(image_input)
         enc = np.reshape(enc, enc.shape[1])
         encoding[image_name] = enc
 
@@ -62,12 +62,20 @@ if __name__ == '__main__':
     # parameters
     ensure_folder('data')
 
-    extract('data/wiki.zh')
+    if not os.path.isfile('data/wiki.zh.vec'):
+        extract('data/wiki.zh')
 
-    extract(train_folder)
-    extract(valid_folder)
-    extract(test_a_folder)
-    extract(test_b_folder)
+    if not os.path.isdir(train_image_folder):
+        extract(train_folder)
+
+    if not os.path.isdir(valid_image_folder):
+        extract(valid_folder)
+
+    if not os.path.isdir(test_a_image_folder):
+        extract(test_a_folder)
+
+    if not os.path.isdir(test_b_image_folder):
+        extract(test_b_folder)
 
     encode_images('train')
     encode_images('valid')
