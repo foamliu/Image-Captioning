@@ -37,7 +37,7 @@ def encode_images(usage):
         image_folder = valid_image_folder
     elif usage == 'test_a':
         image_folder = test_a_image_folder
-    else: # usage == 'test_b':
+    else:  # usage == 'test_b':
         image_folder = test_b_image_folder
 
     names = [f for f in os.listdir(image_folder) if f.endswith('.jpg')]
