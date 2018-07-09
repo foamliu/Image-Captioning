@@ -1,5 +1,4 @@
 import multiprocessing
-import pickle
 
 import cv2 as cv
 import tensorflow as tf
@@ -25,10 +24,3 @@ def draw_str(dst, target, s):
 
 def sparse_loss(y_true, y_pred):
     return tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y_true, logits=y_pred)
-
-
-def load_word_index_converts():
-    vocab = pickle.load(open('vocab_train.p', 'rb'))
-    idx2word = list(vocab)
-    word2idx = dict(zip(idx2word, range(len(vocab))))
-    return idx2word, word2idx

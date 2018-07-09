@@ -10,14 +10,15 @@ from keras.utils import Sequence
 from config import batch_size, max_token_length, start_word, stop_word, unknown_word
 from config import train_folder, train_annotations_filename, train_image_folder
 from config import valid_folder, valid_annotations_filename, valid_image_folder
-from utils import load_word_index_converts
 
 
 class DataGenSequence(Sequence):
     def __init__(self, usage):
         self.usage = usage
 
-        self.idx2word, self.word2idx = load_word_index_converts()
+        vocab = pickle.load(open('data/vocab_train.p', 'rb'))
+        self.idx2word = sorted(vocab)
+        self.word2idx = dict(zip(self.idx2word, range(len(vocab))))
 
         filename = 'encoded_{}_images.p'.format(usage)
         self.image_encoding = pickle.load(open(filename, 'rb'))
