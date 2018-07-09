@@ -18,9 +18,9 @@
 下载点这里：[图像中文描述数据集](https://challenger.ai/datasets/caption)，放在 data 目录下。
 
 
-## ImageNet 预训练模型
+## 网络结构
 
-下载点这里： [ResNet-152](https://drive.google.com/file/d/0Byy2AcGyEVxfeXExMzNNOHpEODg/view?usp=sharing)， 放在 models 目录下。
+ ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/net.png)
 
 ## 用法
 
