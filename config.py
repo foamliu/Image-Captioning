@@ -11,9 +11,6 @@ embedding_size = 300
 vocab_size = 17628
 max_token_length = 40
 num_image_features = 2048
-
-rnn_type = 'lstm'
-bidirectional_rnn = False
 hidden_size = 256
 
 train_folder = 'data/ai_challenger_caption_train_20170902'
