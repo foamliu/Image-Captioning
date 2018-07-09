@@ -1,7 +1,9 @@
+import json
 import os
 import pickle
 import zipfile
 
+import jieba
 import keras
 import numpy as np
 from keras.applications.resnet50 import ResNet50
@@ -9,8 +11,11 @@ from keras.preprocessing.image import (load_img, img_to_array)
 from tqdm import tqdm
 
 from config import img_rows, img_cols
+from config import start_word, stop_word, unknown_word
+from config import train_annotations_filename
 from config import train_folder, valid_folder, test_a_folder, test_b_folder
 from config import train_image_folder, valid_image_folder, test_a_image_folder, test_b_image_folder
+from config import valid_annotations_filename
 
 image_model = ResNet50(include_top=False, weights='imagenet', pooling='avg')
 
@@ -50,7 +55,7 @@ def encode_images(usage):
         image_input = np.zeros((1, img_rows, img_cols, 3))
         image_input[0] = img_array
         enc = image_model.predict(image_input)
-        enc = np.reshape(enc, enc.shape[1])
+        enc = np.reshape(enc, (2048,))
         encoding[image_name] = enc
 
     filename = 'data/encoded_{}_images.p'.format(usage)
@@ -58,12 +63,68 @@ def encode_images(usage):
         pickle.dump(encoding, encoded_pickle)
 
 
+def build_train_vocab():
+    annotations_path = os.path.join(train_folder, train_annotations_filename)
+
+    with open(annotations_path, 'r') as f:
+        annotations = json.load(f)
+
+    print('building {} train vocab')
+    vocab = set()
+    for a in tqdm(annotations):
+        caption = a['caption']
+        for c in caption:
+            seg_list = jieba.cut(c)
+            for word in seg_list:
+                vocab.add(word)
+
+    vocab.add(start_word)
+    vocab.add(stop_word)
+    vocab.add(unknown_word)
+
+    filename = 'data/vocab_train.p'
+    with open(filename, 'wb') as encoded_pickle:
+        pickle.dump(vocab, encoded_pickle)
+
+
+def build_samples(usage):
+    if usage == 'train':
+        annotations_path = os.path.join(train_folder, train_annotations_filename)
+    else:
+        annotations_path = os.path.join(valid_folder, valid_annotations_filename)
+    with open(annotations_path, 'r') as f:
+        annotations = json.load(f)
+
+    vocab = pickle.load(open('data/vocab_train.p', 'rb'))
+    idx2word = sorted(vocab)
+    word2idx = dict(zip(idx2word, range(len(vocab))))
+
+    print('building {} samples'.format(usage))
+    samples = []
+    for a in tqdm(annotations):
+        image_id = a['image_id']
+        caption = a['caption']
+        for c in caption:
+            seg_list = jieba.cut(c)
+            input = []
+            last_word = start_word
+            for j, word in enumerate(seg_list):
+                if word not in vocab:
+                    word = unknown_word
+                input.append(word2idx[last_word])
+                samples.append({'image_id': image_id, 'input': list(input), 'output': word2idx[word]})
+                last_word = word
+            input.append(word2idx[last_word])
+            samples.append({'image_id': image_id, 'input': list(input), 'output': word2idx[stop_word]})
+
+    filename = 'data/samples_{}.p'.format(usage)
+    with open(filename, 'wb') as f:
+        pickle.dump(samples, f)
+
+
 if __name__ == '__main__':
     # parameters
     ensure_folder('data')
-
-    if not os.path.isfile('data/wiki.zh.vec'):
-        extract('data/wiki.zh')
 
     if not os.path.isdir(train_image_folder):
         extract(train_folder)
@@ -77,14 +138,23 @@ if __name__ == '__main__':
     if not os.path.isdir(test_b_image_folder):
         extract(test_b_folder)
 
-    if not os.path.isfile('encoded_train_images.p'):
-        encode_images('train')
+    # if not os.path.isfile('data/encoded_train_images.p'):
+    #     encode_images('train')
 
-    if not os.path.isfile('encoded_valid_images.p'):
+    if not os.path.isfile('data/encoded_valid_images.p'):
         encode_images('valid')
 
-    if not os.path.isfile('encoded_test_a_images.p'):
-        encode_images('test_a')
+    # if not os.path.isfile('data/encoded_test_a_images.p'):
+    #     encode_images('test_a')
+    #
+    # if not os.path.isfile('data/encoded_test_b_images.p'):
+    #     encode_images('test_b')
 
-    if not os.path.isfile('encoded_test_b_images.p'):
-        encode_images('test_b')
+    if not os.path.isfile('data/vocab_train.p'):
+        build_train_vocab()
+
+    if not os.path.isfile('data/samples_train.p'):
+        build_samples('train')
+
+    if not os.path.isfile('data/samples_valid.p'):
+        build_samples('valid')
