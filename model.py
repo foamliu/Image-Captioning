@@ -4,14 +4,15 @@ from keras.layers import Input, Dense, LSTM, GRU, Concatenate, Embedding, Repeat
 from keras.models import Model
 from keras.utils import plot_model
 
-from config import rnn_type, hidden_size, max_token_length
+from config import rnn_type, hidden_size
 from config import vocab_size, embedding_size
 
 
 def build_model():
     # word embedding
-    text_input = Embedding(vocab_size, embedding_size, input_length=max_token_length)
-    x = LSTM(256, return_sequences=True)(text_input)
+    text_input = Input(shape=[None])
+    x = Embedding(input_dim=vocab_size, output_dim=embedding_size)(text_input)
+    x = LSTM(256, return_sequences=True)(x)
     text_embedding = TimeDistributed(Dense(300))(x)
 
     # image embedding
@@ -23,13 +24,7 @@ def build_model():
     # language model
     x = [image_embedding, text_embedding]
     x = Concatenate(axis=1)(x)
-    if rnn_type == 'lstm':
-        x = Bidirectional(LSTM(hidden_size, return_sequences=False, name='recurrent_network'))(x)
-
-    elif rnn_type == 'gru':
-        x = Bidirectional(GRU(hidden_size, return_sequences=False, name='recurrent_network'))(x)
-    else:
-        raise Exception('Invalid rnn type')
+    x = Bidirectional(LSTM(hidden_size, return_sequences=False))(x)
 
     output = Dense(vocab_size, activation='linear', name='output')(x)
 
