@@ -28,7 +28,6 @@ def extract(folder):
 
 
 def encode_images(usage):
-    filename = 'encoded_{}_images.p'.format(usage)
     encoding = {}
 
     if usage == 'train':
@@ -54,6 +53,7 @@ def encode_images(usage):
         enc = np.reshape(enc, enc.shape[1])
         encoding[image_name] = enc
 
+    filename = 'data/encoded_{}_images.p'.format(usage)
     with open(filename, 'wb') as encoded_pickle:
         pickle.dump(encoding, encoded_pickle)
 
