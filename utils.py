@@ -24,8 +24,7 @@ def draw_str(dst, target, s):
 
 
 def sparse_loss(y_true, y_pred):
-    return tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y_true,
-                                                          logits=y_pred)
+    return tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y_true, logits=y_pred)
 
 
 def softmax(X, theta=1.0, axis=None):

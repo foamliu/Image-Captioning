@@ -8,7 +8,7 @@ import numpy as np
 from keras.preprocessing.image import (ImageDataGenerator, load_img, img_to_array)
 from keras.utils import Sequence
 
-from config import batch_size, img_rows, img_cols, max_token_length, words, word2index, start_word, stop_word, \
+from config import batch_size, img_rows, img_cols, max_token_length, idx2word, word2idx, start_word, stop_word, \
     unknown_word
 from config import train_folder, train_annotations_filename, train_image_folder
 from config import valid_folder, valid_annotations_filename, valid_image_folder
@@ -68,20 +68,19 @@ class DataGenSequence(Sequence):
             image_input = np.array(img_array[0])
 
             caption = sample['caption']
-            c = caption[0]
-            seg_list = jieba.cut(c)
+            seg_list = jieba.cut(caption)
             text_input = np.zeros((max_token_length,), dtype=np.int32)
-            text_input[0] = word2index[start_word]
+            text_input[0] = word2idx[start_word]
             target = np.zeros((max_token_length + 1,), dtype=np.int32)
 
             for j, word in enumerate(seg_list):
-                if word not in words:
+                if word not in idx2word:
                     word = unknown_word
-                index = word2index[word]
+                index = word2idx[word]
                 target[j] = index
                 text_input[j + 1] = index
             eos_index = j + 1
-            index = word2index[stop_word]
+            index = word2idx[stop_word]
             target[eos_index] = index
             text_input[eos_index + 1] = index
 

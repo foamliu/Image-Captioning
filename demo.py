@@ -7,9 +7,9 @@ import keras
 import keras.backend as K
 import numpy as np
 from keras.preprocessing.image import (load_img, img_to_array)
-
+from keras.preprocessing import sequence
 import utils
-from config import img_rows, img_cols, max_token_length, word2index, start_word, stop_word, vocab_size, words, \
+from config import img_rows, img_cols, max_token_length, word2idx, start_word, stop_word, vocab_size, idx2word, \
     test_a_image_folder
 from model import build_model
 
@@ -37,22 +37,18 @@ if __name__ == '__main__':
         image_input = np.zeros((1, 224, 224, 3))
         image_input[0] = img_array
 
-        text_input = np.zeros((1, max_token_length), dtype=np.int32)
-        text_input[0, 0] = word2index[start_word]
-
-        sentence = []
-        for i in range(max_token_length - 2):
-            output = model.predict([image_input, text_input])
+        start_words = [start_word]
+        while True:
+            text_input = [word2idx[i] for i in start_words]
+            text_input = sequence.pad_sequences([text_input], maxlen=max_token_length, padding='post')
+            preds = model.predict([image_input, text_input])
             # print('output.shape: ' + str(output.shape))
-            p = utils.softmax(output[0, 0, :])
-            # print('p.shape: ' + str(p.shape))
-            next_index = np.random.choice(range(vocab_size), p=p)
-            if words[next_index] == stop_word:
+            word_pred = idx2word[np.argmax(preds[0])]
+            start_words.append(word_pred)
+            if word_pred == stop_word or len(start_word) > max_token_length:
                 break
-            # print(words[next_index])
-            text_input[0, i + 1] = next_index
-            sentence.append(words[next_index])
 
+        sentence = ' '.join(start_words[1:-1])
         print(sentence)
 
         if not os.path.exists('images'):

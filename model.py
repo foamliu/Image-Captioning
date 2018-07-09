@@ -37,7 +37,7 @@ def build_model():
                                  recurrent_regularizer=l2(regularizer),
                                  kernel_regularizer=l2(regularizer),
                                  bias_regularizer=l2(regularizer),
-                                 return_sequences=True,
+                                 return_sequences=False,
                                  name='recurrent_network')(merged_input)
 
     elif rnn_type == 'gru':
@@ -45,7 +45,7 @@ def build_model():
                                 recurrent_regularizer=l2(regularizer),
                                 kernel_regularizer=l2(regularizer),
                                 bias_regularizer=l2(regularizer),
-                                return_sequences=True,
+                                return_sequences=False,
                                 name='recurrent_network')(merged_input)
     else:
         raise Exception('Invalid rnn type')
