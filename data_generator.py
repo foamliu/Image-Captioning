@@ -36,23 +36,19 @@ class DataGenSequence(Sequence):
         i = idx * batch_size
 
         length = min(batch_size, (len(self.samples) - i))
-        batch_text_input = np.empty((length, max_token_length), dtype=np.int32)
         batch_image_input = np.empty((length, 2048), dtype=np.float32)
         batch_y = np.empty((length, 1), dtype=np.int32)
+        text_input = []
 
         for i_batch in range(length):
-            sample = self.samples[i]
+            sample = self.samples[i + i_batch]
             image_id = sample['image_id']
             image_input = np.array(self.image_encoding[image_id])
-
-            text_input = sequence.pad_sequences(sample['input'], maxlen=max_token_length, padding='post')
-
-            batch_text_input[i_batch] = text_input
+            text_input.append(sample['input'])
             batch_image_input[i_batch] = image_input
             batch_y[i_batch] = keras.utils.to_categorical(sample['output'], vocab_size)
 
-            i += 1
-
+        batch_text_input = sequence.pad_sequences(text_input, maxlen=max_token_length, padding='post')
         return [batch_image_input, batch_text_input], batch_y
 
     def on_epoch_end(self):
