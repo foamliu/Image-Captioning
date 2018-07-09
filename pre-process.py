@@ -62,7 +62,7 @@ if __name__ == '__main__':
     # parameters
     ensure_folder('data')
 
-    extract('wiki.zh')
+    extract('data/wiki.zh')
 
     extract(train_folder)
     extract(valid_folder)

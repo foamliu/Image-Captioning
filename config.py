@@ -1,6 +1,4 @@
-import numpy as np
 import os
-from tqdm import tqdm
 
 img_rows, img_cols = 224, 224
 channel = 3
@@ -32,24 +30,6 @@ test_b_image_folder = os.path.join(test_b_folder, 'caption_test_b_images_2018010
 train_annotations_filename = 'caption_train_annotations_20170902.json'
 valid_annotations_filename = 'caption_validation_annotations_20170910.json'
 
-print('loading word embedding...')
-from gensim.models import KeyedVectors
-
-zh_model = KeyedVectors.load_word2vec_format('data/wiki.zh.vec')
-embedding_matrix = np.zeros((vocab_size, embedding_size))
-for index, word in tqdm(enumerate(zh_model.vocab)):
-    embedding_matrix[index, :] = zh_model[word]
-vocab = zh_model.vocab
-idx2word = list(vocab.keys())
 start_word = '<START>'
 stop_word = '<EOS>'
 unknown_word = '<UNK>'
-idx2word.append(start_word)
-idx2word.append(stop_word)
-idx2word.append(unknown_word)
-word2idx = dict(zip(idx2word, range(vocab_size)))
-
-embedding_matrix[vocab_size-3] = np.random.rand(embedding_size,)
-embedding_matrix[vocab_size-2] = np.random.rand(embedding_size,)
-embedding_matrix[vocab_size-1] = np.random.rand(embedding_size,)
-

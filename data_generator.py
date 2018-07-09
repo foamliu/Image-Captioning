@@ -8,15 +8,25 @@ import numpy as np
 from keras.preprocessing.image import (ImageDataGenerator, load_img, img_to_array)
 from keras.utils import Sequence
 
-from config import batch_size, img_rows, img_cols, max_token_length, idx2word, word2idx, start_word, stop_word, \
-    unknown_word
+from config import batch_size, img_rows, img_cols, max_token_length, start_word, stop_word, unknown_word
 from config import train_folder, train_annotations_filename, train_image_folder
 from config import valid_folder, valid_annotations_filename, valid_image_folder
+from utils import load_word_index_converts
 
 
 class DataGenSequence(Sequence):
     def __init__(self, usage):
         self.usage = usage
+
+        self.data_generator = ImageDataGenerator(rotation_range=40,
+                                                 width_shift_range=0.2,
+                                                 height_shift_range=0.2,
+                                                 shear_range=0.2,
+                                                 zoom_range=0.2,
+                                                 horizontal_flip=True,
+                                                 fill_mode='nearest')
+
+        self.idx2word, self.word2idx = load_word_index_converts()
 
         if usage == 'train':
             annotations_path = os.path.join(train_folder, train_annotations_filename)
@@ -37,14 +47,6 @@ class DataGenSequence(Sequence):
 
         self.samples = samples
         np.random.shuffle(self.samples)
-
-        self.data_generator = ImageDataGenerator(rotation_range=40,
-                                                 width_shift_range=0.2,
-                                                 height_shift_range=0.2,
-                                                 shear_range=0.2,
-                                                 zoom_range=0.2,
-                                                 horizontal_flip=True,
-                                                 fill_mode='nearest')
 
     def __len__(self):
         return int(np.ceil(len(self.samples) / float(batch_size)))
@@ -70,17 +72,17 @@ class DataGenSequence(Sequence):
             caption = sample['caption']
             seg_list = jieba.cut(caption)
             text_input = np.zeros((max_token_length,), dtype=np.int32)
-            text_input[0] = word2idx[start_word]
+            text_input[0] = self.word2idx[start_word]
             target = np.zeros((max_token_length + 1,), dtype=np.int32)
 
             for j, word in enumerate(seg_list):
-                if word not in idx2word:
+                if word not in self.idx2word:
                     word = unknown_word
-                index = word2idx[word]
+                index = self.word2idx[word]
                 target[j] = index
                 text_input[j + 1] = index
             eos_index = j + 1
-            index = word2idx[stop_word]
+            index = self.word2idx[stop_word]
             target[eos_index] = index
             text_input[eos_index + 1] = index
 

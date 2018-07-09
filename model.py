@@ -7,10 +7,12 @@ from keras.regularizers import l2
 from keras.utils import plot_model
 
 from config import rnn_type, hidden_size
-from config import vocab_size, embedding_size, regularizer, embedding_matrix
+from config import vocab_size, embedding_size, regularizer
+from utils import load_word_embedding
 
 
 def build_model():
+    embedding_matrix = load_word_embedding()
     # word embedding
     text_input = Input(shape=[None])
     text_embedding = Embedding(input_dim=vocab_size, output_dim=embedding_size, weights=[embedding_matrix],
