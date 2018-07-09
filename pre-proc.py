@@ -3,7 +3,7 @@ import os
 import pickle
 
 import jieba
-import tqdm
+from tqdm import tqdm
 
 from config import train_folder, train_annotations_filename
 from config import valid_folder, valid_annotations_filename
