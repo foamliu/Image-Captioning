@@ -8,7 +8,7 @@ from keras.utils import multi_gpu_model
 from config import patience, epochs, num_train_samples, num_valid_samples, batch_size, max_token_length
 from data_generator import train_gen, valid_gen
 from model import build_model
-from utils import get_available_gpus, sparse_loss
+from utils import get_available_gpus
 
 if __name__ == '__main__':
     # Parse arguments
@@ -52,8 +52,7 @@ if __name__ == '__main__':
         if pretrained_path is not None:
             new_model.load_weights(pretrained_path)
 
-    decoder_target = tf.placeholder(dtype='int32', shape=(None, max_token_length + 1))
-    new_model.compile(optimizer='RMSprop', loss=sparse_loss, metrics=['accuracy'], target_tensors=[decoder_target])
+    new_model.compile(optimizer='RMSprop', loss='categorical_crossentropy', metrics=['accuracy'])
 
     print(new_model.summary())
 
@@ -69,5 +68,5 @@ if __name__ == '__main__':
                             verbose=1,
                             callbacks=callbacks,
                             use_multiprocessing=True,
-                            workers=8
+                            workers=4
                             )

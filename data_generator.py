@@ -1,11 +1,12 @@
 # encoding=utf-8
 import pickle
 
+import keras
 import numpy as np
 from keras.preprocessing import sequence
 from keras.utils import Sequence
 
-from config import batch_size, max_token_length
+from config import batch_size, max_token_length, vocab_size
 
 
 class DataGenSequence(Sequence):
@@ -48,7 +49,7 @@ class DataGenSequence(Sequence):
 
             batch_text_input[i_batch] = text_input
             batch_image_input[i_batch] = image_input
-            batch_y[i_batch] = sample['output']
+            batch_y[i_batch] = keras.utils.to_categorical(sample['output'], vocab_size)
 
             i += 1
 
