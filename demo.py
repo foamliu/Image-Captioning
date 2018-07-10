@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     print(model.summary())
 
-    encoded_test_a = pickle.load(open('encoded_test_a_images.p', 'rb'))
+    encoded_test_a = pickle.load(open('data/encoded_test_a_images.p', 'rb'))
 
     names = [f for f in encoded_test_a.keys()]
 
