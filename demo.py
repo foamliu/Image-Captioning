@@ -58,6 +58,6 @@ if __name__ == '__main__':
         if not os.path.exists('images'):
             os.makedirs('images')
         bgr = cv.cvtColor(img_array, cv.COLOR_RGB2BGR)
-        cv.imwrite('images/{}_image.png'.format(i), bgr)
+        cv.imwrite('images/{}_image.png'.format(i), cv.imread(filename))
 
     K.clear_session()
