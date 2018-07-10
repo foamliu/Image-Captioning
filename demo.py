@@ -4,13 +4,11 @@ import pickle
 import random
 
 import cv2 as cv
-import keras
 import keras.backend as K
 import numpy as np
 from keras.preprocessing import sequence
-from keras.preprocessing.image import (load_img, img_to_array)
 
-from config import img_rows, img_cols, max_token_length, start_word, stop_word, test_a_image_folder
+from config import max_token_length, start_word, stop_word, test_a_image_folder
 from model import build_model
 
 if __name__ == '__main__':
@@ -26,7 +24,9 @@ if __name__ == '__main__':
 
     print(model.summary())
 
-    names = [f for f in os.listdir(test_a_image_folder) if f.endswith('.jpg')]
+    encoded_test_a = pickle.load(open('encoded_test_a_images.p', 'rb'))
+
+    names = [f for f in encoded_test_a.keys()]
 
     samples = random.sample(names, 1)
 
@@ -34,12 +34,8 @@ if __name__ == '__main__':
         image_name = samples[i]
         filename = os.path.join(test_a_image_folder, image_name)
         print('Start processing image: {}'.format(filename))
-        img = load_img(filename, target_size=(img_rows, img_cols))
-        img_array = img_to_array(img)
-        print('img_array.shape: ' + str(img_array.shape))
-        img_array = keras.applications.resnet50.preprocess_input(img_array)
-        image_input = np.zeros((1, 224, 224, 3))
-        image_input[0] = img_array
+        image_input = np.zeros((1, 2048))
+        image_input[0] = encoded_test_a[image_name]
 
         start_words = [start_word]
         while True:
@@ -57,7 +53,6 @@ if __name__ == '__main__':
 
         if not os.path.exists('images'):
             os.makedirs('images')
-        bgr = cv.cvtColor(img_array, cv.COLOR_RGB2BGR)
         cv.imwrite('images/{}_image.png'.format(i), cv.imread(filename))
 
     K.clear_session()
