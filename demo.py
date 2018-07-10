@@ -8,7 +8,7 @@ import keras.backend as K
 import numpy as np
 from keras.preprocessing import sequence
 
-from config import max_token_length, start_word, stop_word, test_a_image_folder
+from config import max_token_length, start_word, stop_word, test_a_image_folder, img_rows, img_cols
 from model import build_model
 
 if __name__ == '__main__':
@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     names = [f for f in encoded_test_a.keys()]
 
-    samples = random.sample(names, 10)
+    samples = random.sample(names, 20)
 
     for i in range(len(samples)):
         image_name = samples[i]
@@ -51,8 +51,10 @@ if __name__ == '__main__':
         sentence = ' '.join(start_words[1:-1])
         print(sentence)
 
+        img = cv.imread(filename)
+        img = cv.resize(img, (img_rows, img_cols), cv.INTER_CUBIC)
         if not os.path.exists('images'):
             os.makedirs('images')
-        cv.imwrite('images/{}_image.png'.format(i), cv.imread(filename))
+        cv.imwrite('images/{}_image.png'.format(i), img)
 
     K.clear_session()
