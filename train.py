@@ -8,7 +8,7 @@ from keras.utils import multi_gpu_model
 from config import patience, epochs, num_train_samples, num_valid_samples, batch_size, max_token_length
 from data_generator import train_gen, valid_gen
 from model import build_model
-from utils import get_available_gpus
+from utils import get_available_gpus, get_available_cpus
 
 if __name__ == '__main__':
     # Parse arguments
