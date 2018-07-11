@@ -1,6 +1,6 @@
 import keras.backend as K
 import tensorflow as tf
-from keras.layers import Input, Dense, LSTM, Add, Embedding, RepeatVector, Bidirectional, TimeDistributed, \
+from keras.layers import Input, Dense, LSTM, Concatenate, Embedding, RepeatVector, Bidirectional, TimeDistributed, \
     BatchNormalization
 from keras.models import Model
 from keras.utils import plot_model
@@ -24,7 +24,7 @@ def build_model():
 
     # language model
     x = [image_embedding, text_embedding]
-    x = Add(axis=1)(x)
+    x = Concatenate(axis=1)(x)
     x = BatchNormalization(axis=-1)(x)
     x = Bidirectional(LSTM(hidden_size, return_sequences=True))(x)
     x = BatchNormalization(axis=-1)(x)
