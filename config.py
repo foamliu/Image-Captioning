@@ -1,6 +1,6 @@
 import os
 
-img_rows, img_cols = 224, 224
+img_rows, img_cols, img_size = 224, 224, 224
 channel = 3
 batch_size = 256
 epochs = 10000

@@ -4,8 +4,8 @@ from keras.layers import Input, Dense, LSTM, Concatenate, Embedding, RepeatVecto
     BatchNormalization
 from keras.models import Model
 from keras.utils import plot_model
-
-from config import hidden_size, max_token_length
+from keras.applications.resnet50 import ResNet50
+from config import hidden_size, max_token_length, img_rows, img_cols, channel
 from config import vocab_size, embedding_size
 
 
@@ -17,8 +17,12 @@ def build_model():
     text_embedding = TimeDistributed(Dense(embedding_size))(x)
 
     # image embedding
-    image_input = Input(shape=(2048,))
-    x = Dense(embedding_size, activation='relu', name='image_embedding')(image_input)
+    image_encoder = ResNet50(input_shape=(img_rows, img_cols, channel), include_top=False, weights='imagenet', pooling='None')
+    # for layer in image_encoder.layers:
+    #    layer.trainable = False
+    image_input = image_encoder.inputs
+    x = image_encoder.layers[-1].output
+    x = Dense(embedding_size, activation='elu', name='image_embedding')(x)
     # the image I is only input once
     image_embedding = RepeatVector(1)(x)
 
