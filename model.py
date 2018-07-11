@@ -1,6 +1,7 @@
 import keras.backend as K
 import tensorflow as tf
-from keras.layers import Input, Dense, LSTM, Concatenate, Embedding, RepeatVector, Bidirectional, TimeDistributed
+from keras.layers import Input, Dense, LSTM, Add, Embedding, RepeatVector, Bidirectional, TimeDistributed, \
+    BatchNormalization
 from keras.models import Model
 from keras.utils import plot_model
 
@@ -13,7 +14,7 @@ def build_model():
     text_input = Input(shape=(max_token_length,), dtype='int32')
     x = Embedding(input_dim=vocab_size, output_dim=embedding_size)(text_input)
     x = LSTM(256, return_sequences=True)(x)
-    text_embedding = TimeDistributed(Dense(300))(x)
+    text_embedding = TimeDistributed(Dense(embedding_size))(x)
 
     # image embedding
     image_input = Input(shape=(2048,))
@@ -23,10 +24,13 @@ def build_model():
 
     # language model
     x = [image_embedding, text_embedding]
-    x = Concatenate(axis=1)(x)
-    x = Bidirectional(LSTM(hidden_size, return_sequences=False))(x)
+    x = Add(axis=1)(x)
+    x = BatchNormalization(axis=-1)(x)
+    x = Bidirectional(LSTM(hidden_size, return_sequences=True))(x)
+    x = BatchNormalization(axis=-1)(x)
+    x = Bidirectional(LSTM(hidden_size, return_sequences=True))(x)
 
-    output = Dense(vocab_size, activation='softmax', name='output')(x)
+    output = TimeDistributed(Dense(vocab_size, activation='softmax', name='output'))(x)
 
     inputs = [image_input, text_input]
     model = Model(inputs=inputs, outputs=output)
