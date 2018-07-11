@@ -18,20 +18,17 @@ def build_model():
 
     # image embedding
     image_encoder = ResNet50(input_shape=(img_rows, img_cols, channel), include_top=False, weights='imagenet', pooling='avg')
-    # for layer in image_encoder.layers:
-    #    layer.trainable = False
+    for layer in image_encoder.layers:
+        layer.trainable = False
     image_input = image_encoder.layers[0].input
     x = image_encoder.layers[-1].output
-    x = Dense(embedding_size, activation='elu', name='image_embedding')(x)
+    x = Dense(embedding_size, activation='relu', name='image_embedding')(x)
     # the image I is only input once
     image_embedding = RepeatVector(1)(x)
 
     # language model
     x = [image_embedding, text_embedding]
     x = Concatenate(axis=1)(x)
-    x = BatchNormalization(axis=-1)(x)
-    x = Bidirectional(LSTM(hidden_size, return_sequences=True))(x)
-    x = BatchNormalization(axis=-1)(x)
     x = Bidirectional(LSTM(hidden_size, return_sequences=False))(x)
 
     output = Dense(vocab_size, activation='softmax', name='output')(x)

@@ -29,9 +29,6 @@ class DataGenSequence(Sequence):
         self.idx2word = sorted(vocab)
         self.word2idx = dict(zip(self.idx2word, range(len(vocab))))
 
-        # filename = 'data/encoded_{}_images.p'.format(usage)
-        # self.image_encoding = pickle.load(open(filename, 'rb'))
-
         if usage == 'train':
             samples_path = 'data/samples_train.p'
             self.image_folder = train_image_folder
