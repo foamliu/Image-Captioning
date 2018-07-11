@@ -61,6 +61,8 @@ class DataGenSequence(Sequence):
             image = cv.imread(filename)
             image = random_crop(image)
             image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+            if np.random.random_sample() > 0.5:
+                image = np.fliplr(image)
             batch_image_input[i_batch] = image
 
             text_input.append(sample['input'])
