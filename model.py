@@ -17,7 +17,7 @@ def build_model():
     text_embedding = TimeDistributed(Dense(embedding_size))(x)
 
     # image embedding
-    image_encoder = ResNet50(input_shape=(img_rows, img_cols, channel), include_top=False, weights='imagenet', pooling='None')
+    image_encoder = ResNet50(input_shape=(img_rows, img_cols, channel), include_top=False, weights='imagenet', pooling='avg')
     # for layer in image_encoder.layers:
     #    layer.trainable = False
     image_input = image_encoder.inputs
