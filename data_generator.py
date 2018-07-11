@@ -59,6 +59,7 @@ class DataGenSequence(Sequence):
             image_id = sample['image_id']
             filename = os.path.join(self.image_folder, image_id)
             image = cv.imread(filename)
+            image = cv.resize(image, (256, 256), cv.INTER_CUBIC)
             image = random_crop(image)
             image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
             if np.random.random_sample() > 0.5:
