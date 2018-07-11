@@ -20,7 +20,7 @@ def build_model():
     image_encoder = ResNet50(input_shape=(img_rows, img_cols, channel), include_top=False, weights='imagenet', pooling='avg')
     # for layer in image_encoder.layers:
     #    layer.trainable = False
-    image_input = image_encoder.inputs
+    image_input = image_encoder.layers[0].input
     x = image_encoder.layers[-1].output
     x = Dense(embedding_size, activation='elu', name='image_embedding')(x)
     # the image I is only input once
