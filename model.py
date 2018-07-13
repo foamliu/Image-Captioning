@@ -1,6 +1,6 @@
 import keras.backend as K
 import tensorflow as tf
-from keras.layers import Input, Dense, CuDNNGRU, Concatenate, Embedding, RepeatVector, TimeDistributed, Dropout
+from keras.layers import Input, Dense, GRU, Concatenate, Embedding, RepeatVector, TimeDistributed, Dropout
 from keras.models import Model
 from keras.utils import plot_model
 
@@ -12,7 +12,7 @@ def build_model():
     # word embedding
     text_input = Input(shape=(max_token_length,), dtype='int32')
     x = Embedding(input_dim=vocab_size, output_dim=embedding_size)(text_input)
-    x = CuDNNGRU(512, return_sequences=True)(x)
+    x = GRU(512, return_sequences=True, implementation=2)(x)
     x = Dropout(.5)(x)
     text_embedding = TimeDistributed(Dense(embedding_size))(x)
 
@@ -25,7 +25,7 @@ def build_model():
     # language model
     x = [image_embedding, text_embedding]
     x = Concatenate(axis=1)(x)
-    x = CuDNNGRU(512, return_sequences=False)(x)
+    x = GRU(512, return_sequences=False, implementation=2)(x)
     x = Dropout(.5)(x)
     output = Dense(vocab_size, activation='softmax', name='output')(x)
 
