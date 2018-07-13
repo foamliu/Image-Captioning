@@ -6,7 +6,7 @@ import numpy as np
 from keras.preprocessing import sequence
 from keras.utils import Sequence
 
-from config import batch_size, max_token_length, vocab_size, train_image_folder, valid_image_folder
+from config import batch_size, max_token_length, vocab_size
 
 
 class DataGenSequence(Sequence):
@@ -22,10 +22,8 @@ class DataGenSequence(Sequence):
 
         if usage == 'train':
             samples_path = 'data/samples_train.p'
-            self.image_folder = train_image_folder
         else:
             samples_path = 'data/samples_valid.p'
-            self.image_folder = valid_image_folder
 
         samples = pickle.load(open(samples_path, 'rb'))
         self.samples = samples
