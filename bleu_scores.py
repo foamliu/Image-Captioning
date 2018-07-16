@@ -38,7 +38,7 @@ if __name__ == '__main__':
     total_score = 0
     for image_name in tqdm(names):
         filename = os.path.join(test_a_image_folder, image_name)
-        print('Start processing image: {}'.format(filename))
+        # print('Start processing image: {}'.format(filename))
         image_input = np.zeros((1, 2048))
         image_input[0] = encoded_test_a[image_name]
         image_hash = int(int(hashlib.sha256(image_name.split('.')[0].encode('utf-8')).hexdigest(), 16) % sys.maxsize)
