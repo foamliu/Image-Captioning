@@ -5,7 +5,7 @@ import tensorflow as tf
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from keras.utils import multi_gpu_model
 
-from config import patience, epochs, num_train_samples, num_valid_samples, batch_size, max_token_length
+from config import patience, epochs, num_train_samples, num_valid_samples, batch_size
 from data_generator import train_gen, valid_gen
 from model import build_model
 from utils import get_available_gpus, get_available_cpus
@@ -52,7 +52,8 @@ if __name__ == '__main__':
         if pretrained_path is not None:
             new_model.load_weights(pretrained_path)
 
-    new_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    sgd = keras.optimizers.SGD(lr=1e-3, decay=1e-6, momentum=0.9, nesterov=True, clipnorm=5.)
+    new_model.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['accuracy'])
 
     print(new_model.summary())
 
