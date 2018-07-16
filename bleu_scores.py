@@ -40,7 +40,7 @@ if __name__ == '__main__':
         print('Start processing image: {}'.format(filename))
         image_input = np.zeros((1, 2048))
         image_input[0] = encoded_test_a[image_name]
-        image_hash = int(int(hashlib.sha256(image_name.encode('utf-8')).hexdigest(), 16) % sys.maxsize)
+        image_hash = int(int(hashlib.sha256(image_name.split('.')[0].encode('utf-8')).hexdigest(), 16) % sys.maxsize)
         captions = [anno['caption'].split() for anno in annotations['annotations'] if anno['image_id'] == image_hash]
         print(captions)
 
