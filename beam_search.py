@@ -88,9 +88,9 @@ if __name__ == '__main__':
         filename = os.path.join(test_a_image_folder, image_name)
         print('Start processing image: {}'.format(filename))
         img = cv.imread(filename)
-        img = cv.resize(img, (img_rows, img_cols), cv.INTER_CUBIC)
+        img = cv.resize(img, (256, 256), cv.INTER_CUBIC)
         if not os.path.exists('images'):
             os.makedirs('images')
-        cv.imwrite('images/{}_image.png'.format(i), img)
+        cv.imwrite('images/{}_bs_image.png'.format(i), img)
 
     K.clear_session()
