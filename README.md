@@ -41,7 +41,7 @@ $ tensorboard --logdir path_to_current_dir/logs
 ```
 
 ### 演示
-下载 [预训练模型](https://github.com/foamliu/Image-Captioning/releases/download/v1.0/model.85-0.7657.hdf5) 放在 models 目录，然后执行:
+下载 [预训练模型](https://github.com/foamliu/Image-Captioning/releases/download/v1.0/model.07-1.5001.hdf5) 放在 models 目录，然后执行:
 
 ```bash
 $ python demo.py
@@ -60,7 +60,14 @@ $ python demo.py
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/16_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/17_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/18_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/19_image.png) |
 |一个 穿着 短袖 的 男人 在 道路 上 骑 自行车 | 一个 右手 拿 着 话筒 的 男人 在 舞台 上 唱歌 | 两个 穿着 球衣 的 男人 在 球场上 争抢 足球 | 两个 穿着 球衣 的 男人 在 球场上 争抢 足球 |
 
-#### 光束搜索 (Beam Search)
+### 光束搜索 (Beam Search)
+下载 [预训练模型](https://github.com/foamliu/Image-Captioning/releases/download/v1.0/model.07-1.5001.hdf5) 放在 models 目录，然后执行:
+
+```bash
+$ python beam_search.py
+```
+
+
 1 | 2 |
 |---|---|
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/0_bs_image.png) | Normal Max search: 一个 戴着 墨镜 的 男人 和 一个 穿着 黑色 外套 的 女人 走 在 大厅 里 <br> Beam Search, k=3: 道路 上 两个 人 的 旁边 走 着 一个 右手 拿 着 手机 的 女人 <br> Beam Search, k=5: 大厅 里 两个 人 的 旁边 走 着 一个 右手 拿 着 手机 的 女人 <br> Beam Search, k=7: 道路 上 三个 人 的 旁边 走 着 一个 右手 拿 着 手机 的 女人 |
