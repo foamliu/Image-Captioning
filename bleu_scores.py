@@ -42,7 +42,6 @@ if __name__ == '__main__':
         image_input[0] = encoded_test_a[image_name]
         image_hash = int(int(hashlib.sha256(image_name.split('.')[0].encode('utf-8')).hexdigest(), 16) % sys.maxsize)
         captions = [anno['caption'].split() for anno in annotations['annotations'] if anno['image_id'] == image_hash]
-        print(captions)
 
         start_words = [start_word]
         while True:
@@ -56,6 +55,12 @@ if __name__ == '__main__':
 
         reference = captions
         candidate = start_words
+
+        print('reference:')
+        print(reference)
+        print('candidate:')
+        print(candidate)
+
         score = sentence_bleu(reference, candidate)
         print(score)
 
