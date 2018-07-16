@@ -35,7 +35,8 @@ if __name__ == '__main__':
 
     names = [f for f in encoded_test_a.keys()]
 
-    for image_name in tqdm(names[:5]):
+    total_score = 0
+    for image_name in tqdm(names):
         filename = os.path.join(test_a_image_folder, image_name)
         print('Start processing image: {}'.format(filename))
         image_input = np.zeros((1, 2048))
@@ -56,12 +57,15 @@ if __name__ == '__main__':
         reference = captions
         candidate = start_words
 
-        print('reference:')
-        print(reference)
-        print('candidate:')
-        print(candidate)
+        # print('reference:')
+        # print(reference)
+        # print('candidate:')
+        # print(candidate)
 
         score = sentence_bleu(reference, candidate)
-        print(score)
+        # print(score)
+        total_score += score
 
+    print('total score: ' + str(total_score))
+    print('avg: ' + str(total_score / len(names)))
     K.clear_session()
