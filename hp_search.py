@@ -57,7 +57,7 @@ def create_model():
         validation_data=DataGenSequence('valid'),
         validation_steps=num_valid_samples / batch_size // 10)
 
-    score, acc = model.evaluate(DataGenSequence('valid'), verbose=0)
+    score, acc = model.evaluate_generator(DataGenSequence('valid'), verbose=0)
     print('Test accuracy:', acc)
     return {'loss': -acc, 'status': STATUS_OK, 'model': model}
 
