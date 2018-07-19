@@ -53,9 +53,9 @@ def create_model():
 
     model.fit_generator(
         DataGenSequence('train'),
-        steps_per_epoch=num_train_samples / batch_size,
+        steps_per_epoch=num_train_samples / batch_size // 10,
         validation_data=DataGenSequence('valid'),
-        validation_steps=num_valid_samples / batch_size)
+        validation_steps=num_valid_samples / batch_size // 10)
 
     score, acc = model.evaluate(DataGenSequence('valid'), verbose=0)
     print('Test accuracy:', acc)
@@ -66,7 +66,7 @@ if __name__ == '__main__':
     best_run, best_model = optim.minimize(model=create_model,
                                           data=data,
                                           algo=tpe.suggest,
-                                          max_evals=10,
+                                          max_evals=25,
                                           trials=Trials())
 
     print("Evalutation of best performing model:")
