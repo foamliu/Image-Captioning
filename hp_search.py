@@ -17,7 +17,7 @@ def data():
     return DataGenSequence('train'), DataGenSequence('valid')
 
 
-def create_model(train_generator, validation_generator):
+def create_model():
     # word embedding
     text_input = Input(shape=(max_token_length,), dtype='int32')
     x = Embedding(input_dim=vocab_size, output_dim=embedding_size)(text_input)
@@ -52,18 +52,17 @@ def create_model(train_generator, validation_generator):
                   optimizer={{choice(['rmsprop', 'adam', 'sgd', 'nadam'])}})
 
     model.fit_generator(
-        train_generator,
+        DataGenSequence('train'),
         steps_per_epoch=num_train_samples / batch_size,
-        validation_data=validation_generator,
+        validation_data=DataGenSequence('valid'),
         validation_steps=num_valid_samples / batch_size)
 
-    score, acc = model.evaluate(validation_generator, verbose=0)
+    score, acc = model.evaluate(DataGenSequence('valid'), verbose=0)
     print('Test accuracy:', acc)
     return {'loss': -acc, 'status': STATUS_OK, 'model': model}
 
 
 if __name__ == '__main__':
-    train_generator, validation_generator = data()
     best_run, best_model = optim.minimize(model=create_model,
                                           data=data,
                                           algo=tpe.suggest,
@@ -71,6 +70,6 @@ if __name__ == '__main__':
                                           trials=Trials())
 
     print("Evalutation of best performing model:")
-    print(best_model.evaluate(validation_generator))
+    print(best_model.evaluate(DataGenSequence('valid')))
     print("Best performing model chosen hyper-parameters:")
     print(best_run)
