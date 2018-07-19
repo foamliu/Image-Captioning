@@ -36,7 +36,12 @@ def create_model(train_generator, validation_generator):
     x = [image_embedding, text_embedding]
     x = Concatenate(axis=1)(x)
     x = Dropout({{uniform(0, 1)}})(x)
-    x = CuDNNLSTM({{choice([512, 1024, 2048])}}, return_sequences=False)(x)
+    if {{choice(['three', 'four'])}} == 'four':
+        x = CuDNNLSTM({{choice([512, 1024, 2048])}}, return_sequences=False)(x)
+    else:
+        x = CuDNNLSTM(512, return_sequences=True)(x)
+        x = CuDNNLSTM(512, return_sequences=False)(x)
+
     x = Dropout({{uniform(0, 1)}})(x)
     output = Dense(vocab_size, activation='softmax', name='output')(x)
 
