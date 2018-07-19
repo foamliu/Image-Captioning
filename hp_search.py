@@ -13,10 +13,6 @@ from config import vocab_size, embedding_size
 from data_generator import train_gen, valid_gen
 
 
-def data():
-    return train_gen, valid_gen
-
-
 def create_model(train_generator, validation_generator):
     # word embedding
     text_input = Input(shape=(max_token_length,), dtype='int32')
@@ -63,9 +59,9 @@ def create_model(train_generator, validation_generator):
 
 
 if __name__ == '__main__':
-    train_generator, validation_generator = data()
+    train_generator, validation_generator = train_gen, valid_gen
     best_run, best_model = optim.minimize(model=create_model,
-                                          data=data,
+                                          data=(train_gen, valid_gen),
                                           algo=tpe.suggest,
                                           max_evals=10,
                                           trials=Trials())
