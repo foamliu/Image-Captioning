@@ -10,7 +10,11 @@ from keras.models import Model
 from config import batch_size, num_train_samples, num_valid_samples
 from config import max_token_length
 from config import vocab_size, embedding_size
-from data_generator import train_gen, valid_gen
+from data_generator import DataGenSequence
+
+
+def data():
+    return DataGenSequence('train'), DataGenSequence('valid')
 
 
 def create_model(train_generator, validation_generator):
@@ -59,9 +63,9 @@ def create_model(train_generator, validation_generator):
 
 
 if __name__ == '__main__':
-    train_generator, validation_generator = train_gen, valid_gen
+    train_generator, validation_generator = data()
     best_run, best_model = optim.minimize(model=create_model,
-                                          data=(train_gen, valid_gen),
+                                          data=data,
                                           algo=tpe.suggest,
                                           max_evals=10,
                                           trials=Trials())
