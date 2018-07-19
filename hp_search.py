@@ -70,6 +70,6 @@ if __name__ == '__main__':
                                           trials=Trials())
 
     print("Evalutation of best performing model:")
-    print(best_model.evaluate(DataGenSequence('valid')))
+    print(best_model.evaluate_generator(DataGenSequence('valid')))
     print("Best performing model chosen hyper-parameters:")
     print(best_run)
