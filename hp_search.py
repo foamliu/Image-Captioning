@@ -37,10 +37,10 @@ def create_model():
     x = Concatenate(axis=1)(x)
     x = Dropout({{uniform(0, 1)}})(x)
     if {{choice(['three', 'four'])}} == 'four':
-        x = CuDNNLSTM({{choice([512, 1024, 2048])}}, return_sequences=False)(x)
+        x = CuDNNLSTM({{choice([512, 1024])}})(x)
     else:
         x = CuDNNLSTM(512, return_sequences=True)(x)
-        x = CuDNNLSTM(512, return_sequences=False)(x)
+        x = CuDNNLSTM(512)(x)
 
     x = Dropout({{uniform(0, 1)}})(x)
     output = Dense(vocab_size, activation='softmax', name='output')(x)
