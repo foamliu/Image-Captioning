@@ -33,7 +33,7 @@ if __name__ == '__main__':
     for i in range(len(samples)):
         image_name = samples[i]
         filename = os.path.join(test_a_image_folder, image_name)
-        print('Start processing image: {}'.format(filename))
+        # print('Start processing image: {}'.format(filename))
         image_input = np.zeros((1, 2048))
         image_input[0] = encoded_test_a[image_name]
 
