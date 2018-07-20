@@ -7,7 +7,7 @@ if __name__ == '__main__':
     with open('README.template', 'r', encoding="utf-8") as file:
         template = file.readlines()
 
-    template = '\n'.join(template)
+    template = ''.join(template)
 
     for i in range(20):
         template = template.replace('[{}]'.format(i), demo[i].strip())
