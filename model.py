@@ -12,8 +12,9 @@ def build_model():
     # word embedding
     text_input = Input(shape=(max_token_length,), dtype='int32')
     x = Embedding(input_dim=vocab_size, output_dim=embedding_size)(text_input)
-    x = Dropout(.5)(x)
-    x = CuDNNLSTM(256, return_sequences=True)(x)
+    x = Dropout(0.7)(x)
+    x = CuDNNLSTM(512, return_sequences=True)(x)
+    x = Dropout(0.3)(x)
     text_embedding = TimeDistributed(Dense(embedding_size))(x)
 
     # image embedding
@@ -25,8 +26,10 @@ def build_model():
     # language model
     x = [image_embedding, text_embedding]
     x = Concatenate(axis=1)(x)
-    x = Dropout(.5)(x)
-    x = CuDNNLSTM(512, return_sequences=False)(x)
+    x = Dropout(0.2)(x)
+    x = CuDNNLSTM(512, return_sequences=True)(x)
+    x = CuDNNLSTM(512)(x)
+    x = Dropout(0.6)(x)
     output = Dense(vocab_size, activation='softmax', name='output')(x)
 
     inputs = [image_input, text_input]
