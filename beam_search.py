@@ -80,13 +80,14 @@ if __name__ == '__main__':
         image_input = np.zeros((1, 2048))
         image_input[0] = encoding_test[image_name]
 
+        filename = os.path.join(test_a_image_folder, image_name)
+        # print('Start processing image: {}'.format(filename))
+
         print('Normal Max search:', beam_search_predictions(image_name, beam_index=1))
         print('Beam Search, k=3:', beam_search_predictions(image_name, beam_index=3))
         print('Beam Search, k=5:', beam_search_predictions(image_name, beam_index=5))
         print('Beam Search, k=7:', beam_search_predictions(image_name, beam_index=7))
 
-        filename = os.path.join(test_a_image_folder, image_name)
-        print('Start processing image: {}'.format(filename))
         img = cv.imread(filename)
         img = cv.resize(img, (256, 256), cv.INTER_CUBIC)
         if not os.path.exists('images'):
