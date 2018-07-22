@@ -12,7 +12,7 @@ def build_model():
     # word embedding
     text_input = Input(shape=(max_token_length,), dtype='int32')
     x = Embedding(input_dim=vocab_size, output_dim=embedding_size)(text_input)
-    x = CuDNNLSTM(512, return_sequences=True)(x)
+    x = CuDNNLSTM(256, return_sequences=True)(x)
     text_embedding = TimeDistributed(Dense(embedding_size))(x)
 
     # image embedding
