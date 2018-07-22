@@ -25,7 +25,7 @@ def build_model():
     x = [image_embedding, text_embedding]
     x = Concatenate(axis=1)(x)
     x = CuDNNLSTM(1024, return_sequences=True, name='language_lstm_1')(x)
-    x = CuDNNLSTM(1024, name='language_lstm_2')(x)
+    x = CuDNNLSTM(512, name='language_lstm_2')(x)
     output = Dense(vocab_size, activation='softmax', name='output')(x)
 
     inputs = [image_input, text_input]
