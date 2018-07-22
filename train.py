@@ -42,7 +42,7 @@ if __name__ == '__main__':
         with tf.device("/cpu:0"):
             model = build_model()
             if pretrained_path is not None:
-                model.load_weights(pretrained_path)
+                model.load_weights(pretrained_path, by_name=True)
 
         new_model = multi_gpu_model(model, gpus=num_gpu)
         # rewrite the callback: saving through the original model and not the multi-gpu model.
