@@ -41,7 +41,7 @@ $ tensorboard --logdir path_to_current_dir/logs
 ```
 
 ### 演示
-下载 [预训练模型](https://github.com/foamliu/Image-Captioning/releases/download/v1.0/model.07-1.5001.hdf5) 放在 models 目录，然后执行:
+下载 [预训练模型](https://github.com/foamliu/Image-Captioning/releases/download/v1.0/model.04-1.3820.hdf5) 放在 models 目录，然后执行:
 
 ```bash
 $ python demo.py
@@ -61,7 +61,7 @@ $ python demo.py
 | 一个 右手 拿 着 手机 的 女人 站 在 房屋 前 | 一个 穿着 西装 的 男人 和 一个 穿着 球衣 的 男人 走 在 运动场 上 | 房间 里 有 一个 穿着 短裤 的 女人 坐在 沙发 上 | 一个 穿着 红色 上衣 的 男人 在 室内 的 垫子 上 做 俯卧撑 |
 
 ### 光束搜索 (Beam Search)
-下载 [预训练模型](https://github.com/foamliu/Image-Captioning/releases/download/v1.0/model.07-1.5001.hdf5) 放在 models 目录，然后执行:
+下载 [预训练模型](https://github.com/foamliu/Image-Captioning/releases/download/v1.0/model.04-1.3820.hdf5) 放在 models 目录，然后执行:
 
 ```bash
 $ python beam_search.py
