@@ -58,7 +58,7 @@ def beam_search_predictions(image_name, beam_index=3):
 if __name__ == '__main__':
     channel = 3
 
-    model_weights_path = 'models/model.00-1.4741.hdf5'
+    model_weights_path = 'models/model.04-1.3820.hdf5'
     model = build_model()
     model.load_weights(model_weights_path)
 
