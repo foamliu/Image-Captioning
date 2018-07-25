@@ -67,7 +67,6 @@ $ python demo.py
 $ python beam_search.py
 ```
 
-
 1 | 2 |
 |---|---|
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/0_bs_image.png) | (0) |
@@ -80,3 +79,11 @@ $ python beam_search.py
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/7_bs_image.png) | (7) |
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/8_bs_image.png) | (8) |
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/9_bs_image.png) | (9) |
+
+### 模型评估
+
+在 30000 张验证集图片上测得 BLEU-4 并求均值，得到：0.46908。
+
+```bash
+$ python bleu_scores.py
+```

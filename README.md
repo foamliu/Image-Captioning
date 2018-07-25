@@ -50,15 +50,15 @@ $ python demo.py
 1 | 2 | 3 | 4 |
 |---|---|---|---|
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/0_image.png)  | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/1_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/2_image.png)| ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/3_image.png) |
-| ﻿房间 里 有 一个 穿着 黑色 上衣 的 男人 在 给 一个 穿着 白色 上衣 的 女人 化妆 | 一个 戴着 帽子 的 人 在 白雪皑皑 的 雪地 上 滑雪 | 一个 戴着 帽子 的 男人 和 一个 戴着 墨镜 的 女人 走 在 大厅 里 | 一个 戴着 帽子 的 男人 和 一个 穿着 裙子 的 女人 在 海边 的 沙滩 上 玩耍 |
+| ﻿一群 穿着 球衣 的 人 在 运动场 上 打 排球 | 一个 右手 拿 着 话筒 的 男人 在 屋子里 唱歌 | 一个 双手 拿 着 东西 的 孩子 站 在 室外 的 台阶 上 | 一个 穿着 球衣 的 男人 在 球场上 踢足球 |
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/4_image.png)  | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/5_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/6_image.png)| ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/7_image.png) |
-| 一个 穿着 白色 上衣 的 男人 和 一个 穿着 白色 上衣 的 男人 在 房间 里 工作 | 室外 的 空地 上 有 两个 穿着 短袖 的 男人 在 干活 | 室外 的 空地 上 有 两个 穿着 短袖 的 男人 在 给 一个 穿着 红色 上衣 的 男人 递 东西 | 一个 穿着 白色 上衣 的 女人 坐在 室外 的 台阶 上 |
+| 擂台 上 有 两个 穿着 黑色 裤子 的 男人 在 打拳击 | 一个 戴着 帽子 的 男人 在 草地 上 打 高尔夫球 | 一个 穿着 红色 上衣 的 女人 蹲 在 花丛 中 | 一个 穿着 短袖 的 男人 抱 着 一个 穿着 裙子 的 女人 站 在 房间 里 |
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/8_image.png)  | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/9_image.png) |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/10_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/11_image.png)|
-| 室内 一个 人 的 前面 有 一个 戴着 眼镜 的 男人 在 下围棋 | 一个 穿着 裙子 的 女人 和 一个 穿着 黑色 裤子 的 男人 走 在 道路 上 | 两个 穿着 球衣 的 男人 在 球场上 争抢 足球 | 一个 人 的 前面 有 一个 穿着 黑色 裤子 的 男人 和 一个 穿着 黑色 裤子 的 男人 在 道路 上 交谈 |
+| 室内 有 三个 穿着 各异 的 孩子 在 做 手工 | 大 棚里 有 两个 穿着 深色 裤子 的 女人 在 摘 辣椒 | 一个 穿着 黑色 上衣 的 男人 和 一个 穿着 白色 上衣 的 男人 在 篮球场 上 交谈 | 一个 背着 双肩包 的 男人 和 一个 穿着 裙子 的 女人 走 在 山上 |
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/12_image.png)  | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/13_image.png) |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/14_image.png)| ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/15_image.png)|
-| 两个 穿着 球衣 的 男人 在 球场上 争抢 足球| 一个 穿着 裙子 的 女人 和 一个 穿着 白色 上衣 的 男人 坐在 室外 的 台阶 上 | 一个 右手 拿 着 球拍 的 女人 在 运动场 上 打网球 | 一个 穿着 运动服 的 男人 在 运动场 上 跨栏 |
+| 一个 戴着 帽子 的 女人 和 一个 戴着 帽子 的 男人 走 在 草地 上| 一个 双手 拿 着 包 的 女人 站 在 平坦 的 道路 上 | 一个 穿着 黑色 裤子 的 男人 和 一个 穿着 裙子 的 女人 站 在 舞台 上 | 一个 穿着 古装 的 男人 牵着 一个 穿着 裙子 的 女孩 走 在 道路 上 |
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/16_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/17_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/18_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/19_image.png) |
-| 一个 穿着 西装 的 男人 和 一个 穿着 球衣 的 男人 在 运动场 上 交谈 | 一个 双手 拿 着 东西 的 男人 站 在 菜地 里 | 一个 穿着 西装 的 男人 和 一个 穿着 裙子 的 女人 站 在 室内 的 展板 前 | 一个 穿着 黑色 衣服 的 男人 和 一个 穿着 白色 上衣 的 男人 在 房屋 外 的 道路 上 交谈 |
+| 一个 右手 拿 着 手机 的 女人 站 在 房屋 前 | 一个 穿着 西装 的 男人 和 一个 穿着 球衣 的 男人 走 在 运动场 上 | 房间 里 有 一个 穿着 短裤 的 女人 坐在 沙发 上 | 一个 穿着 红色 上衣 的 男人 在 室内 的 垫子 上 做 俯卧撑 |
 
 ### 光束搜索 (Beam Search)
 下载 [预训练模型](https://github.com/foamliu/Image-Captioning/releases/download/v1.0/model.07-1.5001.hdf5) 放在 models 目录，然后执行:
@@ -67,16 +67,23 @@ $ python demo.py
 $ python beam_search.py
 ```
 
-
 1 | 2 |
 |---|---|
-|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/0_bs_image.png) | Normal Max search: 一个 穿着 短袖 的 男人 在 室外 的 空地 上 逗 狗<br>Beam Search, k=3: 道路 上 有 一个 戴着 帽子 的 男人 在 逗 狗<br>Beam Search, k=5: 动物园 里 有 一个 戴着 帽子 的 男人 在 给 一只 老虎 喂 水<br>Beam Search, k=7: 道路 上 有 一个 右手 拿 着 笔 的 男人 在 写字 |
-|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/1_bs_image.png) | Normal Max search: 两个 穿着 球衣 的 男人 在 球场上 打篮球<br>Beam Search, k=3: 篮球场 上 有 两个 穿着 运动服 的 男人 在 打篮球<br>Beam Search, k=5: 篮球场 上 有 两个 穿着 运动服 的 男人 在 打篮球<br>Beam Search, k=7: 篮球场 上 有 两个 穿着 运动服 的 男人 在 打篮球 |
-|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/2_bs_image.png) | Normal Max search: 一个 穿着 黑色 衣服 的 男人 和 一个 穿着 裙子 的 女人 站 在 室内 的 桌子 旁<br>Beam Search, k=3: 房间 里 站 着 一个 双手 拿 着 东西 的 女人<br>Beam Search, k=5: 房间 里 有 一个 右手 拿 着 话筒 的 女人 在 采访 一个 双手 放在 身前 的 女人<br>Beam Search, k=7: 房间 里 有 一个 右手 拿 着 话筒 的 女人 在 采访 一个 双手 放在 身前 的 女人 |
-|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/3_bs_image.png) | Normal Max search: 球场上 有 两个 穿着 运动服 的 男人 在 打篮球<br>Beam Search, k=3: 篮球场 上 有 两个 穿着 运动服 的 男人 在 打篮球<br>Beam Search, k=5: 篮球场 上 有 两个 穿着 运动服 的 男人 在 打篮球<br>Beam Search, k=7: 篮球场 上 有 两个 穿着 不同 球衣 的 男人 在 抢球 |
-|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/4_bs_image.png) | Normal Max search: 一个 右手 拿 着 球拍 的 女人 在 运动场 上 打网球<br>Beam Search, k=3: 运动场 上 有 一个 右手 拿 着 球拍 的 女人 在 打网球<br>Beam Search, k=5: 运动场 上 有 一个 右手 拿 着 球拍 的 女人 在 打网球<br>Beam Search, k=7: 平坦 的 球场上 有 一位 右手 拿 着 球拍 的 女士 在 打网球 |
-|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/5_bs_image.png) | Normal Max search: 一个 穿着 短袖 的 男人 蹲 在 草地 上 的 一只 动物 旁边<br>Beam Search, k=3: 草地 上 蹲 着 一个 双手 拿 着 东西 的 女人<br>Beam Search, k=5: 绿油油 的 草地 上 蹲 着 一个 双手 拿 着 东西 的 孩子<br>Beam Search, k=7: 绿油油 的 草地 上 蹲 着 一个 双手 拿 着 东西 的 女孩 |
-|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/6_bs_image.png) | Normal Max search: 一个 穿着 裙子 的 女人 挽 着 一个 穿着 西装 的 男人 走 在 大厅 里<br>Beam Search, k=3: 一个 穿着 裙子 的 女人 挽 着 一个 穿着 西装 的 男人 走 在 道路 上<br>Beam Search, k=5: 大厅 里 有 一个 右手 拿 着 包 的 女人 走 在 人群 中<br>Beam Search, k=7: 大厅 里 有 一个 右手 拿 着 包 的 女人 走 在 人群 中 |
-|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/7_bs_image.png) | Normal Max search: 房间 里 有 一个 穿着 白色 上衣 的 女人 在 给 一个 躺 在 床上 的 女人 按摩<br>Beam Search, k=3: 房间 里 有 一个 右手 拿 着 笔 的 女人 在 写字<br>Beam Search, k=5: 房间 里 有 一个 右手 拿 着 笔 的 女人 在 写字<br>Beam Search, k=7: 明亮 的 房间 里 坐 着 一位 双手 拿 着 东西 的 女士 |
-|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/8_bs_image.png) | Normal Max search: 一个 右手 拿 着 手机 的 女人 走 在 大厅 里<br>Beam Search, k=3: 明亮 的 房间 里 站 着 一个 左手 拿 着 包 的 女人<br>Beam Search, k=5: 宽敞 的 大厅 里 走 着 一个 右手 拎 着 包 的 女人<br>Beam Search, k=7: 宽敞 的 大厅 里 走 着 一个 右手 拎 着 包 的 女人 |
-|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/9_bs_image.png) | Normal Max search: 一个 穿着 黑色 衣服 的 男人 和 一个 穿着 黑色 衣服 的 男人 在 运动场 上 交谈<br>Beam Search, k=3: 三个 穿着 运动服 的 男人 在 运动场 上 交谈<br>Beam Search, k=5: 大厅 里 有 一个 戴着 眼镜 的 男人 搂 着 一个 右手 拿 着 东西 的 男人<br>Beam Search, k=7: 大厅 里 三个 人 的 旁边 有 一个 右手 拿 着 话筒 的 男人 在 讲话 |
+|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/0_bs_image.png) | Normal Max search: 一个 双手 叉腰 的 女人 站 在 广告牌 前 的 地上<br>Beam Search, k=3: 广告牌 前站 着 一个 双手 放在 身前 的 女人<br>Beam Search, k=5: 发布会 的 幕布 前站 着 一个 双手 叉腰 的 女人<br>Beam Search, k=7: 明亮 的 舞台 上 站 着 一个 左手 叉腰 的 女人 |
+|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/1_bs_image.png) | Normal Max search: 一个 穿着 短袖 上衣 的 男人 在 室内 的 桌子 旁 操作电脑<br>Beam Search, k=3: 房间 里 有 一个 右手 拿 着 笔 的 女人 在 写字<br>Beam Search, k=5: 屋子里 有 一个 右手 拿 着 笔 的 男人 在 写字<br>Beam Search, k=7: 屋子里 有 一个 右手 拿 着 笔 的 男人 在 写字 |
+|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/2_bs_image.png) | Normal Max search: 冰场 上 一个 人 的 前面 有 三个 戴着 头盔 的 人 在 打 冰球<br>Beam Search, k=3: 宽敞 的 滑冰场 上 有 一群 戴着 头盔 的 人 在 打 冰球<br>Beam Search, k=5: 宽敞 的 冰面 上 有 一群 戴着 头盔 的 人 在 打 冰球<br>Beam Search, k=7: 光滑 的 滑冰场 上 有 一群 戴着 头盔 的 人 在 打 冰球 |
+|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/3_bs_image.png) | Normal Max search: 一个 穿着 比基尼 的 女人 站 在 游泳池 边 的 道路 上<br>Beam Search, k=3: 一个 穿着 比基尼 的 女人 站 在 泳池 边 的 道路 上<br>Beam Search, k=5: 一个 穿着 比基尼 的 女人 站 在 室外 的 泳池 旁<br>Beam Search, k=7: 清澈 的 泳池 边站 着 一个 穿着 比基尼 的 女人 |
+|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/4_bs_image.png) | Normal Max search: 一个 穿着 裙子 的 女人 站 在 人群 熙攘 的 大厅 里<br>Beam Search, k=3: 室外 的 红毯 上 站 着 一个 右手 拿 着 包 的 女人<br>Beam Search, k=5: 铺 着 红毯 的 道路 上 站 着 一个 右手 拿 着 包 的 女人<br>Beam Search, k=7: 铺 着 红毯 的 道路 上 站 着 一个 右手 拿 着 包 的 女人 |
+|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/5_bs_image.png) | Normal Max search: 两个 穿着 球衣 的 男人 在 球场上 踢足球<br>Beam Search, k=3: 足球场 上 有 两个 穿着 不同 球衣 的 男人 在 抢球<br>Beam Search, k=5: 碧绿 的 球场上 有 两位 穿着 球服 的 男士 在 抢 足球<br>Beam Search, k=7: 碧绿 的 球场上 有 两位 穿着 球服 的 男士 在 抢 足球 |
+|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/6_bs_image.png) | Normal Max search: 两个 穿着 球衣 的 男人 在 球场上 打篮球<br>Beam Search, k=3: 球场上 有 两个 穿着 运动服 的 男人 在 打篮球<br>Beam Search, k=5: 球场上 有 两个 穿着 运动服 的 男人 在 打篮球<br>Beam Search, k=7: 平坦 的 球场上 有 两位 穿着 球服 的 男士 在 打篮球 |
+|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/7_bs_image.png) | Normal Max search: 一个 戴着 墨镜 的 女人 站 在 室内 的 展板 前<br>Beam Search, k=3: 明亮 的 房间 里 站 着 一个 右手 拿 着 话筒 的 女人<br>Beam Search, k=5: 明亮 的 房间 里 站 着 一个 右手 拿 着 话筒 的 女人<br>Beam Search, k=7: 明亮 的 房间 里 站 着 一个 右手 拿 着 话筒 的 女人 |
+|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/8_bs_image.png) | Normal Max search: 一个 双手 拿 着 锄头 的 男人 站 在 田地 里<br>Beam Search, k=3: 大 棚里 有 一个 双手 拿 着 工具 的 男人 在 干活<br>Beam Search, k=5: 大 棚里 有 一个 双手 拿 着 工具 的 男人 在 干活<br>Beam Search, k=7: 大 棚里 有 一个 双手 拿 着 工具 的 男人 在 干活 |
+|![image](https://github.com/foamliu/Image-Captioning/raw/master/images/9_bs_image.png) | Normal Max search: 一个 戴着 帽子 的 男人 抱 着 一个 孩子 走 在 道路 上<br>Beam Search, k=3: 一个 戴着 帽子 的 男人 抱 着 一个 孩子 走 在 道路 上<br>Beam Search, k=5: 一个 戴着 帽子 的 男人 抱 着 一个 孩子 走 在 道路 上<br>Beam Search, k=7: 一个 戴着 帽子 的 男人 抱 着 一个 孩子 走 在 道路 上 |
+
+### 模型评估
+
+在 30000 张验证集图片上测得 BLEU-4 并求均值，得到：0.46908。
+
+```bash
+$ python bleu_scores.py
+```

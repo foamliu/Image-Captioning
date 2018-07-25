@@ -1,40 +1,40 @@
-Normal Max search: 一个 穿着 短袖 的 男人 在 室外 的 空地 上 逗 狗
-Beam Search, k=3: 道路 上 有 一个 戴着 帽子 的 男人 在 逗 狗
-Beam Search, k=5: 动物园 里 有 一个 戴着 帽子 的 男人 在 给 一只 老虎 喂 水
-Beam Search, k=7: 道路 上 有 一个 右手 拿 着 笔 的 男人 在 写字
-Normal Max search: 两个 穿着 球衣 的 男人 在 球场上 打篮球
-Beam Search, k=3: 篮球场 上 有 两个 穿着 运动服 的 男人 在 打篮球
-Beam Search, k=5: 篮球场 上 有 两个 穿着 运动服 的 男人 在 打篮球
-Beam Search, k=7: 篮球场 上 有 两个 穿着 运动服 的 男人 在 打篮球
-Normal Max search: 一个 穿着 黑色 衣服 的 男人 和 一个 穿着 裙子 的 女人 站 在 室内 的 桌子 旁
-Beam Search, k=3: 房间 里 站 着 一个 双手 拿 着 东西 的 女人
-Beam Search, k=5: 房间 里 有 一个 右手 拿 着 话筒 的 女人 在 采访 一个 双手 放在 身前 的 女人
-Beam Search, k=7: 房间 里 有 一个 右手 拿 着 话筒 的 女人 在 采访 一个 双手 放在 身前 的 女人
-Normal Max search: 球场上 有 两个 穿着 运动服 的 男人 在 打篮球
-Beam Search, k=3: 篮球场 上 有 两个 穿着 运动服 的 男人 在 打篮球
-Beam Search, k=5: 篮球场 上 有 两个 穿着 运动服 的 男人 在 打篮球
-Beam Search, k=7: 篮球场 上 有 两个 穿着 不同 球衣 的 男人 在 抢球
-Normal Max search: 一个 右手 拿 着 球拍 的 女人 在 运动场 上 打网球
-Beam Search, k=3: 运动场 上 有 一个 右手 拿 着 球拍 的 女人 在 打网球
-Beam Search, k=5: 运动场 上 有 一个 右手 拿 着 球拍 的 女人 在 打网球
-Beam Search, k=7: 平坦 的 球场上 有 一位 右手 拿 着 球拍 的 女士 在 打网球
-Normal Max search: 一个 穿着 短袖 的 男人 蹲 在 草地 上 的 一只 动物 旁边
-Beam Search, k=3: 草地 上 蹲 着 一个 双手 拿 着 东西 的 女人
-Beam Search, k=5: 绿油油 的 草地 上 蹲 着 一个 双手 拿 着 东西 的 孩子
-Beam Search, k=7: 绿油油 的 草地 上 蹲 着 一个 双手 拿 着 东西 的 女孩
-Normal Max search: 一个 穿着 裙子 的 女人 挽 着 一个 穿着 西装 的 男人 走 在 大厅 里
-Beam Search, k=3: 一个 穿着 裙子 的 女人 挽 着 一个 穿着 西装 的 男人 走 在 道路 上
-Beam Search, k=5: 大厅 里 有 一个 右手 拿 着 包 的 女人 走 在 人群 中
-Beam Search, k=7: 大厅 里 有 一个 右手 拿 着 包 的 女人 走 在 人群 中
-Normal Max search: 房间 里 有 一个 穿着 白色 上衣 的 女人 在 给 一个 躺 在 床上 的 女人 按摩
+Normal Max search: 一个 双手 叉腰 的 女人 站 在 广告牌 前 的 地上
+Beam Search, k=3: 广告牌 前站 着 一个 双手 放在 身前 的 女人
+Beam Search, k=5: 发布会 的 幕布 前站 着 一个 双手 叉腰 的 女人
+Beam Search, k=7: 明亮 的 舞台 上 站 着 一个 左手 叉腰 的 女人
+Normal Max search: 一个 穿着 短袖 上衣 的 男人 在 室内 的 桌子 旁 操作电脑
 Beam Search, k=3: 房间 里 有 一个 右手 拿 着 笔 的 女人 在 写字
-Beam Search, k=5: 房间 里 有 一个 右手 拿 着 笔 的 女人 在 写字
-Beam Search, k=7: 明亮 的 房间 里 坐 着 一位 双手 拿 着 东西 的 女士
-Normal Max search: 一个 右手 拿 着 手机 的 女人 走 在 大厅 里
-Beam Search, k=3: 明亮 的 房间 里 站 着 一个 左手 拿 着 包 的 女人
-Beam Search, k=5: 宽敞 的 大厅 里 走 着 一个 右手 拎 着 包 的 女人
-Beam Search, k=7: 宽敞 的 大厅 里 走 着 一个 右手 拎 着 包 的 女人
-Normal Max search: 一个 穿着 黑色 衣服 的 男人 和 一个 穿着 黑色 衣服 的 男人 在 运动场 上 交谈
-Beam Search, k=3: 三个 穿着 运动服 的 男人 在 运动场 上 交谈
-Beam Search, k=5: 大厅 里 有 一个 戴着 眼镜 的 男人 搂 着 一个 右手 拿 着 东西 的 男人
-Beam Search, k=7: 大厅 里 三个 人 的 旁边 有 一个 右手 拿 着 话筒 的 男人 在 讲话
+Beam Search, k=5: 屋子里 有 一个 右手 拿 着 笔 的 男人 在 写字
+Beam Search, k=7: 屋子里 有 一个 右手 拿 着 笔 的 男人 在 写字
+Normal Max search: 冰场 上 一个 人 的 前面 有 三个 戴着 头盔 的 人 在 打 冰球
+Beam Search, k=3: 宽敞 的 滑冰场 上 有 一群 戴着 头盔 的 人 在 打 冰球
+Beam Search, k=5: 宽敞 的 冰面 上 有 一群 戴着 头盔 的 人 在 打 冰球
+Beam Search, k=7: 光滑 的 滑冰场 上 有 一群 戴着 头盔 的 人 在 打 冰球
+Normal Max search: 一个 穿着 比基尼 的 女人 站 在 游泳池 边 的 道路 上
+Beam Search, k=3: 一个 穿着 比基尼 的 女人 站 在 泳池 边 的 道路 上
+Beam Search, k=5: 一个 穿着 比基尼 的 女人 站 在 室外 的 泳池 旁
+Beam Search, k=7: 清澈 的 泳池 边站 着 一个 穿着 比基尼 的 女人
+Normal Max search: 一个 穿着 裙子 的 女人 站 在 人群 熙攘 的 大厅 里
+Beam Search, k=3: 室外 的 红毯 上 站 着 一个 右手 拿 着 包 的 女人
+Beam Search, k=5: 铺 着 红毯 的 道路 上 站 着 一个 右手 拿 着 包 的 女人
+Beam Search, k=7: 铺 着 红毯 的 道路 上 站 着 一个 右手 拿 着 包 的 女人
+Normal Max search: 两个 穿着 球衣 的 男人 在 球场上 踢足球
+Beam Search, k=3: 足球场 上 有 两个 穿着 不同 球衣 的 男人 在 抢球
+Beam Search, k=5: 碧绿 的 球场上 有 两位 穿着 球服 的 男士 在 抢 足球
+Beam Search, k=7: 碧绿 的 球场上 有 两位 穿着 球服 的 男士 在 抢 足球
+Normal Max search: 两个 穿着 球衣 的 男人 在 球场上 打篮球
+Beam Search, k=3: 球场上 有 两个 穿着 运动服 的 男人 在 打篮球
+Beam Search, k=5: 球场上 有 两个 穿着 运动服 的 男人 在 打篮球
+Beam Search, k=7: 平坦 的 球场上 有 两位 穿着 球服 的 男士 在 打篮球
+Normal Max search: 一个 戴着 墨镜 的 女人 站 在 室内 的 展板 前
+Beam Search, k=3: 明亮 的 房间 里 站 着 一个 右手 拿 着 话筒 的 女人
+Beam Search, k=5: 明亮 的 房间 里 站 着 一个 右手 拿 着 话筒 的 女人
+Beam Search, k=7: 明亮 的 房间 里 站 着 一个 右手 拿 着 话筒 的 女人
+Normal Max search: 一个 双手 拿 着 锄头 的 男人 站 在 田地 里
+Beam Search, k=3: 大 棚里 有 一个 双手 拿 着 工具 的 男人 在 干活
+Beam Search, k=5: 大 棚里 有 一个 双手 拿 着 工具 的 男人 在 干活
+Beam Search, k=7: 大 棚里 有 一个 双手 拿 着 工具 的 男人 在 干活
+Normal Max search: 一个 戴着 帽子 的 男人 抱 着 一个 孩子 走 在 道路 上
+Beam Search, k=3: 一个 戴着 帽子 的 男人 抱 着 一个 孩子 走 在 道路 上
+Beam Search, k=5: 一个 戴着 帽子 的 男人 抱 着 一个 孩子 走 在 道路 上
+Beam Search, k=7: 一个 戴着 帽子 的 男人 抱 着 一个 孩子 走 在 道路 上
