@@ -11,9 +11,8 @@ from keras.layers import Input, CuDNNLSTM, Concatenate, Embedding, RepeatVector,
 from keras.layers.core import Dense, Dropout
 from keras.models import Model
 
-from config import batch_size, num_train_samples, num_valid_samples
-from config import max_token_length
-from config import vocab_size, embedding_size
+from config import batch_size, num_train_samples, num_valid_samples, max_token_length, vocab_size, embedding_size, \
+    best_model
 from data_generator import DataGenSequence
 
 
