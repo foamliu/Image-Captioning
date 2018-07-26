@@ -29,3 +29,5 @@ test_b_annotations_filename = 'caption_test_b_annotations_20180103.json'
 start_word = '<start>'
 stop_word = '<end>'
 unknown_word = '<UNK>'
+
+best_model = 'model.04-1.3820.hdf5'

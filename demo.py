@@ -8,13 +8,13 @@ import keras.backend as K
 import numpy as np
 from keras.preprocessing import sequence
 
-from config import max_token_length, start_word, stop_word, test_a_image_folder, img_rows, img_cols
+from config import max_token_length, start_word, stop_word, test_a_image_folder, img_rows, img_cols, best_model
 from model import build_model
 
 if __name__ == '__main__':
     channel = 3
 
-    model_weights_path = 'models/model.04-1.3820.hdf5'
+    model_weights_path = os.path.join('models', best_model)
     model = build_model()
     model.load_weights(model_weights_path)
 

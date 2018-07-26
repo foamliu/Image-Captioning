@@ -12,14 +12,14 @@ from nltk.translate.bleu_score import sentence_bleu
 from tqdm import tqdm
 
 from config import max_token_length, start_word, stop_word, test_a_image_folder, test_a_folder, \
-    test_a_annotations_filename
+    test_a_annotations_filename, best_model
 from model import build_model
 
 if __name__ == '__main__':
     channel = 3
 
-    model_weights_path = 'models/model.04-1.3820.hdf5'
     model = build_model()
+    model_weights_path = os.path.join('models', best_model)
     model.load_weights(model_weights_path)
 
     vocab = pickle.load(open('data/vocab_train.p', 'rb'))

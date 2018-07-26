@@ -8,7 +8,7 @@ import keras.backend as K
 import numpy as np
 from keras.preprocessing import sequence
 
-from config import max_token_length, test_a_image_folder
+from config import max_token_length, test_a_image_folder, best_model
 from model import build_model
 
 
@@ -58,7 +58,7 @@ def beam_search_predictions(image_name, beam_index=3):
 if __name__ == '__main__':
     channel = 3
 
-    model_weights_path = 'models/model.04-1.3820.hdf5'
+    model_weights_path = os.path.join('models', best_model)
     model = build_model()
     model.load_weights(model_weights_path)
 

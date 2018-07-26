@@ -1,7 +1,11 @@
 from __future__ import print_function
 
+import os
+
+import keras
+import keras.backend as K
 from hyperas import optim
-from hyperas.distributions import choice, uniform
+from hyperas.distributions import uniform
 from hyperopt import Trials, STATUS_OK, tpe
 from keras.layers import Input, CuDNNLSTM, Concatenate, Embedding, RepeatVector, TimeDistributed
 from keras.layers.core import Dense, Dropout
@@ -21,9 +25,7 @@ def create_model():
     # word embedding
     text_input = Input(shape=(max_token_length,), dtype='int32')
     x = Embedding(input_dim=vocab_size, output_dim=embedding_size)(text_input)
-    x = Dropout({{uniform(0, 1)}})(x)
-    x = CuDNNLSTM({{choice([256, 512, 1024])}}, return_sequences=True)(x)
-    x = Dropout({{uniform(0, 1)}})(x)
+    x = CuDNNLSTM(256, return_sequences=True)(x)
     text_embedding = TimeDistributed(Dense(embedding_size))(x)
 
     # image embedding
@@ -36,20 +38,19 @@ def create_model():
     x = [image_embedding, text_embedding]
     x = Concatenate(axis=1)(x)
     x = Dropout({{uniform(0, 1)}})(x)
-    if {{choice(['three', 'four'])}} == 'four':
-        x = CuDNNLSTM({{choice([512, 1024])}})(x)
-    else:
-        x = CuDNNLSTM(512, return_sequences=True)(x)
-        x = CuDNNLSTM(512)(x)
-
+    x = CuDNNLSTM(1024, return_sequences=True, name='language_lstm_1')(x)
+    x = Dropout({{uniform(0, 1)}})(x)
+    x = CuDNNLSTM(1024, name='language_lstm_2')(x)
     x = Dropout({{uniform(0, 1)}})(x)
     output = Dense(vocab_size, activation='softmax', name='output')(x)
 
     inputs = [image_input, text_input]
     model = Model(inputs=inputs, outputs=output)
+    model_weights_path = os.path.join('models', best_model)
+    model.load_weights(model_weights_path)
 
-    model.compile(loss='categorical_crossentropy', metrics=['accuracy'],
-                  optimizer={{choice(['rmsprop', 'adam', 'sgd', 'nadam'])}})
+    adam = keras.optimizers.Adam(lr=1e-4)
+    model.compile(loss='categorical_crossentropy', metrics=['accuracy'], optimizer=adam)
 
     model.fit_generator(
         DataGenSequence('train'),
@@ -59,6 +60,7 @@ def create_model():
 
     score, acc = model.evaluate_generator(DataGenSequence('valid'), verbose=0)
     print('Test accuracy:', acc)
+    K.clear_session()
     return {'loss': -acc, 'status': STATUS_OK, 'model': model}
 
 
