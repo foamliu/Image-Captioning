@@ -67,7 +67,7 @@ if __name__ == '__main__':
     best_run, best_model = optim.minimize(model=create_model,
                                           data=data,
                                           algo=tpe.suggest,
-                                          max_evals=25,
+                                          max_evals=15,
                                           trials=Trials())
 
     print("Evalutation of best performing model:")
