@@ -1,10 +1,11 @@
 from __future__ import print_function
 
 import os
+from math import log
 
 import keras
-import keras.backend as K
 from hyperas import optim
+from hyperas.distributions import loguniform
 from hyperas.distributions import uniform
 from hyperopt import Trials, STATUS_OK, tpe
 from keras.layers import Input, CuDNNLSTM, Concatenate, Embedding, RepeatVector, TimeDistributed
@@ -48,7 +49,7 @@ def create_model():
     model_weights_path = os.path.join('models', best_model)
     model.load_weights(model_weights_path)
 
-    adam = keras.optimizers.Adam(lr=1e-4)
+    adam = keras.optimizers.Adam(lr={{loguniform(log(1e-6), log(1e-3))}})
     model.compile(loss='categorical_crossentropy', metrics=['accuracy'], optimizer=adam)
 
     model.fit_generator(
