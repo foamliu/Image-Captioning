@@ -59,7 +59,6 @@ def create_model():
 
     score, acc = model.evaluate_generator(DataGenSequence('valid'), verbose=0)
     print('Test accuracy:', acc)
-    K.clear_session()
     return {'loss': -acc, 'status': STATUS_OK, 'model': model}
 
 
@@ -67,7 +66,7 @@ if __name__ == '__main__':
     best_run, best_model = optim.minimize(model=create_model,
                                           data=data,
                                           algo=tpe.suggest,
-                                          max_evals=15,
+                                          max_evals=10,
                                           trials=Trials())
 
     print("Evalutation of best performing model:")
