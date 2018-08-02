@@ -86,7 +86,7 @@ if __name__ == '__main__':
         print('Normal Max search:', beam_search_predictions(image_name, beam_index=1))
         print('Beam Search, k=3:', beam_search_predictions(image_name, beam_index=3))
         print('Beam Search, k=5:', beam_search_predictions(image_name, beam_index=5))
-        print('Beam Search, k=7:', beam_search_predictions(image_name, beam_index=7))
+        print('Beam Search, k=20:', beam_search_predictions(image_name, beam_index=20))
 
         img = cv.imread(filename)
         img = cv.resize(img, (256, 256), cv.INTER_CUBIC)
