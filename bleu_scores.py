@@ -7,14 +7,13 @@ import sys
 
 import keras.backend as K
 import numpy as np
-from keras.preprocessing import sequence
 from nltk.translate.bleu_score import sentence_bleu
 from tqdm import tqdm
 
-from config import max_token_length, start_word, stop_word, test_a_image_folder, test_a_folder, \
+from beam_search import beam_search_predictions
+from config import test_a_image_folder, test_a_folder, \
     test_a_annotations_filename, best_model
 from model import build_model
-from beam_search import beam_search_predictions
 
 if __name__ == '__main__':
     channel = 3
@@ -35,6 +34,7 @@ if __name__ == '__main__':
     encoded_test_a = pickle.load(open('data/encoded_test_a_images.p', 'rb'))
 
     names = [f for f in encoded_test_a.keys()]
+    names = names[:len(names) // 10]
 
     total_score = 0
     for image_name in tqdm(names):
