@@ -14,6 +14,7 @@ from tqdm import tqdm
 from config import max_token_length, start_word, stop_word, test_a_image_folder, test_a_folder, \
     test_a_annotations_filename, best_model
 from model import build_model
+from beam_search import beam_search_predictions
 
 if __name__ == '__main__':
     channel = 3
@@ -44,18 +45,19 @@ if __name__ == '__main__':
         image_hash = int(int(hashlib.sha256(image_name.split('.')[0].encode('utf-8')).hexdigest(), 16) % sys.maxsize)
         captions = [anno['caption'].split() for anno in annotations['annotations'] if anno['image_id'] == image_hash]
 
-        start_words = [start_word]
-        while True:
-            text_input = [word2idx[i] for i in start_words]
-            text_input = sequence.pad_sequences([text_input], maxlen=max_token_length, padding='post')
-            preds = model.predict([image_input, text_input])
-            word_pred = idx2word[np.argmax(preds[0])]
-            if word_pred == stop_word or len(start_word) >= max_token_length:
-                break
-            start_words.append(word_pred)
+        # start_words = [start_word]
+        # while True:
+        #     text_input = [word2idx[i] for i in start_words]
+        #     text_input = sequence.pad_sequences([text_input], maxlen=max_token_length, padding='post')
+        #     preds = model.predict([image_input, text_input])
+        #     word_pred = idx2word[np.argmax(preds[0])]
+        #     if word_pred == stop_word or len(start_word) >= max_token_length:
+        #         break
+        #     start_words.append(word_pred)
 
         reference = captions
-        candidate = start_words
+        # candidate = start_words
+        candidate = beam_search_predictions(image_name, beam_index=20)
 
         # print('reference:')
         # print(reference)
