@@ -12,9 +12,8 @@ from config import max_token_length, test_a_image_folder, best_model
 from model import build_model
 
 
-def beam_search_predictions(image_name, beam_index=3):
+def beam_search_predictions(model, image_name, word2idx, encoding_test, beam_index=3):
     start = [word2idx["<start>"]]
-
     start_word = [[start, 0.0]]
 
     while len(start_word[0][0]) < max_token_length:
@@ -62,11 +61,11 @@ if __name__ == '__main__':
     model = build_model()
     model.load_weights(model_weights_path)
 
+    print(model.summary())
+
     vocab = pickle.load(open('data/vocab_train.p', 'rb'))
     idx2word = sorted(vocab)
     word2idx = dict(zip(idx2word, range(len(vocab))))
-
-    print(model.summary())
 
     encoding_test = pickle.load(open('data/encoded_test_a_images.p', 'rb'))
 
@@ -83,10 +82,10 @@ if __name__ == '__main__':
         filename = os.path.join(test_a_image_folder, image_name)
         # print('Start processing image: {}'.format(filename))
 
-        print('Normal Max search:', beam_search_predictions(image_name, beam_index=1))
-        print('Beam Search, k=3:', beam_search_predictions(image_name, beam_index=3))
-        print('Beam Search, k=5:', beam_search_predictions(image_name, beam_index=5))
-        print('Beam Search, k=20:', beam_search_predictions(image_name, beam_index=20))
+        print('Normal Max search:', beam_search_predictions(model, image_name, word2idx, encoding_test, beam_index=1))
+        print('Beam Search, k=3:', beam_search_predictions(model, image_name, word2idx, encoding_test, beam_index=3))
+        print('Beam Search, k=5:', beam_search_predictions(model, image_name, word2idx, encoding_test, beam_index=5))
+        print('Beam Search, k=20:', beam_search_predictions(model, image_name, word2idx, encoding_test, beam_index=20))
 
         img = cv.imread(filename)
         img = cv.resize(img, (256, 256), cv.INTER_CUBIC)
