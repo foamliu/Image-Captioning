@@ -12,7 +12,7 @@ from config import max_token_length, test_a_image_folder, best_model
 from model import build_model
 
 
-def beam_search_predictions(model, image_name, word2idx, encoding_test, beam_index=3):
+def beam_search_predictions(model, image_name, word2idx, idx2word, encoding_test, beam_index=3):
     start = [word2idx["<start>"]]
     start_word = [[start, 0.0]]
 
