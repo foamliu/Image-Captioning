@@ -82,7 +82,7 @@ $ python beam_search.py
 
 ### 模型评估
 
-在 30000 张验证集图片上测得 BLEU-4 并求均值，得到：0.46908。
+在 30000 张验证集图片上测得 BLEU-4 并求均值，得到：0.47094。
 
 ```bash
 $ python bleu_scores.py
