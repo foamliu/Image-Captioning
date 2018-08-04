@@ -1,6 +1,7 @@
 # import the necessary packages
 import hashlib
 import json
+import multiprocessing as mp
 import os
 import pickle
 import queue
@@ -9,14 +10,22 @@ from multiprocessing import Process
 from multiprocessing import Queue
 
 import numpy as np
+from tqdm import tqdm
+
+
+def listener(q):
+    pbar = tqdm(total=3000)
+    for item in iter(q.get, None):
+        pbar.update()
 
 
 class InferenceWorker(Process):
-    def __init__(self, gpuid, in_queue, out_queue):
+    def __init__(self, gpuid, in_queue, out_queue, q):
         Process.__init__(self, name='ImageProcessor')
         self._gpuid = gpuid
         self.in_queue = in_queue
         self.out_queue = out_queue
+        self.q = q
 
     def run(self):
         from nltk.translate.bleu_score import sentence_bleu
@@ -59,13 +68,16 @@ class InferenceWorker(Process):
             print('woker', self._gpuid, ' image_name ', image_name, " predicted as candidate", candidate)
             print('score: {}, remaining tasks: {} '.format(score, self.in_queue.qsize()))
 
-        import keras.backend as K
-        K.clear_session()
+        # import keras.backend as K
+        # K.clear_session()
+        SENTINEL = 1
+        self.q.put(SENTINEL)
         print('InferenceWorker done ', self._gpuid)
 
 
 class Scheduler:
-    def __init__(self, gpuids):
+    def __init__(self, gpuids, q):
+        self.q = q
         self.in_queue = Queue()
         self.out_queue = Queue()
         self._gpuids = gpuids
@@ -75,7 +87,7 @@ class Scheduler:
     def __init_workers(self):
         self._workers = list()
         for gpuid in self._gpuids:
-            self._workers.append(InferenceWorker(gpuid, self.in_queue, self.out_queue))
+            self._workers.append(InferenceWorker(gpuid, self.in_queue, self.out_queue, self.q))
 
     def start(self, names):
         # put all of image names into queue
@@ -93,7 +105,7 @@ class Scheduler:
         return self.out_queue
 
 
-def run(gpuids):
+def run(gpuids, q):
     # scan all files under img_path
     encoded_test_a = pickle.load(open('data/encoded_test_a_images.p', 'rb'))
 
@@ -101,7 +113,7 @@ def run(gpuids):
     names = names[:len(names) // 10]
 
     # init scheduler
-    x = Scheduler(gpuids)
+    x = Scheduler(gpuids, q)
 
     # start processing and wait for complete
     return x.start(names)
@@ -111,7 +123,11 @@ if __name__ == "__main__":
     gpuids = ['/device:GPU:0', '/device:GPU:1', '/device:GPU:2', '/device:GPU:3']
     print(gpuids)
 
-    out_queue = run(gpuids)
+    q = mp.Queue()
+    proc = mp.Process(target=listener, args=(q,))
+    proc.start()
+
+    out_queue = run(gpuids, q)
     out_list = []
     while out_queue.qsize() > 0:
         out_list.append(out_queue.get())
@@ -120,3 +136,6 @@ if __name__ == "__main__":
     print('total score: ' + str(np.sum(out_list)))
     if len(out_list) > 0:
         print('avg: ' + str(np.mean(out_list)))
+
+    q.put(None)
+    proc.join()
