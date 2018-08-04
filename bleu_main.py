@@ -8,14 +8,7 @@ import sys
 from multiprocessing import Process
 from multiprocessing import Queue
 
-import keras.backend as K
 import numpy as np
-from nltk.translate.bleu_score import sentence_bleu
-
-from beam_search import beam_search_predictions
-from config import best_model, test_a_folder, test_a_annotations_filename
-from model import build_model
-from utils import get_available_gpus
 
 
 class InferenceWorker(Process):
@@ -26,7 +19,11 @@ class InferenceWorker(Process):
         self.out_queue = out_queue
 
     def run(self):
+        from nltk.translate.bleu_score import sentence_bleu
 
+        from beam_search import beam_search_predictions
+        from config import best_model, test_a_folder, test_a_annotations_filename
+        from model import build_model
         # set enviornment
         os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
         os.environ["CUDA_VISIBLE_DEVICES"] = str(self._gpuid)
@@ -62,6 +59,7 @@ class InferenceWorker(Process):
             print('woker', self._gpuid, ' image_name ', image_name, " predicted as candidate", candidate)
             print('score: {}, remaining tasks: {} '.format(score, self.in_queue.qsize()))
 
+        import keras.backend as K
         K.clear_session()
         print('InferenceWorker done ', self._gpuid)
 
@@ -110,7 +108,7 @@ def run(gpuids):
 
 
 if __name__ == "__main__":
-    gpuids = range(len(get_available_gpus()))
+    gpuids = range(4)
     print(gpuids)
 
     out_queue = run(gpuids)
