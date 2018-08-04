@@ -12,6 +12,8 @@ from multiprocessing import Queue
 import numpy as np
 from tqdm import tqdm
 
+SENTINEL = 1
+
 
 def listener(q):
     pbar = tqdm(total=3000)
@@ -20,17 +22,19 @@ def listener(q):
 
 
 class InferenceWorker(Process):
-    def __init__(self, gpuid, in_queue, out_queue, q):
-        Process.__init__(self, name='ImageProcessor')
-        self._gpuid = gpuid
-        self.in_queue = in_queue
-        self.out_queue = out_queue
-        self.q = q
-
-    def run(self):
+    def __init__(self, gpuid, in_queue, out_queue, signal_queue):
         # set enviornment
         os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-        os.environ["CUDA_VISIBLE_DEVICES"] = str(self._gpuid)
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(gpuid)
+
+        Process.__init__(self, name='ImageProcessor')
+        print("InferenceWorker init, GPU ID: {}".format(gpuid))
+
+        self.in_queue = in_queue
+        self.out_queue = out_queue
+        self.signal_queue = signal_queue
+
+    def run(self):
 
         from nltk.translate.bleu_score import sentence_bleu
 
@@ -68,17 +72,17 @@ class InferenceWorker(Process):
             self.out_queue.put(score)
             # print('woker', self._gpuid, ' image_name ', image_name, " predicted as candidate", candidate)
             # print('score: {}, remaining tasks: {} '.format(score, self.in_queue.qsize()))
-            SENTINEL = 1
-            self.q.put(SENTINEL)
+
+            self.signal_queue.put(SENTINEL)
 
         # import keras.backend as K
         # K.clear_session()
-        print('InferenceWorker done ', self._gpuid)
+        print('InferenceWorker done ')
 
 
 class Scheduler:
-    def __init__(self, gpuids, q):
-        self.q = q
+    def __init__(self, gpuids, signal_queue):
+        self.signal_queue = signal_queue
         self.in_queue = Queue()
         self.out_queue = Queue()
         self._gpuids = gpuids
@@ -88,7 +92,7 @@ class Scheduler:
     def __init_workers(self):
         self._workers = list()
         for gpuid in self._gpuids:
-            self._workers.append(InferenceWorker(gpuid, self.in_queue, self.out_queue, self.q))
+            self._workers.append(InferenceWorker(gpuid, self.in_queue, self.out_queue, self.signal_queue))
 
     def start(self, names):
         # put all of image names into queue
