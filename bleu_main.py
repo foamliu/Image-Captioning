@@ -28,14 +28,15 @@ class InferenceWorker(Process):
         self.q = q
 
     def run(self):
+        # set enviornment
+        os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(self._gpuid)
+
         from nltk.translate.bleu_score import sentence_bleu
 
         from beam_search import beam_search_predictions
         from config import best_model, test_a_folder, test_a_annotations_filename
         from model import build_model
-        # set enviornment
-        os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-        os.environ["CUDA_VISIBLE_DEVICES"] = str(self._gpuid)
 
         # load models
         model = build_model()
@@ -120,7 +121,8 @@ def run(gpuids, q):
 
 
 if __name__ == "__main__":
-    gpuids = ['/device:GPU:0', '/device:GPU:1', '/device:GPU:2', '/device:GPU:3']
+    # gpuids = ['/device:GPU:0', '/device:GPU:1', '/device:GPU:2', '/device:GPU:3']
+    gpuids = [0, 1, 2, 3]
     print(gpuids)
 
     q = mp.Queue()
