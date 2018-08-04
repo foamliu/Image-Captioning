@@ -120,4 +120,5 @@ if __name__ == "__main__":
 
     print('item number: ' + str(len(out_list)))
     print('total score: ' + str(np.sum(out_list)))
-    print('avg: ' + str(np.mean(out_list)))
+    if len(out_list) > 0:
+        print('avg: ' + str(np.mean(out_list)))
