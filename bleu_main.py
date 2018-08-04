@@ -12,23 +12,10 @@ from multiprocessing import Queue
 import numpy as np
 from tqdm import tqdm
 
-SENTINEL = 1
-
-
-def listener(q):
-    pbar = tqdm(total=3000)
-    for item in iter(q.get, None):
-        pbar.update()
-
 
 class InferenceWorker(Process):
     def __init__(self, gpuid, in_queue, out_queue, signal_queue):
-        # set enviornment
-        os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-        os.environ["CUDA_VISIBLE_DEVICES"] = str(gpuid)
-
         Process.__init__(self, name='ImageProcessor')
-        print("InferenceWorker init, GPU ID: {}".format(gpuid))
 
         self.gpuid = gpuid
         self.in_queue = in_queue
@@ -36,47 +23,50 @@ class InferenceWorker(Process):
         self.signal_queue = signal_queue
 
     def run(self):
-        import tensorflow as tf
-        with tf.device(self.gpuid):
-            from nltk.translate.bleu_score import sentence_bleu
+        # set enviornment
+        os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(self.gpuid)
+        print("InferenceWorker init, GPU ID: {}".format(self.gpuid))
 
-            from beam_search import beam_search_predictions
-            from config import best_model, test_a_folder, test_a_annotations_filename
-            from model import build_model
+        from nltk.translate.bleu_score import sentence_bleu
 
-            # load models
-            model = build_model()
-            model_weights_path = os.path.join('models', best_model)
-            model.load_weights(model_weights_path)
+        from beam_search import beam_search_predictions
+        from config import best_model, test_a_folder, test_a_annotations_filename
+        from model import build_model
 
-            vocab = pickle.load(open('data/vocab_train.p', 'rb'))
-            idx2word = sorted(vocab)
-            word2idx = dict(zip(idx2word, range(len(vocab))))
+        # load models
+        model = build_model()
+        model_weights_path = os.path.join('models', best_model)
+        model.load_weights(model_weights_path)
 
-            encoded_test_a = pickle.load(open('data/encoded_test_a_images.p', 'rb'))
+        vocab = pickle.load(open('data/vocab_train.p', 'rb'))
+        idx2word = sorted(vocab)
+        word2idx = dict(zip(idx2word, range(len(vocab))))
 
-            annotations_path = os.path.join(test_a_folder, test_a_annotations_filename)
+        encoded_test_a = pickle.load(open('data/encoded_test_a_images.p', 'rb'))
 
-            with open(annotations_path, 'r') as f:
-                annotations = json.load(f)
+        annotations_path = os.path.join(test_a_folder, test_a_annotations_filename)
 
-            while True:
-                try:
-                    image_name = self.in_queue.get(block=False)
-                except queue.Empty:
-                    break
-                candidate = beam_search_predictions(model, image_name, word2idx, idx2word, encoded_test_a,
-                                                    beam_index=100)
-                image_hash = int(
-                    int(hashlib.sha256(image_name.split('.')[0].encode('utf-8')).hexdigest(), 16) % sys.maxsize)
-                reference = [anno['caption'].split() for anno in annotations['annotations'] if
-                             anno['image_id'] == image_hash]
-                score = sentence_bleu(reference, candidate)
-                self.out_queue.put(score)
-                # print('woker', self._gpuid, ' image_name ', image_name, " predicted as candidate", candidate)
-                # print('score: {}, remaining tasks: {} '.format(score, self.in_queue.qsize()))
+        with open(annotations_path, 'r') as f:
+            annotations = json.load(f)
 
-                self.signal_queue.put(SENTINEL)
+        while True:
+            try:
+                image_name = self.in_queue.get(block=False)
+            except queue.Empty:
+                break
+            candidate = beam_search_predictions(model, image_name, word2idx, idx2word, encoded_test_a,
+                                                beam_index=100)
+            image_hash = int(
+                int(hashlib.sha256(image_name.split('.')[0].encode('utf-8')).hexdigest(), 16) % sys.maxsize)
+            reference = [anno['caption'].split() for anno in annotations['annotations'] if
+                         anno['image_id'] == image_hash]
+            score = sentence_bleu(reference, candidate)
+            self.out_queue.put(score)
+            # print('woker', self._gpuid, ' image_name ', image_name, " predicted as candidate", candidate)
+            # print('score: {}, remaining tasks: {} '.format(score, self.in_queue.qsize()))
+
+            self.signal_queue.put(SENTINEL)
 
         import keras.backend as K
         K.clear_session()
@@ -127,9 +117,17 @@ def run(gpuids, q):
     return x.start(names)
 
 
+SENTINEL = 1
+
+
+def listener(q):
+    pbar = tqdm(total=3000)
+    for item in iter(q.get, None):
+        pbar.update()
+
+
 if __name__ == "__main__":
-    gpuids = ['/device:GPU:0', '/device:GPU:1', '/device:GPU:2', '/device:GPU:3']
-    # gpuids = [0, 1, 2, 3]
+    gpuids = ['0', '1', '2', '3']
     print(gpuids)
 
     q = mp.Queue()
