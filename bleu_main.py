@@ -108,7 +108,7 @@ def run(gpuids):
 
 
 if __name__ == "__main__":
-    gpuids = range(4)
+    gpuids = ['/device:GPU:0', '/device:GPU:1', '/device:GPU:2', '/device:GPU:3']
     print(gpuids)
 
     out_queue = run(gpuids)
