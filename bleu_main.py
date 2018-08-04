@@ -65,13 +65,13 @@ class InferenceWorker(Process):
                          anno['image_id'] == image_hash]
             score = sentence_bleu(reference, candidate)
             self.out_queue.put(score)
-            print('woker', self._gpuid, ' image_name ', image_name, " predicted as candidate", candidate)
-            print('score: {}, remaining tasks: {} '.format(score, self.in_queue.qsize()))
+            # print('woker', self._gpuid, ' image_name ', image_name, " predicted as candidate", candidate)
+            # print('score: {}, remaining tasks: {} '.format(score, self.in_queue.qsize()))
+            SENTINEL = 1
+            self.q.put(SENTINEL)
 
         # import keras.backend as K
         # K.clear_session()
-        SENTINEL = 1
-        self.q.put(SENTINEL)
         print('InferenceWorker done ', self._gpuid)
 
 
