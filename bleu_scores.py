@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
         reference = captions
         # candidate = start_words
-        candidate = beam_search_predictions(model, image_name, word2idx, idx2word, encoded_test_a, beam_index=20)
+        candidate = beam_search_predictions(model, image_name, word2idx, idx2word, encoded_test_a, beam_index=100)
 
         # print('reference:')
         # print(reference)
