@@ -60,7 +60,7 @@ class InferenceWorker(Process):
             score = sentence_bleu(reference, candidate)
             self.out_queue.put(score)
             print('woker', self._gpuid, ' image_name ', image_name, " predicted as candidate", candidate)
-            print('remaining tasks： ' + str(self.in_queue.qsize()))
+            print('score: {}, remaining tasks: {} '.format(score, self.in_queue.qsize()))
 
         K.clear_session()
         print('InferenceWorker done ', self._gpuid)
@@ -110,7 +110,7 @@ def run(gpuids):
 
 
 if __name__ == "__main__":
-    gpuids = range(get_available_gpus())
+    gpuids = range(len(get_available_gpus()))
     print(gpuids)
 
     out_queue = run(gpuids)
