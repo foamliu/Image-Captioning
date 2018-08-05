@@ -47,13 +47,6 @@ $ python train.py
 $ tensorboard --logdir path_to_current_dir/logs
 ```
 
-### 性能评估
-多进程多 GPU 的生成图像描述，并计算 BLEU-4：
-
-```bash
-$ python bleu_scores.py
-```
-
 ### 演示
 下载 [预训练模型](https://github.com/foamliu/Image-Captioning/releases/download/v1.0/model.04-1.3820.hdf5) 放在 models 目录，然后执行:
 
@@ -74,8 +67,15 @@ $ python demo.py
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/16_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/17_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/18_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/19_image.png) |
 | [16] | [17] | [18] | [19] |
 
+### 性能评估
+多进程多 GPU 的生成图像描述，并计算 BLEU-4：
+
+```bash
+$ python bleu_main.py
+```
+
 ### 光束搜索 (Beam Search)
-下载 [预训练模型](https://github.com/foamliu/Image-Captioning/releases/download/v1.0/model.04-1.3820.hdf5) 放在 models 目录，然后执行:
+展示不同的光束尺寸(beam size)对图像描述的影响：
 
 ```bash
 $ python beam_search.py
