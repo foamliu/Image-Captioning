@@ -31,3 +31,4 @@ stop_word = '<end>'
 unknown_word = '<UNK>'
 
 best_model = 'model.03-1.3640.hdf5'
+beam_size = 20
