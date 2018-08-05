@@ -20,7 +20,7 @@
 
 ## 网络结构
 
- ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/net.png)
+ ![image](https://github.com/foamliu/Image-Captioning/raw/master/model.svg)
 
 ## 用法
 
@@ -38,6 +38,14 @@ $ python train.py
 可视化训练过程，执行：
 ```bash
 $ tensorboard --logdir path_to_current_dir/logs
+```
+
+### 性能
+
+在 30000 张测试集 (test-a) 图片上测得 BLEU-4 并求均值，得到：0.64684。
+
+```bash
+$ python bleu_scores.py
 ```
 
 ### 演示
@@ -80,10 +88,3 @@ $ python beam_search.py
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/8_bs_image.png) | (8) |
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/9_bs_image.png) | (9) |
 
-### 模型评估
-
-在 30000 张验证集图片上测得 BLEU-4 并求均值，得到：0.64684。
-
-```bash
-$ python bleu_scores.py
-```

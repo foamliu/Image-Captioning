@@ -20,7 +20,7 @@
 
 ## 网络结构
 
- ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/net.png)
+ ![image](https://github.com/foamliu/Image-Captioning/raw/master/model.svg)
 
 ## 用法
 
@@ -38,6 +38,14 @@ $ python train.py
 可视化训练过程，执行：
 ```bash
 $ tensorboard --logdir path_to_current_dir/logs
+```
+
+### 性能
+
+在 30000 张测试集 (test-a) 图片上测得 BLEU-4 并求均值，得到：0.64684。
+
+```bash
+$ python bleu_scores.py
 ```
 
 ### 演示
@@ -80,10 +88,3 @@ $ python beam_search.py
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/8_bs_image.png) | Normal Max search: 一个 穿着 短袖 的 男人 在 房间 里 骑 自行车<br>Beam Search, k=3: 房间 里 有 一个 坐在 轮椅 上 的 女人 在 弹 吉他<br>Beam Search, k=5: 房间 里 有 一个 坐在 轮椅 上 的 女人 在 弹 吉他<br>Beam Search, k=20: 明亮 的 房间 里 有 一位 双手 拿 着 扫把 的 女孩 在 扫地 |
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/9_bs_image.png) | Normal Max search: 两个 穿着 球衣 的 男人 在 球场上 争抢 足球<br>Beam Search, k=3: 足球场 上 有 两个 穿着 不同 球衣 的 男人 在 抢球<br>Beam Search, k=5: 足球场 上 有 两个 穿着 不同 球衣 的 男人 在 抢球<br>Beam Search, k=20: 绿草 茵茵 的 足球场 上 有 两个 男 运动员 在 踢足球 |
 
-### 模型评估
-
-在 30000 张验证集图片上测得 BLEU-4 并求均值，得到：0.47094。
-
-```bash
-$ python bleu_scores.py
-```
