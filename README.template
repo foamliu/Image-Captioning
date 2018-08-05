@@ -26,6 +26,9 @@ CNN图像嵌入器为 ResNet-50:
 ### 模型可视化
 ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/model.png)
 
+## 性能
+在 30000 张测试集 (test-a) 图片上测得 BLEU-4 并求均值，得到：0.64684。
+
 ## 用法
 
 ### 数据预处理
@@ -44,9 +47,8 @@ $ python train.py
 $ tensorboard --logdir path_to_current_dir/logs
 ```
 
-### 性能
-
-在 30000 张测试集 (test-a) 图片上测得 BLEU-4 并求均值，得到：0.64684。
+### 性能评估
+多进程多 GPU 的生成图像描述，并计算 BLEU-4：
 
 ```bash
 $ python bleu_scores.py
