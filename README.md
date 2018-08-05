@@ -18,9 +18,9 @@
 下载点这里：[图像中文描述数据集](https://challenger.ai/datasets/caption)，放在 data 目录下。
 
 
-## 网络结构
+## 模型结构
 
- <img src="https://raw.githubusercontent.com/foamliu/Image-Captioning/master/model.py?sanitize=true">
+ ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/model.png)
 
 ## 用法
 
