@@ -20,7 +20,7 @@
 
 ## 网络结构
 
- ![image](https://github.com/foamliu/Image-Captioning/raw/master/model.svg)
+ <img src="https://raw.githubusercontent.com/foamliu/Image-Captioning/master/model.py?sanitize=true">
 
 ## 用法
 
