@@ -20,6 +20,7 @@
 
 ## 模型结构
 
+ ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/net.png)
  ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/model.png)
 
 ## 用法
