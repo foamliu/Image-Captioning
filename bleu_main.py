@@ -70,7 +70,7 @@ class InferenceWorker(Process):
 
         import keras.backend as K
         K.clear_session()
-        print('InferenceWorker done, GPU ID '.format(self.gpuid))
+        print('InferenceWorker done, GPU ID {}'.format(self.gpuid))
 
 
 class Scheduler:
