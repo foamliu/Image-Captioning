@@ -20,8 +20,11 @@
 
 ## 模型结构
 
- ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/net.png)
- ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/model.png)
+### 网络结构
+CNN图像嵌入器为 ResNet-50:
+![image](https://github.com/foamliu/Image-Captioning/raw/master/images/net.png)
+### 模型可视化
+![image](https://github.com/foamliu/Image-Captioning/raw/master/images/model.png)
 
 ## 用法
 
