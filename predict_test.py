@@ -14,6 +14,8 @@ from tqdm import tqdm
 
 from config import best_model, test_a_folder, test_a_annotations_filename, beam_size
 
+encoded_test_a = pickle.load(open('data/encoded_test_a_images.p', 'rb'))
+
 
 class InferenceWorker(Process):
     def __init__(self, gpuid, in_queue, out_queue, signal_queue):
@@ -49,8 +51,6 @@ class InferenceWorker(Process):
         vocab = pickle.load(open('data/vocab_train.p', 'rb'))
         idx2word = sorted(vocab)
         word2idx = dict(zip(idx2word, range(len(vocab))))
-
-        encoded_test_a = pickle.load(open('data/encoded_test_a_images.p', 'rb'))
 
         while True:
             try:
@@ -108,10 +108,7 @@ class Scheduler:
 
 def run(gpuids, q):
     # scan all files under img_path
-    encoded_test_a = pickle.load(open('data/encoded_test_a_images.p', 'rb'))
-
     names = [f for f in encoded_test_a.keys()]
-    # names = names[:len(names) // 10]
 
     # init scheduler
     x = Scheduler(gpuids, q)
