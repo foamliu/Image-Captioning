@@ -26,14 +26,6 @@ class InferenceWorker(Process):
         self.out_queue = out_queue
         self.signal_queue = signal_queue
 
-    def check_point(self, num_done):
-        out_list = []
-        while out_queue.qsize() > 0:
-            out_list.append(self.out_queue.get())
-
-        with open("preds_{}.p".format(num_done), "wb") as file:
-            pickle.dump(out_list, file)
-
     def run(self):
         # set enviornment
         os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
@@ -54,22 +46,26 @@ class InferenceWorker(Process):
 
         while True:
             try:
-                image_name = self.in_queue.get(block=False)
-            except queue.Empty:
-                continue
+                try:
+                    image_name = self.in_queue.get(block=False)
+                    num_done = self.out_queue.qsize()
+                except queue.Empty:
+                    continue
 
-            candidate = beam_search_predictions(model, image_name, word2idx, idx2word, encoded_test_a,
-                                                beam_index=beam_size)
+                candidate = beam_search_predictions(model, image_name, word2idx, idx2word, encoded_test_a,
+                                                    beam_index=beam_size)
 
-            self.out_queue.put({'image_name': image_name, 'candidate': candidate})
-            self.signal_queue.put(SENTINEL)
+                self.out_queue.put({'image_name': image_name, 'candidate': candidate})
+                self.signal_queue.put(SENTINEL)
 
-            num_done = self.out_queue.qsize()
-            if num_done % 1000 == 0:
-                self.check_point(num_done)
+                if num_done % 1000 == 0:
+                    with open("preds_{}.p".format(num_done), "wb") as file:
+                        pickle.dump(self.out_queue, file)
 
-            if self.in_queue.qsize() == 0:
-                break
+                if self.in_queue.qsize() == 0:
+                    break
+            except Exception as e:
+                print(e)
 
         import keras.backend as K
         K.clear_session()
