@@ -56,12 +56,7 @@ class InferenceWorker(Process):
             try:
                 image_name = self.in_queue.get(block=False)
             except queue.Empty:
-                if self.in_queue.qsize() == 0:
-                    break
-                else:
-                    import time
-                    time.sleep(1)
-                    continue
+                continue
 
             candidate = beam_search_predictions(model, image_name, word2idx, idx2word, encoded_test_a,
                                                 beam_index=beam_size)
@@ -72,6 +67,9 @@ class InferenceWorker(Process):
             num_done = self.out_queue.qsize()
             if num_done % 1000 == 0:
                 self.check_point(num_done)
+
+            if self.in_queue.qsize() == 0:
+                break
 
         import keras.backend as K
         K.clear_session()
