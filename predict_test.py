@@ -7,7 +7,6 @@ import pickle
 import queue
 import sys
 from multiprocessing import Process
-from multiprocessing import Queue
 
 import numpy as np
 from tqdm import tqdm
@@ -75,8 +74,8 @@ class InferenceWorker(Process):
 class Scheduler:
     def __init__(self, gpuids, signal_queue):
         self.signal_queue = signal_queue
-        self.in_queue = Queue()
-        self.out_queue = Queue()
+        self.in_queue = manager.Queue()
+        self.out_queue = manager.Queue()
         self._gpuids = gpuids
 
         self.__init_workers()
@@ -148,7 +147,8 @@ if __name__ == "__main__":
     gpuids = ['0', '1', '2', '3']
     print(gpuids)
 
-    q = mp.Queue()
+    manager = mp.Manager()
+    q = manager.Queue()
     proc = mp.Process(target=listener, args=(q,))
     proc.start()
 
