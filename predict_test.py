@@ -58,7 +58,7 @@ class InferenceWorker(Process):
                 self.signal_queue.put(SENTINEL)
 
                 if num_done % 1000 == 0:
-                    with open("preds_{}.p".format(num_done), "wb") as file:
+                    with open("data/preds_{}.p".format(num_done), "wb") as file:
                         pickle.dump(self.out_queue, file)
 
                 if self.in_queue.qsize() == 0:
