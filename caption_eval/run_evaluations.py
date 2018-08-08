@@ -19,8 +19,8 @@
 
 import argparse
 import sys
-
-reload(sys)
+import importlib
+importlib.reload(sys)
 sys.setdefaultencoding('utf8')
 from coco_caption.pycxtools.coco import COCO
 from coco_caption.pycxevalcap.eval import COCOEvalCap
