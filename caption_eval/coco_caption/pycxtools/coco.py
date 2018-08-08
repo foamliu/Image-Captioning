@@ -56,8 +56,8 @@ from skimage.draw import polygon
 import copy
 import os
 import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 import jieba
 import hashlib
 
