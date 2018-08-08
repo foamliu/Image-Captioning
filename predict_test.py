@@ -157,7 +157,7 @@ if __name__ == "__main__":
     while out_queue.qsize() > 0:
         out_list.append(out_queue.get())
 
-    with open("preds.p", "wb") as file:
+    with open("data/preds.p", "wb") as file:
         pickle.dump(out_list, file)
 
     total_score, avg_score = bleu(out_list)
