@@ -30,31 +30,39 @@ if __name__ == '__main__':
 
     samples = random.sample(names, 20)
 
+    sentences = []
     for i in range(len(samples)):
         image_name = samples[i]
         filename = os.path.join(test_a_image_folder, image_name)
-        # print('Start processing image: {}'.format(filename))
-        image_input = np.zeros((1, 2048))
-        image_input[0] = encoded_test_a[image_name]
+        # # print('Start processing image: {}'.format(filename))
+        # image_input = np.zeros((1, 2048))
+        # image_input[0] = encoded_test_a[image_name]
+        #
+        # start_words = [start_word]
+        # while True:
+        #     text_input = [word2idx[i] for i in start_words]
+        #     text_input = sequence.pad_sequences([text_input], maxlen=max_token_length, padding='post')
+        #     preds = model.predict([image_input, text_input])
+        #     # print('output.shape: ' + str(output.shape))
+        #     word_pred = idx2word[np.argmax(preds[0])]
+        #     start_words.append(word_pred)
+        #     if word_pred == stop_word or len(start_word) > max_token_length:
+        #         break
 
-        start_words = [start_word]
-        while True:
-            text_input = [word2idx[i] for i in start_words]
-            text_input = sequence.pad_sequences([text_input], maxlen=max_token_length, padding='post')
-            preds = model.predict([image_input, text_input])
-            # print('output.shape: ' + str(output.shape))
-            word_pred = idx2word[np.argmax(preds[0])]
-            start_words.append(word_pred)
-            if word_pred == stop_word or len(start_word) > max_token_length:
-                break
+        from beam_search import beam_search_predictions
+        candidate = beam_search_predictions(model, image_name, word2idx, idx2word, encoded_test_a,
+                                            beam_index=20)
 
-        sentence = ' '.join(start_words[1:-1])
-        print(sentence)
+        print(candidate)
+        sentences.append(candidate)
 
         img = cv.imread(filename)
         img = cv.resize(img, (img_rows, img_cols), cv.INTER_CUBIC)
         if not os.path.exists('images'):
             os.makedirs('images')
         cv.imwrite('images/{}_image.png'.format(i), img)
+
+    with open('demo.txt', 'w') as file:
+        file.writelines(sentences)
 
     K.clear_session()

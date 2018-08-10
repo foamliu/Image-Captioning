@@ -50,7 +50,7 @@ def beam_search_predictions(model, image_name, word2idx, idx2word, encoding_test
         else:
             break
 
-    final_caption = ' '.join(final_caption[1:])
+    final_caption = ''.join(final_caption[1:])
     return final_caption
 
 
