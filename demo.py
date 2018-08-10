@@ -5,10 +5,8 @@ import random
 
 import cv2 as cv
 import keras.backend as K
-import numpy as np
-from keras.preprocessing import sequence
 
-from config import max_token_length, start_word, stop_word, test_a_image_folder, img_rows, img_cols, best_model
+from config import test_a_image_folder, img_rows, img_cols, best_model
 from model import build_model
 
 if __name__ == '__main__':
@@ -50,6 +48,7 @@ if __name__ == '__main__':
         #         break
 
         from beam_search import beam_search_predictions
+
         candidate = beam_search_predictions(model, image_name, word2idx, idx2word, encoded_test_a,
                                             beam_index=20)
 
@@ -63,6 +62,6 @@ if __name__ == '__main__':
         cv.imwrite('images/{}_image.png'.format(i), img)
 
     with open('demo.txt', 'w') as file:
-        file.writelines(sentences)
+        file.write('\n'.join(sentences))
 
     K.clear_session()
