@@ -57,15 +57,15 @@ $ python demo.py
 1 | 2 | 3 | 4 |
 |---|---|---|---|
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/0_image.png)  | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/1_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/2_image.png)| ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/3_image.png) |
-| ﻿一个 穿着 裙子 的 女人 在 滑冰场 上 表演 花样滑冰 | 房间 里 一个 人 的 旁边 有 一个 穿着 短袖 的 男人 在 给 一个 穿着 红色 上衣 的 女人 递 东西 | 舞台 上 有 一个 右手 拿 着 话筒 的 女人 在 唱歌 | 房间 里 有 一个 穿着 白色 上衣 的 女人 在 给 一群 孩子 讲课 |
+| 微波荡漾的海水里站着三位戴着墨镜的男士 | 平坦的球场上有一位穿着球服的男士在打篮球 | 球场上有一个穿着运动服的男人在打篮球 | 亮堂的会议室里有一群坐着的人在开会 |
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/4_image.png)  | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/5_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/6_image.png)| ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/7_image.png) |
-| 房间 里 有 一群 穿着 各异 的 孩子 在 玩耍 | 房间 里 有 一个 右手 拿 着 笔 的 女人 在 写字 | 一个 戴着 帽子 的 女人 走 在 人来人往 的 道路 上 | 一个 右手 拿 着 笔 的 女人 坐在 室内 的 桌子 旁 |
+| 平整的道路上站着一位右肩背着包的女士 | 碧绿的球场上跑着两位穿着球服的男士 | 两名运动员在绿茵茵的运动场上抢足球 | 平坦的球场上有一位右手拿着球拍的男士在打羽毛球 |
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/8_image.png)  | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/9_image.png) |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/10_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/11_image.png)|
-| 一个 穿着 短袖 的 男人 推 着 一辆 购物车 走 在 超市 里 | 一个 穿着 球衣 的 男人 在 球场上 踢足球 | 一个 右手 拿 着 话筒 的 女人 在 广告牌 前 讲话 | 两个 穿着 球衣 的 男人 在 球场上 踢足球 |
+| 舞台上有一个右手拿着话筒的女人在唱歌 | 人来人往的大厅里走着一个斜挎着包的女人 | 绿树环绕的公园里有两个女人在做瑜伽 | 绚丽的舞台上走着两个手里拿着话筒的人讲话 |
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/12_image.png)  | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/13_image.png) |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/14_image.png)| ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/15_image.png)|
-| 房间 里 一个 人 的 旁边 有 一个 戴着 眼镜 的 男人 在 给 一个 穿着 深色 上衣 的 男人 递 东西| 一个 双手 拿 着 球杆 的 男人 在 滑冰场 上 滑冰 | 一个 戴着 眼镜 的 男人 和 一个 穿着 短袖 的 男人 在 室内 的 桌子 旁 交谈 | 一个 双手 拿 着 奖杯 的 女人 站 在 舞台 上 讲话 |
+| 房间里的沙发上有一个右手拿着笔的女人在写字| 平坦的球场上有两位穿着裙子的女士在跳舞 | 平整的道路上走着一位戴着墨镜的女士 | 碧绿的球场上有一群戴着头盔的人在打橄榄球 |
 |![image](https://github.com/foamliu/Image-Captioning/raw/master/images/16_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/17_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/18_image.png) | ![image](https://github.com/foamliu/Image-Captioning/raw/master/images/19_image.png) |
-| 一个 赤裸 上身 的 男人 在 海边 的 沙滩 上 奔跑 | 两个 穿着 球衣 的 男人 在 球场上 打篮球 | 一群 穿着 泳衣 的 人 在 游泳池 里 游泳 | 一个 右手 拎 着 包 的 男人 走 在 道路 上 |
+| 琳琅满目的商店里站着一个右肩背着包的女人 | 平坦的舞台上站着一位左手插兜的男士 | 波涛汹涌的海面上有一个双手握着船桨的人在划船 | 光线充足的房间里有两个坐着的人在交谈 |
 
 ### 性能评估
 多进程多 GPU 的生成图像描述，并计算 BLEU-4：
